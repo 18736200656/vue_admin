@@ -6,6 +6,8 @@
           mode="vertical"
           class="el-menu-vertical-demo"
           :collapse="collapse"
+          router
+          @select="selectMenu"
           :default-active="$route.path"
           background-color="#324057"
           text-color="#fff">
@@ -28,38 +30,37 @@ export default {
         {
           icon: "el-icon-menu",
           name: "商品目录管理",
-          path: "home",
-          // index: "/home"
+          path: "/menu",
         },
+        // {
+        //   icon: "el-icon-menu",
+        //   name: "商品目录管理",
+        //   path: "/home",
+        // },
         {
           icon: "el-icon-setting",
           name: "商品管理",
-          path: "commodity",
-          // index: "/commodity"
+          path: "/home",
         },
         {
           icon: "el-icon-document",
           name: "渠道管理",
-          path: "channel",
-          // index: "/channel"
+          path: "/channel",
         },
         {
           icon: "el-icon-user-solid",
           name: "用户管理",
           path: "/user",
-          index: "/user"
         },
         {
           icon: "el-icon-s-tools",
           name: "任务管理",
           path: "/task",
-          index: "/task"
         },
         {
           icon: "el-icon-bank-card",
           name: "提现管理",
           path: "/cash",
-          index: "/cash"
         },
         // {
         //   icon: "el-icon-service",

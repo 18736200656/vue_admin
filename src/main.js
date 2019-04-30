@@ -10,8 +10,9 @@ import api from './utils/api'
 Vue.prototype.$api = api;
 
 Vue.config.productionTip = false
-Vue.use(ElementUI,{size: "mini"});
+Vue.use(ElementUI,{size: "small"});
 new Vue({
   router,
   render: h => h(App),
 }).$mount('#app')
+

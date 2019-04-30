@@ -1,56 +1,28 @@
 <template>
   <div id="app">
      <router-view></router-view>
-    <!-- <div class="index">
-    <Header></Header>
-    <LeftMenu></LeftMenu>
-    <div class="rightContainer" :class="{'content-collapse':collapse}">
-      <Tags/>
-      <div class="content">
-        <transition name="move" mode="out-in">
-          <keep-alive :include="tagsList">
-            <router-view></router-view>
-          </keep-alive>
-        </transition>
-      </div>
-    </div>
-  </div> -->
   </div>
 </template>
 
 <script>
-import Header from "./components/common/Header";
-import LeftMenu from "./components/common/LeftMenu";
-import bus from "./utils/bus";
-import Tags from "./components/common/Tags";
+
 export default {
   name: 'App',
-   data() {
-    return {
-      tagsList: [],
-      collapse: false
-    };
-  },
-  components: {
-    Header,
-    LeftMenu,
-    Tags
-  },
-  created() {
-    //内容区域跟随变化
-    bus.$on("collapse", msg => {
-      console.log(msg);
-      this.collapse = msg;
-    }),
-      // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
-      bus.$on("tags", msg => {
-        let arr = [];
-        for (let i = 0, len = msg.length; i < len; i++) {
-          msg[i].name && arr.push(msg[i].name);
-        }
-        this.tagsList = arr;
-        // console.log(tags)
-      });
+  created(){
+    
+//鼠标划入滚动条展现，鼠标划出滚动条隐藏
+  function scrollbarShowHidden(element){
+    element.setAtrribute('className','scrollbarHide');
+    element.hover(function() {
+      element.setAtrribute('className','scrollbarShow');
+    }, function() {
+      element.removeAtrribute('scrollbarShow');
+    });
+  }
+  var tag = document.getElementsByClassName('.el-table__body-wrapper')[0];
+  var body = document.getElementsByTagName('body')[0]
+  scrollbarShowHidden(tag);
+  scrollbarShowHidden(body);
   }
 }
 </script>
@@ -66,31 +38,13 @@ html,body,
   text-align: center;
   color: #2c3e50;
 }
-.index {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.content {
-  position: absolute;
-  width: auto;
-  height: 100%;
-  padding: 10px;
-  overflow-y: scroll;
-  box-sizing: border-box;
-}
-.rightContainer.content-collapse {
-  left: 48px;
-}
-.rightContainer {
-  position: absolute;
-  left: 180px;
-  right: 0;
-  top: 72px;
-  height: 100%;
-  overflow-y: scroll;
-  padding-bottom: 30px;
-  transition: left 0.3s ease-in-out;
-}
+
+   /*chrome滚动条颜色设置*/
+
+*::-webkit-scrollbar {width:7px; height:10px; background-color:transparent;} /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+*::-webkit-scrollbar-track {background-color:#f0f6ff;  } /*定义滚动条轨道 内阴影+圆角*/
+*::-webkit-scrollbar-thumb {background-color:#73abb1; border-radius:6px;} /*定义滑块 内阴影+圆角*/
+.scrollbarHide::-webkit-scrollbar{display: none}
+.scrollbarShow::-webkit-scrollbar{display: block}
+
 </style>

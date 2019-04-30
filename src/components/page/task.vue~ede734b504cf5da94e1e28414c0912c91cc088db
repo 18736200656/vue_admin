@@ -1,0 +1,12 @@
+<template>
+  <div class="task">这是体现页面</div>
+</template>
+<script>
+export default {
+  name:'Task'
+}
+</script>
+<style scoped>
+
+</style>
+

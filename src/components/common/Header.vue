@@ -156,6 +156,7 @@ export default {
   border-bottom: 1px solid #1f2d3d;
   overflow: hidden;
   padding: 5px 0;
+  z-index:10;
 }
 
 .collapse-btn {
