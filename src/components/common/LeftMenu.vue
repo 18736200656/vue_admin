@@ -28,19 +28,19 @@ export default {
         {
           icon: "el-icon-menu",
           name: "商品目录管理",
-          path: "/home",
+          path: "home",
           // index: "/home"
         },
         {
           icon: "el-icon-setting",
           name: "商品管理",
-          path: "/commodity",
+          path: "commodity",
           // index: "/commodity"
         },
         {
           icon: "el-icon-document",
           name: "渠道管理",
-          path: "/channel",
+          path: "channel",
           // index: "/channel"
         },
         {

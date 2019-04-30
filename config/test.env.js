@@ -4,5 +4,5 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"test"',
-  // NODE_BASE_URL:'https://mx.atpiao.net/api/v9/test/wbz_pc/'
+  NODE_BASE_URL:'http://47.97.152.146'
 })

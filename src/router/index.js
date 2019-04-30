@@ -1,28 +1,34 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from '@/components/page/login'
+import Home from '@/components/page/home'
+import Index from '@/components/page/index'
+import Nofind from '@/components/page/404'
+import Commodity from '@/components/page/commodity'
+import Channel from '@/components/page/channel'
+import User from '@/components/page/user'
+import Task from '@/components/page/task'
+import Cash from '@/components/page/cash'
+import Lock from '@/components/page/Lock'
+
 
 Vue.use(Router)
 
 const routes=[
   {
     path:'/',
-    redirect:'/index/home',
-  },
-  {
-    path:'/index',
     name:'Index',
-    components:()=>import('@/components/view/index'),
-    redirect:'/home',
+    components:Index,
+    redirect:'home',
     children:children
   },
-  
   {
     path:'/login',
     name:'Login',
     meta:{
       title:'登录页面'
     },
-    components:()=>import('@/components/view/login')
+    components:Login
   },
   {
     path:'/lock',
@@ -30,12 +36,12 @@ const routes=[
     meta:{
       title:'锁屏页面'
     },
-    components:()=>import('@/components/view/Lock')
+    components:Lock
   },
   {
     path: "*",
     name: "Nofind",
-    component: () => import("@/components/view/404")
+    component:Nofind
   }
 ]
 const children = [
@@ -46,7 +52,7 @@ const children = [
       requireAuthor:true,
       title:'首页'
     },
-    components:()=>import('@/components/view/home')
+    components:Home
   },
   {
     path:'commodity',
@@ -54,7 +60,7 @@ const children = [
     meta:{
       title:'商品管理'
     },
-    components:()=>import('@/components/view/commodity')
+    components:Commodity
   },
   {
     path:'channel',
@@ -62,7 +68,7 @@ const children = [
     meta:{
       title:'渠道管理'
     },
-    components:()=>import('@/components/view/channel')
+    components:Channel
   },
   {
     path:'user',
@@ -70,7 +76,7 @@ const children = [
     meta:{
       title:'用户管理'
     },
-    components:()=>import('@/components/view/user')
+    components:User
   },
   {
     path:'task',
@@ -78,7 +84,7 @@ const children = [
     meta:{
       title:'任务管理'
     },
-    components:()=>import('@/components/view/task')
+    components:Task
   },
   {
     path:'cash',
@@ -86,37 +92,27 @@ const children = [
     meta:{
       title:'提现管理'
     },
-    components:()=>import('@/components/view/cash')
+    components:Cash
   },
 ]
-
-
 
 const router= new Router({
   mode:'history',
   routes:routes
 })
-router.beforeEach((to,from,next)=>{
-  let token = window.sessionStorage.getItem('token');
-  if(to.meta && to.meta.title){
-    document.title = to.meta.title
-  }
-  
-  const isLogin = token ? true : false
-
-  // if (to.path === '/login') {
-  //   next()
-  // } else {
-  //   isLogin ? next() : next('/login')
-  // }
-  next()
-  // if(to.meta.requireAuthor){
-  //   if(token){
-  //     next()
-  //   }else{
-  //     next('/login')
-  //   }
-  // }
-});
+// router.beforeEach((to,from,next)=>{
+//   let token = window.sessionStorage.getItem('token');
+//   if(to.meta && to.meta.title){
+//     document.title = to.meta.title
+//   }
+//   const isLogin = token ? true : false
+//   if (to.path === '/login') {
+//     next()
+//   } else {
+//     isLogin ? next() : next('/login')
+//   }
+//   next()
+//
+// });
 
 export default router
