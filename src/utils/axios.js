@@ -39,7 +39,8 @@ _axios.interceptors.response.use(
   },
   error=>{
     loading.close();
-    Message.error(JSON.stringify(error));
+    Message.error(JSON.stringify(error.message));
+    // console.log(error,'----')
     const {status} =error.res;
     if (status == 401) {
       Message.error("token值无效，请重新登录");
@@ -47,6 +48,10 @@ _axios.interceptors.response.use(
       window.sessionStorage.removeItem('token')
       // 页面跳转
       router.push("/login");
+    }
+    if(status == 404){
+      Message.error("请求地址不存在！");
+      return
     }
     return Promise.reject(error);
   }

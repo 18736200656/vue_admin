@@ -72,7 +72,7 @@ export default {
   left: 48px;
 }
 .rightContainer {
-  position: absolute;
+  position: fixed;
   left: 180px;
   right: 0;
   top: 72px;

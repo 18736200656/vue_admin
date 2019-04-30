@@ -63,7 +63,7 @@ export default {
     }
   },
   created(){
-    consoole.log(this.FormData,'----')
+    console.log(this.FormData,'----')
   }
 }
 </script>

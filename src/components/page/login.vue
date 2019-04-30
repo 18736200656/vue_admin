@@ -38,22 +38,22 @@
                     captcha: ''
                 },
                 loginRules: {
-                    phone: [
-                        {required: true, message: '请输入手机号', trigger: 'blur'},
-                        {max: 11, message: '请输入11位数字', trigger: 'blur'},
-                        {validator: this.ValidatePhone, trigger: 'blur'}
-                    ],
-                    password :[
-                        {required: true, message: '请输入密码', trigger: 'blur'},
-                        {min:6,max: 20, message: '请输入6-20位字符', trigger: 'blur'},
-                        {validator: this.ValidatePassword, trigger: 'blur'}
-                    ],
-                    captcha: [
-                        {required: true, message: '请输入验证码', trigger: 'blur'},
-                        {max: 4, message: '请输入4位数字', trigger: 'blur'},
-                        {validator: this.ValidateCaptcha, trigger: 'blur'},
+                    // phone: [
+                    //     {required: true, message: '请输入手机号', trigger: 'blur'},
+                    //     {max: 11, message: '请输入11位数字', trigger: 'blur'},
+                    //     {validator: this.ValidatePhone, trigger: 'blur'}
+                    // ],
+                    // password :[
+                    //     {required: true, message: '请输入密码', trigger: 'blur'},
+                    //     {min:6,max: 20, message: '请输入6-20位字符', trigger: 'blur'},
+                    //     {validator: this.ValidatePassword, trigger: 'blur'}
+                    // ],
+                    // captcha: [
+                    //     {required: true, message: '请输入验证码', trigger: 'blur'},
+                    //     {max: 4, message: '请输入4位数字', trigger: 'blur'},
+                    //     {validator: this.ValidateCaptcha, trigger: 'blur'},
                        
-                    ]
+                    // ]
                 },
                 sys_error: '',
                 validate: false
@@ -89,19 +89,21 @@
                 this.$refs.loginForm.validate((valid) => {
                     if (valid) {
                         let data = {
-                            phone: this.loginForm.phone,
+                            loginName: this.loginForm.phone,
                             password: this.loginForm.password
                         }
                         if(this.validate) data.validate = this.loginForm.validate
-                        this.loginByEmail(data).then(res => {
-                            if(res.data.login){
-                                this.$router.push('home')
-                            } else{
-                                this.sys_error = res.data.message
+                        this.$api.adminLogin(data).then(res => {
+                            if(res.code==1){
+                                console.log(res.data,'=========登录结果')
+                                this.$router.push('home');
+
+                            }else{
+                                this.$message.error(res.msg) 
                                 this.validate = res.data.validate
                             }
-                        }).catch(err => {
-                            this.sys_error = err.response.data
+                        }).catch(error => {
+                           this.$message.error(error.msg) 
                         })
                     } else {
                         console.log('error submit!!');

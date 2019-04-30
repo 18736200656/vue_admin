@@ -1,13 +1,13 @@
 <template>
   <div class="menulist">
     <el-card>
-      <el-form>
-        <el-item-form>
+      <el-form ref="goodsForm" label-width="100px" :inline="true" align="left">
+        <el-form-item label="菜单名称">
           <el-input
             placeholder="输入关键字进行过滤"
             v-model="filterText">
           </el-input>
-        </el-item-form>
+        </el-form-item>
       </el-form>
       <div class="tree_box">
         <el-tree
