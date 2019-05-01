@@ -1,9 +1,5 @@
 <template>
   <div class="sidebar">
-		 <el-menu-item class="item_top" style="height:70px;line-height:70px;font-size:20px;color:#49a0f9;">
-				<!-- <i class="el-icon-menu icon-btn" @click="collapseChage"></i> -->
-				<span>后台管理系统</span>
-		</el-menu-item>
     <template v-for="item in items">
 			<el-menu-item v-if="item.children ==null || item.children.length == 0 " :index="item.path" >
 				<i :class="item.icon"></i>

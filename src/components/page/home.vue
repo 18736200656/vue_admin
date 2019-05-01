@@ -1,18 +1,26 @@
 <template>
   <div class="home">
+    <div class="filte_box">
+      <div class="filter_top">
+        <img src="../../assets/icon_sousuo.png" alt="" class="sou_immg">
+        筛选检查
+      </div>
       <el-card class="el_card_form">
         <el-form ref="goodsForm" :model="goodsForm" label-width="80px" size="mini" :inline="true" align="left">
-          <el-form-item label="商品名称">
+          <el-form-item label="输入搜索">
             <el-input v-model="goodsForm.name"></el-input>
           </el-form-item>
-          <el-form-item label="商品标题">
-            <el-input v-model="goodsForm.title"></el-input>
+          <el-form-item label="商品分类">
+            <el-select>
+               <el-option></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item size="mini">
             <el-button type="primary" @click="goodsList">查询</el-button>
           </el-form-item>
         </el-form>
       </el-card>
+    </div>  
     <div class="table_box">
       <el-card>
         <el-table
@@ -163,7 +171,7 @@ export default {
       this.$api.queryGoods(data).then(res=>{
         if(res.code==1){
         }else{
-          this.$message.error(res.msg);
+          Message.error(res.msg);
         }
       })
     },
@@ -181,12 +189,12 @@ export default {
           type: 'warning'
         }).then(() => {
           this.tableData.goods.splice(index,1)
-          this.$message({
+          Message({
             type: 'success',
             message: '删除成功!'
           });
         }).catch(() => {
-          this.$message({
+          Message({
             type: 'info',
             message: '已取消删除'
           });          
@@ -205,6 +213,22 @@ export default {
 }
 </script>
 <style scoped>
+  .filter_box{
+    margin-top: 30px;
+
+  }
+  .filter_top{
+    height: 80px;
+    background:#e5e5e5 ;
+    font-size: 24px;
+    color: #333;
+    line-height: 80px;
+  }
+  .sou_immg{
+    margin-left: 15px;
+    vertical-align: middle;
+    margin-right: 15px;
+  }
   .goods_img{
     width: 50px;
     height: 40px;

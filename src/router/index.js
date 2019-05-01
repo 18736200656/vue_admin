@@ -74,7 +74,25 @@ const routes=[
         meta:{
           title:'任务管理'
         },
-        component:()=>import('@/components/page/task')
+        component:()=>import('@/components/page/task'),
+        children: [
+          {
+            path:'taskD',
+            name:'taskM',
+            meta:{
+              title:'任务详情'
+            },
+            component:()=>import('@/components/page/task/taskdetail')
+          },
+          {
+            path:'taskM',
+            name:'taskM',
+            meta:{
+              title:'任务管理'
+            },
+            component:()=>import('@/components/page/task/taskmanage')
+          },
+        ]  
       },
       {
         path:'cash',

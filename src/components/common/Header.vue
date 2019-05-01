@@ -1,47 +1,13 @@
 <template>
-  <header class="header-nav" :class="collapse ? 'lf49' : ''">
-    <el-row>
-      <!-- <el-col :span="6" class="logo-container">
-        <img src="../../assets/logo.png" alt="" class="logo">
-        <div class="collapse-btn" @click="collapseChage">
-          <i class="el-icon-menu icon-btn"></i>
-        </div>
-        <span class="title">后台管理系统</span>
-      </el-col> -->
-      <el-col class="user">
-        <div class="btn-fullscreen icon-font"></div>
-        <div class="userinfo">
-          <div class="btn-fullscreen icon-font">
-            <el-tooltip class="item" effect="dark" content="锁屏" placement="bottom">
-              <i class="iconfont el-icon-lock" @click="handleLockScreen"></i>
-            </el-tooltip>
-          </div>
-          <!-- 全屏显示 -->
-          <div class="btn-fullscreen" @click="handleFullScreen">
-            <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
-              <i class="el-icon-rank"></i>
-            </el-tooltip>
-          </div>
-          <!-- <img class="avatar" :src="users.avatar"> -->
-          <div class="welcome">
-            <p class="name comename">欢迎</p>
-            <!-- <p class="name avatarname">{{users.name}}</p> -->
-          </div>
-          <span class="username">
-            <el-dropdown trigger="click" @command="setDialogInfo">
-              <span class="el-dropdown-link">
-                <i class="el-icon-caret-bottom el-icon--right"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="info">个人信息</el-dropdown-item>
-                <el-dropdown-item command="logout">退出</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </span>
-        </div>
-      </el-col>
-    </el-row>
+<div>
+  <header class="header-nav">
+    <img src="../../assets/icon_user.png" alt="" class="avatar">
+    <span class="comename">hello,</span>
+    <span class="avatarname">{{'babab'}}</span>
+    <el-button icon="el-icon el-icon-refresh" @click="$router.go(0)" class="reloadbtn">刷新</el-button>
   </header>
+</div>
+  
 </template>
 
 <script>
@@ -56,10 +22,7 @@ export default {
     };
   },
   computed: {
-    // users() {
-    //   //通过vuex获取用户信息
-    //   return this.$store.getters.user;
-    // }
+
   },
   methods: {
     setDialogInfo(cmditem) {
@@ -72,28 +35,6 @@ export default {
           break;
       }
     },
-    handleLockScreen() {
-      this.$confirm("是否要进行锁屏?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "锁屏成功!"
-          });
-          setTimeout(() => {
-            this.$router.push("/lock");
-          }, 100);
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "锁屏失效"
-          });
-        });
-    },
     showInfoList() {
       // console.log('下来菜单')
       this.$router.push("/Infoshow");
@@ -104,41 +45,6 @@ export default {
       //路由跳转
       this.$router.push("/login");
     },
-    collapseChage() {
-      //点击隐藏左侧菜单栏，
-      this.collapse = !this.collapse;
-      //非父子组件传值
-      bus.$emit("collapse", this.collapse);
-    },
-    //全屏
-    handleFullScreen() {
-      //获取到整个html
-      let element = document.documentElement;
-      // console.log(element)
-      if (this.fullscreen) {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitCancelFullScreen) {
-          document.webkitCancelFullScreen();
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen();
-        }
-      } else {
-        if (element.requestFullscreen) {
-          element.requestFullscreen();
-        } else if (element.webkitRequestFullScreen) {
-          element.webkitRequestFullScreen();
-        } else if (element.mozRequestFullScreen) {
-          element.mozRequestFullScreen();
-        } else if (element.msRequestFullscreen) {
-          // IE11
-          element.msRequestFullscreen();
-        }
-      }
-      this.fullscreen = !this.fullscreen;
-    }
   },
 
 };
@@ -150,53 +56,23 @@ export default {
   top: 0;
   width: 100%;
   height: 60px;
-  background: #324057;
-  color: #fff;
-  border-bottom: 1px solid #1f2d3d;
-  overflow: hidden;
-  padding: 5px 0;
-  transition: all 0.3s ease-in-out;
-  /* z-index:10; */
-}
-.lf49{
-  left:49px;
-  transition: all 0.3s ease-in-out;
-}
-.collapse-btn {
-  width: 50px;
-  margin-left: 20px;
-  display: inline-block;
-}
-.aplayer {
-  margin: 0;
-}
-.icon-btn {
-  font-size: 36px;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
-.logo-container {
+  background: #ddd;
+  z-index: 10;
+  box-shadow: #a9a9a9 4px 4px(90 ) 25%;
+  font-size:18px;
   line-height: 60px;
-  min-width: 400px;
-  padding: 0 5px;
 }
-
-.logo {
-  height: 50px;
-  width: 50px;
-  margin-right: 5px;
+.user_img {
+  height: 40px;
+  width: 40px;
+  
   vertical-align: middle;
-  display: inline-block;
+  border-radius: 50%;
 }
 
-.title {
-  vertical-align: middle;
-  font-size: 22px;
-  font-family: "Microsoft YaHei";
-  letter-spacing: 3px;
-}
+.reloadbtn{
 
+}
 .user {
   line-height: 60px;
   text-align: right;
@@ -205,6 +81,7 @@ export default {
 }
 
 .avatar {
+  margin-left: 25px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -218,15 +95,8 @@ export default {
   vertical-align: middle;
   padding: 0 5px;
 }
-
-.name {
-  line-height: 20px;
-  text-align: center;
-  font-size: 14px;
-}
-
 .comename {
-  font-size: 12px;
+  margin-left: 10px;
 }
 
 .avatarname {

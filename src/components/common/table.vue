@@ -119,7 +119,7 @@ export default {
         if(res.code==1){
           this.tableList = res.data;
         }else{
-          this.$message.error(res.message)
+          Message.error(res.message)
         }
       }).catch((error) => {
         Promise.reject(error);

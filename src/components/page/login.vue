@@ -92,18 +92,26 @@
                             loginName: this.loginForm.phone,
                             password: this.loginForm.password
                         }
-                        if(this.validate) data.validate = this.loginForm.validate
                         this.$api.adminLogin(data).then(res => {
                             if(res.code==1){
+                                window.sessionStorage.setItem('token',res.data.token);
                                 console.log(res.data,'=========登录结果')
-                                this.$router.push('home');
+                                this.$router.push({
+                                    path:'/home',
+                                    query:{
+                                        loginName:res.data.loginName,
+                                        loginNickName:res.data.loginNickName,
+                                        isDeleted:res.data.isDeleted,
+                                        id:res.data.id
+                                    }
+                                });
 
                             }else{
                                 this.$message.error(res.msg) 
-                                this.validate = res.data.validate
                             }
-                        }).catch(error => {
-                           this.$message.error(error.msg) 
+                        }).catch(err => {
+                        //    this.$message.error(err) 
+                           return Promise.reject(err);
                         })
                     } else {
                         console.log('error submit!!');

@@ -1,8 +1,10 @@
 <template>
   <div class="sidebar">
+    <div class="top_box">
+      后台管理系统
+    </div>
     <el-row class="menu_page">
       <el-col>
-        <!-- 折叠按钮 -->
         <el-menu
           mode="vertical"
           class="el-menu-vertical-demo"
@@ -10,7 +12,8 @@
           router
           @select="selectMenu"
           :default-active="$route.path"
-          background-color="#324057"
+          background-color="#21212c"
+          active-text-color="#fff"
           text-color="#fff">
           <Menu :items="items"/>
         </el-menu>
@@ -33,11 +36,6 @@ export default {
           name: "商品目录管理",
           path: "/menu",
         },
-        // {
-        //   icon: "el-icon-menu",
-        //   name: "商品目录管理",
-        //   path: "/home",
-        // },
         {
           icon: "el-icon-setting",
           name: "商品管理",
@@ -57,103 +55,23 @@ export default {
           icon: "el-icon-s-tools",
           name: "任务管理",
           path: "/task",
+          children:[
+            {
+              name: "任务详情",
+              path: "/task/taskD",
+            },
+            {
+              name: "任务管理",
+              path: "/task/taskM",
+            },
+            
+          ]
         },
         {
           icon: "el-icon-bank-card",
           name: "提现管理",
           path: "/cash",
         },
-        // {
-        //   icon: "el-icon-service",
-        //   name: "用户信息",
-        //   path: "/staff"
-        // },
-        // {
-        //   icon: "el-icon-mobile-phone",
-        //   name: "信息列表",
-        //   path: "/listuser"
-        // },
-        // {
-        //   icon: "el-icon-document",
-        //   name: "资金管理",
-        //   path: "fund",
-        //   children: [
-        //     {
-        //       path: "/fundList",
-        //       name: "资金流水"
-        //     },
-        //     {
-        //       path: "/payList",
-        //       name: "支付单据"
-        //     }
-        //   ]
-        // },
-        // {
-        //   icon: "el-icon-setting",
-        //   name: "信息管理",
-        //   path: "/info",
-        //   children: [
-        //     {
-        //       path: "/infoshow",
-        //       name: "个人信息"
-        //     },
-        //     {
-        //       path: "/editor",
-        //       name: "表单处理",
-        //       children: [
-        //         {
-        //           path: "/editor",
-        //           name: "富文本编辑器"
-        //         },
-        //         {
-        //           path: "/markdown",
-        //           name: "Markdown编辑器"
-        //         },
-        //         {
-        //           path: "/markdown",
-        //           name: "文章",
-        //           children: [
-        //             {
-        //               path: "/showFundArticle",
-        //               name: "文章列表"
-        //             }
-        //           ]
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // },
-        // {
-        //   icon: "el-icon-bell",
-        //   name: "投资管理",
-        //   path: "/list",
-        //   children: [
-        //     {
-        //       path: "/chinaTouziList",
-        //       name: "省份投资"
-        //     },
-        //     {
-        //       path: "/chinaTabsList",
-        //       name: "区域投资"
-        //     }
-        //   ]
-        // },
-        // {
-        //   icon: "el-icon-tickets",
-        //   name: "资金数据",
-        //   path: "/position",
-        //   children: [
-        //     {
-        //       path: "/fundPosition",
-        //       name: "投资分布"
-        //     }
-        //   ]
-        // },
-        // {
-        //   icon: "el-icon-location-outline",
-        //   name: "地图展示",
-        //   path: "/maplist"
-        // }
       ]
     };
   },
@@ -161,34 +79,40 @@ export default {
     Menu
   },
   created() {
-    // 通过 Event Bus 进行组件间通信，来折叠侧边栏
-    bus.$on("collapse", msg => {
-      this.collapse = msg;
-    });
   },
   methods:{
     selectMenu(key,keyPath){
       console.log(key)
       this.$router.push({path:key})
     },
-   
   }
 };
 </script>
 <style scoped>
-.menu_page {
-  position: fixed;
-  top: 0;
-  left: 0;
-  min-height: 100%;
-  background-color: #324057;
-  z-index: 99;
+.sidebar{
+  width: 180px;
+  height: 100%;
+  float: left;
+  background-color: #21212c;
+  overflow: hidden;
 }
-.top_t{
-  height: 70px;
-  color: #fff;
-  font-size: 20px;
-  line-height: 70px;
+.menu_page {
+  width: 180px;
+  min-height: 100%;
+  background-color: #21212c;
+}
+.top_box{
+  width: 100%;
+  font-size:20px;
+  text-align: center;
+  color:#49a0f9;
+  height:60px;
+  line-height:60px;
+  margin-bottom:18px; 
+  background-color:#353646;
+}
+.top_tit{
+  
 }
 .collapse-btn{
   display: inline-block;
@@ -236,3 +160,9 @@ a {
   text-decoration: none;
 }
 </style>
+<style>
+  .el-menu-item.is-active {
+    background-color: #6ebbe5 !important;
+  }
+</style>
+
