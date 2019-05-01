@@ -2,6 +2,7 @@
   <div class="sidebar">
     <el-row class="menu_page">
       <el-col>
+        <!-- 折叠按钮 -->
         <el-menu
           mode="vertical"
           class="el-menu-vertical-demo"
@@ -169,18 +170,29 @@ export default {
     selectMenu(key,keyPath){
       console.log(key)
       this.$router.push({path:key})
-    }
+    },
+   
   }
 };
 </script>
 <style scoped>
 .menu_page {
   position: fixed;
-  top: 71px;
+  top: 0;
   left: 0;
   min-height: 100%;
   background-color: #324057;
   z-index: 99;
+}
+.top_t{
+  height: 70px;
+  color: #fff;
+  font-size: 20px;
+  line-height: 70px;
+}
+.collapse-btn{
+  display: inline-block;
+  margin-left: 20px;
 }
 .sidebar {
   overflow: hidden;

@@ -1,15 +1,14 @@
 <template>
-  <header class="header-nav">
+  <header class="header-nav" :class="collapse ? 'lf49' : ''">
     <el-row>
-      <el-col :span="6" class="logo-container">
+      <!-- <el-col :span="6" class="logo-container">
         <img src="../../assets/logo.png" alt="" class="logo">
-        <!-- 折叠按钮 -->
         <div class="collapse-btn" @click="collapseChage">
           <i class="el-icon-menu icon-btn"></i>
         </div>
         <span class="title">后台管理系统</span>
-      </el-col>
-      <el-col :span="6" class="user">
+      </el-col> -->
+      <el-col class="user">
         <div class="btn-fullscreen icon-font"></div>
         <div class="userinfo">
           <div class="btn-fullscreen icon-font">
@@ -147,7 +146,7 @@ export default {
 <style scoped>
 .header-nav {
   position: fixed;
-  left: 0;
+  left: 180px;
   top: 0;
   width: 100%;
   height: 60px;
@@ -156,9 +155,13 @@ export default {
   border-bottom: 1px solid #1f2d3d;
   overflow: hidden;
   padding: 5px 0;
-  z-index:10;
+  transition: all 0.3s ease-in-out;
+  /* z-index:10; */
 }
-
+.lf49{
+  left:49px;
+  transition: all 0.3s ease-in-out;
+}
 .collapse-btn {
   width: 50px;
   margin-left: 20px;

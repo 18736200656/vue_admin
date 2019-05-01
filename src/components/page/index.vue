@@ -1,12 +1,12 @@
 <template>
   <div class="index">
-    这是首页页面
-    <Header></Header>
     <LeftMenu></LeftMenu>
     <div class="rightContainer" :class="{'content-collapse':collapse}">
       <!-- <Tags/> -->
       <div class="content">
+        <Header></Header>
         <transition name="move" mode="out-in">
+         
           <!--<keep-alive :include="tagsList">-->
             <!--<router-view></router-view>-->
           <!--</keep-alive>-->
@@ -75,7 +75,7 @@ export default {
   position: fixed;
   left: 180px;
   right: 0;
-  top: 72px;
+  top: 76px;
   height: 100%;
   overflow-y: scroll;
   padding-bottom: 30px;
