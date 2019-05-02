@@ -7,12 +7,25 @@
       </div>
       <el-card class="el_card_form">
         <el-form ref="goodsForm" :model="goodsForm" label-width="80px" size="mini" :inline="true" align="left">
-          <el-form-item label="输入搜索">
+          <el-form-item label="商品编号">
+            <el-input v-model="goodsForm.order"></el-input>
+          </el-form-item>
+          <el-form-item label="商品名称">
             <el-input v-model="goodsForm.name"></el-input>
           </el-form-item>
           <el-form-item label="商品分类">
-            <el-select>
-               <el-option></el-option>
+             <el-select v-model="goodsForm.level1" placeholder="请选择商品分类" @change="queryGoods">
+              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods1List"></el-option>
+            </el-select>
+            <el-select v-model="goodsForm.level2"
+                       :disabled="goods2List.length==0 || goods2List==null"
+                       @change="query2Goods" placeholder="请选择商品分类2">
+              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods2List"></el-option>
+            </el-select>
+            <el-select v-model="goodsForm.level3"
+                       :disabled="goods3List.length==0 || goods3List==null"
+                       placeholder="请选择商品分类3">
+              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods3List"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item size="mini">
@@ -20,9 +33,14 @@
           </el-form-item>
         </el-form>
       </el-card>
-    </div>  
+    </div>
     <div class="table_box">
       <el-card>
+        <el-form :inline="true">
+           <el-form-item >
+             <el-button type="primary" @click="addgoods">添加</el-button>
+           </el-form-item>
+        </el-form>
         <el-table
           ref="multipleTable"
           :data="tableData.goods"
@@ -34,12 +52,13 @@
           <el-table-column
             type="selection"
             width="55">
-          </el-table-column>  
+          </el-table-column>
           <el-table-column
+            label="编号"
             type="index"
             width="50">
           </el-table-column>
-         
+
           <el-table-column
             prop="goodsName"
             label="商品名称"
@@ -47,11 +66,16 @@
           </el-table-column>
           <el-table-column
             prop="goodsUrl"
-            label="商品主图"
+            label="商品图片"
             width="120">
              <template slot-scope="scope">
               <img :src="scope.row.goodsUrl" class="goods_img"/>
-            </template>  
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="goodsPrice"
+            label="商品分类"
+            width="120">
           </el-table-column>
           <el-table-column
             prop="goodsPrice"
@@ -60,12 +84,17 @@
           </el-table-column>
           <el-table-column
             prop="saleCounts"
-            label="销售量"
+            label="月销量"
             width="120">
           </el-table-column>
           <el-table-column
             prop="rate"
             label="佣金率"
+            width="100">
+          </el-table-column>
+           <el-table-column
+            prop="rate"
+            label="佣金金额"
             width="100">
           </el-table-column>
           <el-table-column
@@ -83,12 +112,12 @@
             width="220">
             <template slot-scope="scope">
               <a :href="scope.row.link">{{scope.row.link}}</a>
-            </template>  
+            </template>
           </el-table-column>
           <el-table-column
             fixed="right"
             prop="zip"
-            label="添加"
+            label="操作"
             align="center"
             width="200">
             <template slot-scope="scope">
@@ -119,33 +148,57 @@
           </el-pagination>
         </div>
       </el-card>
-      
-    </div>  
-    
-     <dialog-eidt :form-data="FormData" @updata="updata" :dialogVisible.sync="dialogVisible"> </dialog-eidt> 
+    </div>
+    <!-- 商品弹出 -->
+     <el-dialog
+      :visible.sync="dialogVisible"
+      width="40%">
+      <span slot="title" class="dialog-header">
+        {{'商品信息'}}
+      </span>
+      <goods-form @update="addNewgoods"></goods-form>
+    </el-dialog>
 </div>
 </template>
 <script>
 import tableData from '../../utils/data.json'
 import DialogEidt from '../common/dialogEdit'
+import goodsForm from '../common/goods/goodsform'
 export default {
   name:'Home',
   data(){
     return{
       goodsForm:{
         name:'',
-        title:''
+        title:'',
+        level1:'',
+        level2:'',
+        level3:'',
       },
       tableData:tableData,
       currentPage:1, //当前是第几页
       pageSize:20, //一页显示多少
       total:20, //总共
-      FormData:{},
-      dialogVisible:false,
+      FormData:{
+
+      },
+      dialogVisible:true,
+      id:0,
+      goods1List:[],
+      goods2List:[],
+      goods3List:[],
     }
   },
   created(){
-    // this.goodsList()
+
+
+  },
+  mounted(){
+    let params = this.$route.params;
+    this.id = params.id;
+    // this.updateGoodsCategory()
+    this.goodsList()
+    this.queryGoodsCategory();
   },
   methods:{
     handleSelectionChange(val){
@@ -161,19 +214,43 @@ export default {
       this.currentPage = val;
       this.goodsList();
     },
+    //商品信息
     goodsList(){
-      var data={
-        name:'',
-        title:'',
-        pageSize:this.pageSize,
-        currentPage:this.currentPage
-      }
-      this.$api.queryGoods(data).then(res=>{
+      this.$api.queryGoods(this.goodsForm).then(res=>{
         if(res.code==1){
+          console.log(res.data,'====goodsList===')
         }else{
-          Message.error(res.msg);
+          this.$message.error(res.msg)
         }
+      }).catch(error=>{
+        return Promise.reject(error)
       })
+    },
+    //商品类别
+    updateGoodsCategory(){
+      let data = {
+        id:2,
+        name:'',
+        alias:'',
+        parentId:'',
+        level:'',
+        img:'',
+        sort:'',
+      }
+      this.$api.updateGoodsCategory(data).then(res=>{
+        console.log(res,'===fenl ')
+        if(res.code==1){
+
+        }else{
+          this.$message.error(res.msg)
+        }
+      }).catch(error=>{
+        return Promise.reject(error)
+      })
+    },
+    //a添加
+    addgoods(){
+      this.dialogVisible = true;
     },
     //编辑
     handleEdit(index,row){
@@ -197,25 +274,66 @@ export default {
           Message({
             type: 'info',
             message: '已取消删除'
-          });          
+          });
         });
     },
     //更新
     updata(data){
       console.log(data,'====更想你的数据')
       this.tableData.goods[data.key]=data.data
+    },
+    addNewgoods(data){
+      console.log(data, '------商品新增')
+    },
+    //商品分类查询
+    queryGoodsCategory(evel,parentId,cb){
+      //一级分类
+      let data ={
+        evel:evel || 1, //	int	否	分类级别
+        parentId:parentId ||''	 //long	否	上级分类ID
+      }
+      this.$api.queryGoodsCategory(data).then(res=>{
+        if (res.code ==1){
+          if(!evel && !parentId){
+            this.goods1List = res.data
+          }else{
+            cb && cb(res.data)
+          }
+        }else{
+          this.$message.error(res.message)
+        }
+      }).catch(error=>{
+        this.$message.error(res.messag)
+        return Promise.reject(error)
+      })
+    },
+    queryGoods(e){
+      console.log(e,'选中数据---1')
+       var that = this;
+       this.queryGoodsCategory(e, 1,result =>{
+         that.goods2List = result
+       });
+    },
+    query2Goods(val){
+      console.log(val,'选中数据---2')
+      var that = this;
+      this.queryGoodsCategory(val, 2,result =>{
+        that.goods3List = result
+      });
     }
-    
   },
   components:{
-    DialogEidt
+    DialogEidt,
+    goodsForm
   }
 }
 </script>
-<style scoped>
+<style>
+  .home{
+    position: relative;
+  }
   .filter_box{
     margin-top: 30px;
-
   }
   .filter_top{
     height: 80px;
@@ -235,6 +353,20 @@ export default {
     vertical-align: middle;
     border-radius: 5px;
   }
+  .dialog-header{
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 100%;
+    height: 60px;
+    background: #eee;
+    font-size: 18px;
+    color: #2f71a9;
+    line-height: 60px;
+    padding-left: 20px;
+    box-sizing: border-box;
+  }
 </style>
 <style>
   .el-table__header tr,
@@ -251,5 +383,6 @@ export default {
   .page_block{
     margin-top: 20px;
     text-align: right;
+    margin-bottom: 20px;
   }
 </style>

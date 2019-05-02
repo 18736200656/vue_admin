@@ -3,11 +3,11 @@
   <header class="header-nav">
     <img src="../../assets/icon_user.png" alt="" class="avatar">
     <span class="comename">hello,</span>
-    <span class="avatarname">{{'babab'}}</span>
-    <el-button icon="el-icon el-icon-refresh" @click="$router.go(0)" class="reloadbtn">刷新</el-button>
+    <span class="avatarname">{{username || 'username'}}</span>
+    <el-button icon="el-icon el-icon-refresh" size="large" @click="$router.go(0)" class="reloadbtn">刷新</el-button>
   </header>
 </div>
-  
+
 </template>
 
 <script>
@@ -18,11 +18,16 @@ export default {
     return {
       collapse: false, //菜单栏是否闭合
       fullscreen: false,
-      showlrc: true
+      showlrc: true,
+      username:''
     };
   },
   computed: {
 
+  },
+  created(){
+    let userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    this.username = userInfo.loginNickName
   },
   methods: {
     setDialogInfo(cmditem) {
@@ -58,26 +63,16 @@ export default {
   height: 60px;
   background: #ddd;
   z-index: 10;
-  box-shadow: #a9a9a9 4px 4px(90 ) 25%;
+  box-shadow: #a9a9a9 4px 4px 4px;
   font-size:18px;
   line-height: 60px;
 }
-.user_img {
-  height: 40px;
-  width: 40px;
-  
-  vertical-align: middle;
-  border-radius: 50%;
-}
 
 .reloadbtn{
-
-}
-.user {
-  line-height: 60px;
-  text-align: right;
+  margin-top:8px;
   float: right;
-  padding-right: 10px;
+  margin-right:210px;
+  font-size:16px;
 }
 
 .avatar {
@@ -89,12 +84,12 @@ export default {
   display: inline-block;
 }
 
-.welcome {
+/* .welcome {
   display: inline-block;
   width: auto;
   vertical-align: middle;
   padding: 0 5px;
-}
+} */
 .comename {
   margin-left: 10px;
 }
@@ -104,38 +99,4 @@ export default {
   font-weight: bolder;
 }
 
-.username {
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.el-dropdown {
-  color: #fff;
-}
-
-.btn-fullscreen {
-  display: inline-block;
-  font-size: 24px;
-  vertical-align: middle;
-  margin-right: 20px;
-  transform: rotate(45deg);
-  cursor: pointer;
-}
-
-.icon-font {
-  transform: none;
-}
-
-a {
-  text-decoration: none;
-  color: #fff;
-}
-
-.icon-font i {
-  font-size: 20px;
-}
-
-.userinfo {
-  display: inline-block;
-}
 </style>

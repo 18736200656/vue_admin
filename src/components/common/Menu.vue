@@ -44,7 +44,7 @@ export default {
 <style >
 	.menu_page {
 		position: fixed;
-		top: 71px;
+		/* top: 71px; */
 		left: 0;
 		min-height: 100%;
 		background-color: #324057;

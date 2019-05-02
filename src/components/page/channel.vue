@@ -1,12 +1,11 @@
 <template>
   <div class="channel">
-    <search-box :searchData="searchData" :searchParams.sync="searchData.params" @updata="getSearchData"></search-box>
-    <table-box :tableData="tableData"></table-box>
+    <search-box></search-box>
+    <table-box :tableData="tableData" :newData="searchData.filterData"></table-box>
   </div>
 </template>
 <script>
-import bus from '../../utils/bus'
-import searchBox from '../common/searchbox'
+import searchBox from '../common/chanmel/search'
 import tableBox from '../common/table'
 export default {
   name:'Channel',
@@ -30,60 +29,87 @@ export default {
           {
             label:'渠道名称',
             key:'formData.channelName',
-             prop:'channelName',
+            prop:'channelName',
             placeholder:'请输入渠道名称',
           },
           {
             label:'邀请码',
             key:'formData.inviteCode',
-             prop:'inviteCode',
+            prop:'inviteCode',
             placeholder:'请输入邀请码',
           },
           {
             label:'状态',
             key:'formData.status',
-             prop:'status',
+            prop:'status',
             status:['1','2'],
             elSelct:true
           },
-          
+
         ]
       },
       tableData:{
         type:'channel',
         filterData:{},
-        api:'queryStudenChannel', //接口名字方法
+        tableBtn:[
+          {
+            api:'saveStudenChannel',
+            type:'primary',
+            name:'新增'
+          },
+        ],
+                //接口名字方法       //启用。禁用             //新增
+        api:['queryStudenChannel','updateStudentChannel','saveStudenChannel'],
         thData:[
-          { 
+          {
             key:'appCount',
             label:"APP安装量",
-
+            align:'right'
           },
-          { 
+          {
             key:'shopCount',
             label:"收购完成量",
-
           },
-          { 
+          {
             key:'creditCount',
             label:"信用卡开卡量",
+            align:'right'
 
           },
-          { 
+          {
             key:'cloudPayCount',
             label:"云闪付完成量",
+            align:'right'
 
           },
-          { 
+          {
             key:'jingdongCount',
             label:"京东白条完成量",
+            align:'right'
           },
-          { 
+          {
             key:'status',
             label:"状态",
             Tag:true,
           },
-          
+          {
+            key:'status',
+            fun:true,
+            label:"操作",
+            wd:150,
+            chilren:[
+              {
+                num: '1',
+                type: 'success',
+                name: '启用'
+              },
+              {
+                num: '2',
+                type: 'danger',
+                name: '禁用'
+              }
+            ]
+          }
         ]
       }
     }
@@ -92,10 +118,7 @@ export default {
 
   },
   methods:{
-    getSearchData(data){ //获取search的数据
-      console.log(data,'====channel======')
-      this.tableData.filterData = data
-    }
+
   },
   components:{
     searchBox,tableBox

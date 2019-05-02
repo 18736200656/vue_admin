@@ -1,9 +1,9 @@
 <template>
   <div class="sidebar">
-    <div class="top_box">
-      后台管理系统
-    </div>
     <el-row class="menu_page">
+      <div class="top_box">
+        后台管理系统
+      </div>
       <el-col>
         <el-menu
           mode="vertical"
@@ -64,7 +64,7 @@ export default {
               name: "任务管理",
               path: "/task/taskM",
             },
-            
+
           ]
         },
         {
@@ -90,52 +90,31 @@ export default {
 </script>
 <style scoped>
 .sidebar{
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 180px;
-  height: 100%;
-  float: left;
-  background-color: #21212c;
-  overflow: hidden;
-}
-.menu_page {
-  width: 180px;
-  min-height: 100%;
   background-color: #21212c;
 }
 .top_box{
-  width: 100%;
+  margin-bottom:18px;
   font-size:20px;
   text-align: center;
   color:#49a0f9;
   height:60px;
   line-height:60px;
-  margin-bottom:18px; 
   background-color:#353646;
 }
-.top_tit{
-  
+.menu_page {
+  min-height: 100%;
+  background-color: #21212c;
 }
-.collapse-btn{
-  display: inline-block;
-  margin-left: 20px;
-}
+
 .sidebar {
   overflow: hidden;
 }
 .sidebar::-webkit-scrollbar {
   width: 0;
-}
-
-.sidebar-el-menu:not(.el-menu--collapse) {
-  width: 250px;
-}
-
-.el-menu {
-  border: none;
-  z-index: 9999;
-}
-
-.fa-margin {
-  margin-right: 5px;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
@@ -150,12 +129,6 @@ export default {
 .el-submenu .el-menu-item {
   min-width: 180px;
 }
-
-.hiddenDropdown,
-.hiddenDropname {
-  display: none;
-}
-
 a {
   text-decoration: none;
 }

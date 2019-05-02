@@ -1,15 +1,13 @@
 <template>
   <div class="index">
     <LeftMenu></LeftMenu>
-    <div class="rightContainer" :width="wd">
-      <Header></Header>
-      <div class="content">
-        <transition name="move" mode="out-in">
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
-        </transition>
-      </div>
+    <Header></Header>
+    <div class="content" :width="height+'px'">
+      <transition name="move" mode="out-in">
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </transition>
     </div>
   </div>
 </template>
@@ -26,6 +24,7 @@ export default {
       tagsList: [],
       collapse: false,
       wd:0,
+      height:0
     };
   },
   components: {
@@ -33,14 +32,14 @@ export default {
     LeftMenu,
     Tags
   },
-  created() {
-    window.onresize = this.getclientW()
-    // document.addEventListener('resize',this.getclientW,false);
+  mounted() {
+    window.addEventListener('resize',this.getclientW,false);
   },
   methods:{
     getclientW(){
-      console.log(document.body.clientWidth ,'---000');
+//      console.log(document.body.clientWidth ,'---000');
       this.wd= document.body.clientWidth - 180
+      this.height= document.body.clientWidth - 60
     }
   }
 };
@@ -49,22 +48,16 @@ export default {
 .index {
   width: 100%;
   height: 100%;
+  /* position: relative; */
   box-sizing: border-box;
-}
-
-.rightContainer {
-  float: left;
-  /* width: auto; */
-  height: 100%;
-  /* z-index: 10; */
-
 }
 .content {
   margin-top: 60px;
+  margin-left: 180px;
   width: auto;
-  height: 100%;
-  padding: 25px;
   background: #f0f4fb;
+  padding: 25px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 </style>

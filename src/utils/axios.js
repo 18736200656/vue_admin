@@ -17,8 +17,7 @@ let loading;
 _axios.interceptors.request.use(
   config=>{
     let token = window.sessionStorage.getItem('token');
-    config.headers.token = token || ''
-
+    config.headers.common[token] = encodeURI(token) || ''
     loading = Loading.service({
       lock: true,
       text: "加载中...",
@@ -36,7 +35,7 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   res=>{
     loading.close();
-    return res;
+    return res.data;
   },
   error=>{
     loading.close();

@@ -77,7 +77,7 @@ const api = {
   //更新商品分类
   updateGoodsCategory(val){
     return axios({
-      url:'/goodsCategory/addGoodsCategory/goodsCategory/updateGoodsCategory',
+      url:'/goodsCategory/updateGoodsCategory',
       method:'POST',
       data:val
     })
@@ -86,6 +86,14 @@ const api = {
   queryGoodsCategory(val){
     return axios({
       url:'/goodsCategory/addGoodsCategory/goodsCategory/queryGoodsCategory',
+      method:'POST',
+      data:val
+    })
+  },
+  //商品分类
+  queryGoodsCategory(val){
+    return axios({
+      url:'/goodsCategory/queryGoodsList',
       method:'POST',
       data:val
     })
@@ -107,7 +115,7 @@ const api = {
       data:val
     })
   },
-  
+
   //查询广告
   queryAdvertising(val){
     return axios({
@@ -116,7 +124,7 @@ const api = {
       data:val
     })
   },
-  
+
   //更新广告
   updateAdvertising(val){
     return axios({
@@ -125,7 +133,7 @@ const api = {
       data:val
     })
   },
-  
+
   //删除广告
   deleteAdvertising(val){
     return axios({
@@ -143,7 +151,7 @@ const api = {
       data:val
     })
   },
-  
+
   //分页查询渠道列表
   queryStudenChannel(val){
     return axios({

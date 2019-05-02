@@ -52,7 +52,7 @@
                     //     {required: true, message: '请输入验证码', trigger: 'blur'},
                     //     {max: 4, message: '请输入4位数字', trigger: 'blur'},
                     //     {validator: this.ValidateCaptcha, trigger: 'blur'},
-                       
+
                     // ]
                 },
                 sys_error: '',
@@ -78,7 +78,7 @@
             ValidatePassword (rule, value, callback) {
                 if (value.match(/^\d{6,}$/)) {
                 callback(new Error('不能使用纯数字的密码'))
-                } else if (/^([a-z0-9\.\@\!\#\$\%\^\&\*\(\)\-\+]){6,20}$/i == false) {
+                } else if (/^([a-z0-9\.\@\!\#\$\%\^\&\*\(\)\-\+]){6,20}$/i.test(value) == false) {
                 callback(new Error('请输入6-20位数字、字母和特殊字符（仅限!@#$%^&*()-+）'))
                 } else {
                 callback()
@@ -93,12 +93,14 @@
                             password: this.loginForm.password
                         }
                         this.$api.adminLogin(data).then(res => {
-                            if(res.code==1){
+                            console.log(res,'===res')
+                            if(res.code=='1'){
                                 window.sessionStorage.setItem('token',res.data.token);
+                                window.sessionStorage.setItem('userInfo',JSON.stringify(res.data))
                                 console.log(res.data,'=========登录结果')
                                 this.$router.push({
                                     path:'/home',
-                                    query:{
+                                    params:{
                                         loginName:res.data.loginName,
                                         loginNickName:res.data.loginNickName,
                                         isDeleted:res.data.isDeleted,
@@ -107,10 +109,10 @@
                                 });
 
                             }else{
-                                this.$message.error(res.msg) 
+                                this.$message.error(res.msg)
                             }
                         }).catch(err => {
-                        //    this.$message.error(err) 
+                           this.$message.error(err)
                            return Promise.reject(err);
                         })
                     } else {

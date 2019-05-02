@@ -15,7 +15,7 @@ const routes=[
     meta:{
       title:'登录页面'
     },
-    component:()=>import('@/components/page/login')
+    component:()=>import('@/components/page/login2')
   },
   {
     path:'/lock',
@@ -92,7 +92,7 @@ const routes=[
             },
             component:()=>import('@/components/page/task/taskmanage')
           },
-        ]  
+        ]
       },
       {
         path:'cash',
@@ -115,7 +115,13 @@ router.beforeEach((to,from,next)=>{
   if(to.meta && to.meta.title){
     document.title = to.meta.title
   }
-  next()
+  if (to.meta && to.meta.requireAuthor && !token) {
+    next({
+      path: "/login",
+    });
+    return
+  }
+  next();
 });
 
 export default router

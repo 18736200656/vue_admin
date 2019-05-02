@@ -1,11 +1,11 @@
 <template>
   <div class="searchbox">
     <el-card :class="searchData.type+'_search_box'">
-      <el-form :inline="true" :model="formData" ref="formData" align="left">
-        <el-form-item :label="item.label" :prop="item.prop"  v-for="(item,index) in searchData.filterData" 
+      <el-form :inline="true" :model="formData" align="left">
+        <el-form-item :label="item.label" v-for="(item,index) in searchData.filterData"
                       :key="index" label-width="80px">
-          <el-input v-model="item[key]" :placeholder="item.placeholder" type="text" v-if="!item.elSelct"></el-input>
-          <el-select v-model="item[key]" placeholder="请选择状态" v-if="item.elSelct">
+          <el-input v-model="item[key].a" :placeholder="item.placeholder" type="text" v-if="!item.elSelct"></el-input>
+          <el-select v-model="item[key].a" placeholder="请选择状态" v-if="item.elSelct">
             <el-option :label="$valid.statusStr(v)" :value="v" v-for='(v,n) in item.status' :key="n"></el-option>
           </el-select>
         </el-form-item>
@@ -22,6 +22,10 @@ export default {
   data(){
     return{
       formData:{
+//        channelLoginName:'', //	渠道账号
+//        channelName:'',	//渠道名称
+//        inviteCode:'',	//	邀请码
+//        status:'',		//状态
       },
     }
   },
@@ -30,10 +34,6 @@ export default {
       type:Object,
       default:{}
     },
-    searchParams:{
-      type:Object,
-      default:{}
-    }
   },
   methods:{
     querySub(){
@@ -42,12 +42,15 @@ export default {
     }
   },
   created(){
-    this.formData = this.searchParams
+
   },
   watch:{
-    searchParams(val){
-      console.log(val)
-       this.formData = val
+    formData:{
+      handdle(val){
+        console.log(val)
+        return val
+      },
+      deep:true
     }
   }
 }
