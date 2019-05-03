@@ -15,17 +15,17 @@
           </el-form-item>
           <el-form-item label="商品分类">
              <el-select v-model="goodsForm.level1" placeholder="请选择商品分类" @change="queryGoods">
-              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods1List"></el-option>
+              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods1List" :key="index"></el-option>
             </el-select>
             <el-select v-model="goodsForm.level2"
                        :disabled="goods2List.length==0 || goods2List==null"
                        @change="query2Goods" placeholder="请选择商品分类2">
-              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods2List"></el-option>
+              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods2List" :key="index"></el-option>
             </el-select>
             <el-select v-model="goodsForm.level3"
                        :disabled="goods3List.length==0 || goods3List==null"
                        placeholder="请选择商品分类3">
-              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods3List"></el-option>
+              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods3List" :key="index" ></el-option>
             </el-select>
           </el-form-item>
           <el-form-item size="mini">
@@ -55,21 +55,29 @@
           </el-table-column>
           <el-table-column
             label="编号"
-            type="index"
+            prop="id"
             width="50">
           </el-table-column>
-
           <el-table-column
-            prop="goodsName"
+            prop="name"
             label="商品名称"
             width="150">
           </el-table-column>
           <el-table-column
-            prop="goodsUrl"
+            prop="title"
+            label="商品标题"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="content"
+            label="商品内容"
+            width="150">
+          </el-table-column>
+          <el-table-column
             label="商品图片"
             width="120">
              <template slot-scope="scope">
-              <img :src="scope.row.goodsUrl" class="goods_img"/>
+              <img :src="scope.row.img" class="goods_img"/>
             </template>
           </el-table-column>
           <el-table-column
@@ -78,28 +86,29 @@
             width="120">
           </el-table-column>
           <el-table-column
-            prop="goodsPrice"
+            prop="price"
             label="商品价格"
             width="120">
           </el-table-column>
           <el-table-column
-            prop="saleCounts"
+            prop="monSalesVolume"
             label="月销量"
             width="120">
           </el-table-column>
+
           <el-table-column
-            prop="rate"
-            label="佣金率"
-            width="100">
-          </el-table-column>
-           <el-table-column
-            prop="rate"
-            label="佣金金额"
-            width="100">
+            prop="incomeProportion"
+            label="收入比例"
+            width="120">
           </el-table-column>
           <el-table-column
-            prop="coupon"
-            label="优惠券面值"
+            prop="commission"
+            label="佣金"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="rebate"
+            label="返利比例"
             width="120">
           </el-table-column>
           <el-table-column
@@ -111,7 +120,7 @@
             label="优惠券推广链接"
             width="220">
             <template slot-scope="scope">
-              <a :href="scope.row.link">{{scope.row.link}}</a>
+              <a :href="scope.row.url">{{scope.row.url}}</a>
             </template>
           </el-table-column>
           <el-table-column
@@ -130,11 +139,7 @@
                 @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="rebateRadio"
-            label="返利比例"
-            width="120">
-          </el-table-column>
+
         </el-table>
         <div class="page_block">
           <el-pagination
@@ -156,38 +161,38 @@
       <span slot="title" class="dialog-header">
         {{'商品信息'}}
       </span>
-      <goods-form @update="addNewgoods"></goods-form>
+      <goods-form @update="addNewgoods" :creator="creator" :formdata22="formdata"></goods-form>
     </el-dialog>
 </div>
 </template>
 <script>
 import tableData from '../../utils/data.json'
-import DialogEidt from '../common/dialogEdit'
+//import DialogEidt from '../common/dialogEdit'
 import goodsForm from '../common/goods/goodsform'
 export default {
   name:'Home',
   data(){
-    return{
-      goodsForm:{
-        name:'',
-        title:'',
-        level1:'',
-        level2:'',
-        level3:'',
+    return {
+      goodsForm: {
+        name: '',
+        title: '',
+        level1: '',
+        level2: '',
+        level3: '',
       },
-      tableData:tableData,
-      currentPage:1, //当前是第几页
-      pageSize:20, //一页显示多少
-      total:20, //总共
-      FormData:{
-
-      },
-      dialogVisible:true,
-      id:0,
-      goods1List:[],
-      goods2List:[],
-      goods3List:[],
-    }
+      tableData: tableData,
+      currentPage: 1, //当前是第几页
+      pageSize: 20, //一页显示多少
+      total: 20, //总共
+      FormData: {},
+      dialogVisible: false,
+      id: 0,
+      goods1List: [],
+      goods2List: [],
+      goods3List: [],
+      creator:'',
+      formdata:{}, //修改的东西
+    };
   },
   created(){
 
@@ -196,9 +201,11 @@ export default {
   mounted(){
     let params = this.$route.params;
     this.id = params.id;
+    this.creator =params.loginNickName;
     // this.updateGoodsCategory()
-    this.goodsList()
-    this.queryGoodsCategory();
+//    this.goodsList()
+//    this.queryGoodsCategory();
+    this.queryGoodsList();
   },
   methods:{
     handleSelectionChange(val){
@@ -207,12 +214,12 @@ export default {
     handleSizeChange(val){
       console.log(val,'一页显示多少');
       this.pageSize=val
-      this.goodsList();
+      this.queryGoodsList()
     },
     handleCurrentChange(val){
       console.log(val,'当前页面是')
       this.currentPage = val;
-      this.goodsList();
+      this.queryGoodsList()
     },
     //商品信息
     goodsList(){
@@ -248,15 +255,16 @@ export default {
         return Promise.reject(error)
       })
     },
-    //a添加
+    //a添加弹出那个
     addgoods(){
       this.dialogVisible = true;
     },
     //编辑
     handleEdit(index,row){
-      console.log(index,row,'---删除的行')
       this.FormData = {key:index,data:row}
       this.dialogVisible = true
+      console.log(row, '====row')
+      this.formdata=row;
     },
     //删除
     handleDelete(index,row){
@@ -279,12 +287,40 @@ export default {
     },
     //更新
     updata(data){
-      console.log(data,'====更想你的数据')
       this.tableData.goods[data.key]=data.data
+
     },
+    //商品新增
     addNewgoods(data){
-      console.log(data, '------商品新增')
+      this.dialogVisible=false
+      this.$api.addGoods(data).then(res=>{
+        if(res.code==1){
+          this.$message.success(res.data);
+          this.queryGoodsList()
+        }else{
+          this.$message.error(res.msg)
+        }
+      }).catch(error=>{
+        return Promise.reject(error)
+      })
     },
+    queryGoodsList(){
+      let data =Object.assign(this.goodsForm,{
+        currentPage:this.currentPage, //当前是第几页
+        pageSize:this.pageSize //一页显示多少
+      })
+      this.$api.queryGoods(data).then(res=>{
+        if(res.code==1){
+          console.log(res.data,'[[[[[[[[[[')
+
+        }else{
+          this.$message.error(res.msg)
+        }
+      }).catch(error=>{
+        return Promise.reject(error)
+      })
+    },
+
     //商品分类查询
     queryGoodsCategory(evel,parentId,cb){
       //一级分类
@@ -323,7 +359,7 @@ export default {
     }
   },
   components:{
-    DialogEidt,
+//    DialogEidt,
     goodsForm
   }
 }

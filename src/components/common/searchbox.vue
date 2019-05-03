@@ -4,8 +4,8 @@
       <el-form :inline="true" :model="formData" align="left">
         <el-form-item :label="item.label" v-for="(item,index) in searchData.filterData"
                       :key="index" label-width="80px">
-          <el-input v-model="item[key].a" :placeholder="item.placeholder" type="text" v-if="!item.elSelct"></el-input>
-          <el-select v-model="item[key].a" placeholder="请选择状态" v-if="item.elSelct">
+          <el-input v-model="item[key]" :placeholder="item.placeholder" type="text" v-if="!item.elSelct"></el-input>
+          <el-select v-model="item[key]" placeholder="请选择状态" v-if="item.elSelct">
             <el-option :label="$valid.statusStr(v)" :value="v" v-for='(v,n) in item.status' :key="n"></el-option>
           </el-select>
         </el-form-item>
