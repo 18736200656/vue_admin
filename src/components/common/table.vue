@@ -2,7 +2,7 @@
 <div>
   <el-card class="tablelist">
     <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-      <el-button :type="item.type" @click="dialogVisible=true"
+      <el-button :type="item.type" @click="dialogVisible=true" :key="index"
                  v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
     </section>
     <section class="table_container">

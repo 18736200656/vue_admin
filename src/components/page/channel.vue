@@ -100,7 +100,7 @@ export default {
             chilren:[
               {
                 num: '1',
-                type: 'success',
+                type: 'primary',
                 name: '启用'
               },
               {

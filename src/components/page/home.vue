@@ -40,10 +40,15 @@
            <el-form-item >
              <el-button type="primary" @click="addgoods">添加</el-button>
            </el-form-item>
+          <el-form-item >
+            <el-button type="danger" @click="deleteGoods">删除</el-button>
+          </el-form-item>
         </el-form>
         <el-table
+          row-style="height:20px"
+          cell-style="padding:0"
           ref="multipleTable"
-          :data="tableData.goods"
+          :data="tableData"
           tooltip-effect="dark"
           style="width: 100%"
           height="500"
@@ -64,14 +69,18 @@
             width="150">
           </el-table-column>
           <el-table-column
-            prop="title"
             label="商品标题"
             width="150">
+            <template slot-scope="scope">
+              <span>{{scope.row.title || "--"}}</span>
+            </template>
           </el-table-column>
           <el-table-column
-            prop="content"
             label="商品内容"
             width="150">
+            <template slot-scope="scope">
+              <span>{{scope.row.content || "--"}}</span>
+            </template>
           </el-table-column>
           <el-table-column
             label="商品图片"
@@ -81,9 +90,13 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="goodsPrice"
             label="商品分类"
-            width="120">
+            width="150">
+            <template slot-scope="scope">
+              <div>商品等级一级分类：{{scope.row.levelOne}}</div>
+              <div>商品等级二级分类：{{scope.row.levelTwo}}</div>
+              <div>商品等级三级分类：{{scope.row.levelThree}}</div>
+            </template>
           </el-table-column>
           <el-table-column
             prop="price"
@@ -166,8 +179,6 @@
 </div>
 </template>
 <script>
-import tableData from '../../utils/data.json'
-//import DialogEidt from '../common/dialogEdit'
 import goodsForm from '../common/goods/goodsform'
 export default {
   name:'Home',
@@ -180,8 +191,8 @@ export default {
         level2: '',
         level3: '',
       },
-      tableData: tableData,
-      currentPage: 1, //当前是第几页
+      tableData:[],
+      currentPage: 0, //当前是第几页
       pageSize: 20, //一页显示多少
       total: 20, //总共
       FormData: {},
@@ -192,6 +203,7 @@ export default {
       goods3List: [],
       creator:'',
       formdata:{}, //修改的东西
+      selectDatas:[],  // 选则的商品
     };
   },
   created(){
@@ -204,12 +216,13 @@ export default {
     this.creator =params.loginNickName;
     // this.updateGoodsCategory()
 //    this.goodsList()
-//    this.queryGoodsCategory();
-    this.queryGoodsList();
+    this.queryGoodsCategory(); //查询的商品分类
+    this.queryGoodsList(); //列表
   },
   methods:{
     handleSelectionChange(val){
       console.log(val,'选中数据---')
+      this.selectDatas = val
     },
     handleSizeChange(val){
       console.log(val,'一页显示多少');
@@ -266,24 +279,75 @@ export default {
       console.log(row, '====row')
       this.formdata=row;
     },
-    //删除
+    //单个删除
     handleDelete(index,row){
       this.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.tableData.goods.splice(index,1)
-          Message({
+          //删除商品
+          this.$api.delGoods({ids:row.id}).then(res=>{
+            if(res.code==1){
+//              this.$message.success(res.data);
+              console.log(res.data)
+              this.queryGoodsList()
+            }else{
+              this.$message.error(res.msg)
+            }
+          }).catch(error=>{
+            return Promise.reject(error)
+          })
+          this.$message({
             type: 'success',
             message: '删除成功!'
           });
         }).catch(() => {
-          Message({
+          this.$message({
             type: 'info',
             message: '已取消删除'
           });
         });
+    },
+    //选择删除
+    deleteGoods(){
+      var dataDelets = this.selectDatas;
+      var ids=[];
+      if (dataDelets.length>0){
+        dataDelets.forEach(val=>{
+          ids.push(val.id)
+        })
+      }else{
+        this.$message.info('请选择删除的商品');
+        return
+      };
+      this.$confirm('是否删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+
+        //删除商品
+        this.$api.delGoods({ids}).then(res=>{
+          if(res.code==1){
+            console.log(res.data)
+            this.queryGoodsList()
+          }else{
+            this.$message.error(res.msg)
+          }
+        }).catch(error=>{
+          return Promise.reject(error)
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     },
     //更新
     updata(data){
@@ -311,7 +375,7 @@ export default {
       })
       this.$api.queryGoods(data).then(res=>{
         if(res.code==1){
-          console.log(res.data,'[[[[[[[[[[')
+          this.tableData = res.data.rows;
 
         }else{
           this.$message.error(res.msg)
@@ -420,5 +484,10 @@ export default {
     margin-top: 20px;
     text-align: right;
     margin-bottom: 20px;
+  }
+  .el-table__header tr,
+  .el-table__header th {
+    padding: 0;
+    height: 60px;
   }
 </style>
