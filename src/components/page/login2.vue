@@ -97,7 +97,20 @@
           }
         });
       },
+      keydown(e){
+        e = e || window.event;
+        var code =e.keyCode || e.which;
+          if(code=='13'){
+            this.loginBtn()
+          }
+      }
     },
+    created(){
+      document.addEventListener('keydown',this.keydown,false)
+    },
+    beforeDestroy(){
+      document.removeEventListener('keydown',this.keydown,false)
+    }
   }
 </script>
 <style scoped lang="less">

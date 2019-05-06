@@ -45,11 +45,9 @@
           </el-form-item>
         </el-form>
         <el-table
-          row-style="height:20px"
-          cell-style="padding:0"
+          :row-style="{height:'40px'}"
           ref="multipleTable"
           :data="tableData"
-          tooltip-effect="dark"
           style="width: 100%"
           height="500"
           :header-cell-style="{background:'#f7f7f7'}"
@@ -174,7 +172,7 @@
       <span slot="title" class="dialog-header">
         {{'商品信息'}}
       </span>
-      <goods-form @update="addNewgoods" :creator="creator" :formdata22="formdata"></goods-form>
+      <goods-form @update="addNewgoods" :creator="creator" :formdata="formdata"></goods-form>
     </el-dialog>
 </div>
 </template>

@@ -53,6 +53,7 @@
     </el-card>
     <el-dialog
       :visible.sync="dialogVisible"
+      :before-close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增商品分类</span>
       <form-box :channelData="channelData" @update="closeDialog"></form-box>
@@ -71,7 +72,7 @@
         currentPage: 1,
         pageSize: 10,
         dialogVisible:false,
-        channelData:[],
+        channelData:{},
         busData:{},
       }
     },
@@ -94,10 +95,6 @@
     created(){
       this.getTabList();
       this.channelData = this.newData;
-      bus.$on('updataMENU',data =>{
-        this.busData = data;
-        this.getTabList();
-      })
     },
     methods:{
       //选中
@@ -145,6 +142,7 @@
 
       //关闭弹窗
       closeDialog(data){
+        console.log(data,'====,,,,')
         this.dialogVisible = false;
         if (data.type){ //新增
           this.$api[this.tableData.api[2]](data).then(res=>{
@@ -171,6 +169,10 @@
           })
         }
 
+      },
+
+      beforeClose(){
+        this.channelData=null
       }
     }
   }

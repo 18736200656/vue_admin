@@ -33,23 +33,13 @@
             :align="item.align || 'center'"
             :width=" item.wd || 'auto'">
             <template slot-scope="scope">
-              <el-tag v-if="item.Tag" :type="scope.row[item.key]=='1' ?'':'info'">
-                {{$valid.statusStr(scope.row[item.key])}}
-              </el-tag>
-
-              <div v-else-if="item.fun">
-                <!--<el-button type="success" size="mini"-->
-                <!--:disabled="scope.row[item.key] !='1'"-->
-                <!--@click="handleEdit(scope.$index, scope.row,1)">启用</el-button>-->
-                <!--<el-button type="danger" size="mini"-->
-                <!--:disabled="scope.row[item.key] !='2'"-->
-                <!--@click="handleEdit(scope.$index, scope.row,2)">禁用</el-button>-->
+              <div v-if="item.fun">
                 <el-button
                   size="mini" :disabled="v.num == scope.row[item.key] "
                   v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                   @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
               </div>
-              <div v-else="!item.Tag">
+              <div v-else>
                 <span>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
               </div>
             </template>
@@ -78,7 +68,7 @@
 </template>
 <script>
   import bus from '../../../utils/bus'
-  import formBox from './formbox'
+  import formBox from './form'
   export default {
     name:'Table',
     data(){
@@ -152,27 +142,45 @@
       },
       //启用还是禁用
       handleEdit(index,val,num){
-        let data = {
-          id:val.id,
-          status:num
-        }
-        this.$api[this.tableData.api[1]](data).then(res=>{
-          if(res.code==1){
-            this.tableList = res.data.list;
-            this.total = res.data.total
-          }else{
-            this.$message.error(res.message)
+        if(num=='1'){ //修改
+           let data = {
+            edit:true,
+            data:val,
           }
-        }).catch((error) => {
-          Promise.reject(error);
-        })
+          this.FormData = data;
+          this.dialogVisible = true;
+        }else if(num=='2'){ //删除
+          this.$api[this.tableData.api[num]]({id:val.id}).then(res=>{
+            if(res.code==1){
+             this.$message.success(res.data.message)
+             this.getTabList()
+            }else{
+              this.$message.error(res.message)
+            }
+          }).catch((error) => {
+            Promise.reject(error);
+          })
+        }else{ //导出 3
+          this.$api[this.tableData.api[num]](val).then(res=>{
+            if(res.code==1){
+               this.$message.success(res.data.message)
+              //  window.location.href = res.data.xx 
+            }else{
+              this.$message.error(res.message)
+            }
+          }).catch((error) => {
+            Promise.reject(error);
+          })
+        }
       },
 
       //关闭弹窗
-      closeDialog(data){
+      closeDialog(params){
         this.dialogVisible = false;
-        this.$api[this.tableData.api[2]](data).then(res=>{
+        let data = params.data;
+        this.$api[this.tableData.api[4]](data).then(res=>{
           if (res.code ==1){
+            this.$message.success(res.data.message)
             this.getTabList();
           }else{
             this.$message.error(res.message)
@@ -180,7 +188,6 @@
         }).catch((error) => {
           Promise.reject(error);
         })
-
       }
     }
   }

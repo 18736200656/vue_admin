@@ -21,6 +21,7 @@
           <el-upload
             action="/common/attachment/uploadFile"
             list-type="picture-card"
+            :headers="headers"
             :on-preview="handlePictureCardPreview"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -89,6 +90,7 @@ export default {
   name:'goodsform',
   data(){
     return{
+      headers:{'Content-Type':'application/json;charset=utf-8 '},
       FormData: {
         name:'',     //	string	是	商品名称
         title:'',     //	string	是	商品标题
@@ -132,7 +134,7 @@ export default {
       }
     }
   },
-  props:['creator','formdata22'],
+  props:['creator','formdata'],
   methods:{
     onSubmit() {
       this.$refs.form.validate(valid =>{
@@ -177,14 +179,14 @@ export default {
     }
   },
   created(){
-    this.FormData = this.formdata22;
+    this.FormData = this.formdata;
     console.log(this.FormData,'====')
     this.FormData.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName
   },
   watch:{
-//    formdata22:val=>{
-//       this.FormData=val
-//    }
+   formdata(val){
+      this.FormData=val
+   }
   }
 }
 </script>

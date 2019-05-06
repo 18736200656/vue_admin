@@ -168,6 +168,98 @@ const api = {
       data:val
     })
   },
+  // ____________________________________________________任务详情____________________________________________
+  //添加任务名称
+  saveTask(val){
+    return axios({
+      url:'/saveTask',
+      method:'POST',
+      data:val
+    })
+  },
+
+  //更新任务详情
+  updateTask(val){
+    return axios({
+      url:'/updateTask',
+      method:'POST',
+      data:val
+    })
+  },
+  //分页查询任务列表
+  queryTaskList(val){
+    return axios({
+      url:'/queryTaskList',
+      method:'POST',
+      data:val
+    })
+  },
+  //启用任务详情
+  enableTask(val){
+    return axios({
+      url:'/enableTask',
+      method:'POST',
+      data:val
+    })
+  },
+  //禁用任务详情
+  disableTask(val){
+    return axios({
+      url:'/disableTask',
+      method:'POST',
+      data:val
+    })
+  },
+  // ____________________________________________________任务管理____________________________________________
+  //新增任务数据
+  saveTaskUser(val){
+    return axios({
+      url:'/saveTaskUser',
+      method:'POST',
+      data:val
+    })
+  },
+
+  //更新用户任务截图
+  updateTaskUser(val){
+    return axios({
+      url:'/updateTaskUser',
+      method:'POST',
+      data:val
+    })
+  },
+  //	删除任务数据
+  deleteTaskUser(val){
+    return axios({
+      url:'/deleteTaskUser',
+      method:'POST',
+      data:val
+    })
+  },
+  //审核用户任务数据
+  reviewTaskUser(val){
+    return axios({
+      url:'/reviewTaskUser',
+      method:'POST',
+      data:val
+    })
+  },
+  //导出任务数据
+  exportTaskUser(val){
+    return axios({
+      url:'/exportTaskUser',
+      method:'POST',
+      data:val
+    })
+  },
+  //分页查询用户任务数据
+  queryTaskUserList(val){
+    return axios({
+      url:'/queryTaskUserList',
+      method:'POST',
+      data:val
+    })
+  },
   // _________________________附件上传_________ _________________________附件上传_________
   //图片上传
   uploadFile(val){
