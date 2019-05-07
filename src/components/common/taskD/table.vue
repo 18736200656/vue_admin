@@ -2,7 +2,7 @@
 <div>
   <el-card class="tablelist">
     <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-      <el-button :type="item.type" @click="dialogVisible=true" :key="index"
+      <el-button :type="item.type" @click="addClick" :key="index"
                  v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
     </section>
     <section class="table_container">
@@ -58,7 +58,7 @@
            label="操作"
            align="center"
            width="100">
-           <template scolt-scope="scope">
+           <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
            </template>
          </el-table-column>
@@ -158,24 +158,22 @@
         }
         this.FormData = data;
         this.dialogVisible = true;
-        // this.$api[this.tableData.api[1]](data).then(res=>{
-        //   if(res.code==1){
-        //     this.tableList = res.data.list;
-        //     this.total = res.data.total
-        //   }else{
-        //     this.$message.error(res.message)
-        //   }
-        // }).catch((error) => {
-        //   Promise.reject(error);
-        // })
+      },
+      //新增
+      addClick(){
+        this.dialogVisible=true
+        this.FormData+{
+          edit:false,
+          data:{}
+        }
       },
 
       //关闭弹窗
-      closeDialog(params){
+      closeDialog(data){
         this.dialogVisible = false;
-        let data = params.data;
+        let num = data.type ? '4' : '3'; //4修改 3 新增
         if(params.type){ //修改
-          this.$api[this.tableData.api[4]](data).then(res=>{
+          this.$api[this.tableData.api[num]](data).then(res=>{
             if (res.code ==1){
               this.getTabList();
             }else{
@@ -184,17 +182,6 @@
           }).catch((error) => {
               Promise.reject(error);
           })
-        }else{ //新增
-          this.$api[this.tableData.api[2]](data).then(res=>{
-            if (res.code ==1){
-              this.getTabList();
-            }else{
-              this.$message.error(res.message)
-            }
-          }).catch((error) => {
-              Promise.reject(error);
-          })
-
         }
       },
       //改变状态

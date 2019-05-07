@@ -29,7 +29,7 @@
             </el-select>
           </el-form-item>
           <el-form-item size="mini">
-            <el-button type="primary" @click="goodsList">查询</el-button>
+            <el-button type="primary" @click="queryGoodsList">查询</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -38,14 +38,13 @@
       <el-card>
         <el-form :inline="true">
            <el-form-item >
-             <el-button type="primary" @click="addgoods">添加</el-button>
+             <el-button type="primary" @click="addClick">添加</el-button>
            </el-form-item>
           <el-form-item >
             <el-button type="danger" @click="deleteGoods">删除</el-button>
           </el-form-item>
         </el-form>
         <el-table
-          :row-style="{height:'40px'}"
           ref="multipleTable"
           :data="tableData"
           style="width: 100%"
@@ -59,22 +58,29 @@
           <el-table-column
             label="编号"
             prop="id"
+            align="center"
             width="50">
           </el-table-column>
           <el-table-column
             prop="name"
             label="商品名称"
+            align="center"
+            show-overflow-tooltip
             width="150">
           </el-table-column>
           <el-table-column
             label="商品标题"
-            width="150">
+            show-overflow-tooltip
+            align="center"
+            width="250">
             <template slot-scope="scope">
               <span>{{scope.row.title || "--"}}</span>
             </template>
           </el-table-column>
           <el-table-column
             label="商品内容"
+            show-overflow-tooltip
+            align="center"
             width="150">
             <template slot-scope="scope">
               <span>{{scope.row.content || "--"}}</span>
@@ -129,6 +135,8 @@
           </el-table-column>
           <el-table-column
             label="优惠券推广链接"
+            show-overflow-tooltip
+            align="center"
             width="220">
             <template slot-scope="scope">
               <a :href="scope.row.url">{{scope.row.url}}</a>
@@ -136,7 +144,6 @@
           </el-table-column>
           <el-table-column
             fixed="right"
-            prop="zip"
             label="操作"
             align="center"
             width="200">
@@ -172,7 +179,7 @@
       <span slot="title" class="dialog-header">
         {{'商品信息'}}
       </span>
-      <goods-form @update="addNewgoods" :creator="creator" :formdata="formdata"></goods-form>
+      <goods-form @update="closeDialog" :formdata="formdata"></goods-form>
     </el-dialog>
 </div>
 </template>
@@ -190,16 +197,14 @@ export default {
         level3: '',
       },
       tableData:[],
-      currentPage: 0, //当前是第几页
+      currentPage: 1, //当前是第几页
       pageSize: 20, //一页显示多少
       total: 20, //总共
-      FormData: {},
       dialogVisible: false,
       id: 0,
       goods1List: [],
       goods2List: [],
       goods3List: [],
-      creator:'',
       formdata:{}, //修改的东西
       selectDatas:[],  // 选则的商品
     };
@@ -209,11 +214,6 @@ export default {
 
   },
   mounted(){
-    let params = this.$route.params;
-    this.id = params.id;
-    this.creator =params.loginNickName;
-    // this.updateGoodsCategory()
-//    this.goodsList()
     this.queryGoodsCategory(); //查询的商品分类
     this.queryGoodsList(); //列表
   },
@@ -232,50 +232,23 @@ export default {
       this.currentPage = val;
       this.queryGoodsList()
     },
-    //商品信息
-    goodsList(){
-      this.$api.queryGoods(this.goodsForm).then(res=>{
-        if(res.code==1){
-          console.log(res.data,'====goodsList===')
-        }else{
-          this.$message.error(res.msg)
-        }
-      }).catch(error=>{
-        return Promise.reject(error)
-      })
-    },
-    //商品类别
-    updateGoodsCategory(){
-      let data = {
-        id:2,
-        name:'',
-        alias:'',
-        parentId:'',
-        level:'',
-        img:'',
-        sort:'',
-      }
-      this.$api.updateGoodsCategory(data).then(res=>{
-        console.log(res,'===fenl ')
-        if(res.code==1){
 
-        }else{
-          this.$message.error(res.msg)
-        }
-      }).catch(error=>{
-        return Promise.reject(error)
-      })
-    },
-    //a添加弹出那个
-    addgoods(){
-      this.dialogVisible = true;
+     //新增
+    addClick(){
+      this.dialogVisible=true
+      this.FormData+{
+        edit:false,
+        data:{}
+      }
     },
     //编辑
     handleEdit(index,row){
-      this.FormData = {key:index,data:row}
+      let data = {
+        edit:true,
+        data:row
+      };
+      this.formdata=data;
       this.dialogVisible = true
-      console.log(row, '====row')
-      this.formdata=row;
     },
     //单个删除
     handleDelete(index,row){
@@ -287,19 +260,18 @@ export default {
           //删除商品
           this.$api.delGoods({ids:row.id}).then(res=>{
             if(res.code==1){
-//              this.$message.success(res.data);
-              console.log(res.data)
               this.queryGoodsList()
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
             }else{
               this.$message.error(res.msg)
             }
           }).catch(error=>{
             return Promise.reject(error)
           })
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
+          
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -347,15 +319,13 @@ export default {
         });
       });
     },
-    //更新
-    updata(data){
-      this.tableData.goods[data.key]=data.data
 
-    },
-    //商品新增
-    addNewgoods(data){
-      this.dialogVisible=false
-      this.$api.addGoods(data).then(res=>{
+    // 关闭弹窗
+    closeDialog(params){
+      this.dialogVisible=false;
+                          //  1修改  2新增
+      let api = params.type ? 'editGoods' : 'addGoods'
+      this.$api[api](params).then(res=>{
         if(res.code==1){
           this.$message.success(res.data);
           this.queryGoodsList()
@@ -366,9 +336,10 @@ export default {
         return Promise.reject(error)
       })
     },
+    //商品列表
     queryGoodsList(){
       let data =Object.assign(this.goodsForm,{
-        currentPage:this.currentPage, //当前是第几页
+        currentPage:parseInt(this.currentPage -1), //当前是第几页
         pageSize:this.pageSize //一页显示多少
       })
       this.$api.queryGoods(data).then(res=>{
@@ -487,5 +458,29 @@ export default {
   .el-table__header th {
     padding: 0;
     height: 60px;
+  }
+
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
   }
 </style>

@@ -77,8 +77,8 @@
 </div>
 </template>
 <script>
-  import bus from '../../utils/bus'
-  import formBox from '../common/formbox'
+  import bus from '../../../utils/bus'
+  import formBox from './formbox'
   export default {
     name:'Table',
     data(){

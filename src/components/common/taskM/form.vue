@@ -16,7 +16,6 @@
           <img v-if="formData.taskImg" :src="formData.taskImg" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        
       </el-form-item>
       <el-form-item align="right">
         <el-button type="primary" @click="submit('true')" v-if="FormData.edit">保存</el-button>
@@ -45,7 +44,7 @@
     props:{
       FormData:{
         type:Object,
-        default:()=>[]
+        default:()=>{}
       }
     },
     created(){
@@ -54,8 +53,7 @@
      methods:{
       submit(val){
         this.formData = Object.assign(this.formData,{
-          type:val,
-          data:this.formData
+          type:val
         })
         this.$refs.formData.validate(valid =>{
           if (valid){
@@ -84,5 +82,28 @@
 <style scoped lang="less">
   .formbox{
     margin-top:20px;
+  }
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 18px;
+    color: #8c939d;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+  }
+  .avatar {
+    width: 80px;
+    height: 80px;
+    display: block;
   }
 </style>

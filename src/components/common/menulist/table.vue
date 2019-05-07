@@ -2,7 +2,7 @@
   <div>
     <el-card class="tablelist">
       <section class="tabe_btn">
-        <el-button type="primary" @click="dialogVisible=true">新增</el-button>
+        <el-button type="primary" @click="addClick">新增</el-button>
       </section>
       <section class="table_container">
         <el-table
@@ -53,7 +53,6 @@
     </el-card>
     <el-dialog
       :visible.sync="dialogVisible"
-      :before-close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增商品分类</span>
       <form-box :channelData="channelData" @update="closeDialog"></form-box>
@@ -92,6 +91,7 @@
       this.getTabList();
       bus.$on('updataMENU',data=>{
         this.busData = data;
+        this.getTabList();
       })
     },
     methods:{
@@ -137,14 +137,21 @@
         };
         this.channelData = data;
       },
-
+       //新增
+      addClick(){
+        this.dialogVisible=true
+        this.FormData+{
+          edit:false,
+          data:{}
+        }
+      },
       //关闭弹窗
       closeDialog(data){
         console.log(data,'====,,,,')
         this.dialogVisible = false;
                          // 2 新增 1 修改
-        let num = data.type ? '2' :'1'
-
+        let num = data.type ? '1' :'2'
+        console.log(num,data.type,'---')
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
             this.getTabList();
@@ -159,9 +166,6 @@
 
       },
 
-      beforeClose(){
-        this.channelData=null
-      }
     }
   }
 </script>

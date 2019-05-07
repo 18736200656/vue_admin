@@ -5,7 +5,7 @@
         <el-input v-model="formData.taskName" placeholder="请输入任务名称" type="text" ></el-input>
       </el-form-item>
       <el-form-item label="	任务描述">
-        <el-input v-model="formData.taskDesc" placeholder="请输入任务描述" type="text" ></el-input>
+        <el-input v-model="formData.taskDesc" placeholder="请输入任务描述" type="textarea" ></el-input>
       </el-form-item>
       <el-form-item label="任务视频链接" prop="taskLink">
         <el-input v-model="formData.taskLink" placeholder="请输入任务视频链接" type="text" ></el-input>
@@ -78,7 +78,6 @@
       submit(val){
         this.formData = Object.assign(this.formData,{
           type:val,
-          data:this.formData
         })
         this.$refs.formData.validate(valid =>{
           if (valid){

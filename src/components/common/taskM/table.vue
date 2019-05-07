@@ -2,7 +2,7 @@
   <div>
     <el-card class="tablelist">
       <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-        <el-button :type="item.type" @click="dialogVisible=true"
+        <el-button :type="item.type" @click="addClick" :key="index"
                    v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
       </section>
       <section class="table_container">
@@ -62,7 +62,7 @@
       :visible.sync="dialogVisible"
       width="50%">
       <span slot="title" class="dialog_tit">新增渠道管理</span>
-      <form-box :channelData="channelData" @update="closeDialog"></form-box>
+      <form-box :FormData="FormData" @update="closeDialog"></form-box>
     </el-dialog>
   </div>
 </template>
@@ -78,7 +78,7 @@
         currentPage: 1,
         pageSize: 10,
         dialogVisible:false,
-        channelData:[],
+        FormData:[],
         busData:{},
       }
     },
@@ -100,7 +100,6 @@
     },
     created(){
       this.getTabList();
-      this.channelData = this.newData;
       bus.$on('updataCHN',data =>{
         this.busData = data;
         this.getTabList();
@@ -173,12 +172,19 @@
           })
         }
       },
-
+       //新增
+      addClick(){
+        this.dialogVisible=true
+        this.FormData+{
+          edit:false,
+          data:{}
+        }
+      },
       //关闭弹窗
-      closeDialog(params){
+      closeDialog(data){
         this.dialogVisible = false;
-        let data = params.data;
-        this.$api[this.tableData.api[4]](data).then(res=>{
+        let num = data.type ? '1' : '4'; //1 修改 4 新增
+        this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
             this.$message.success(res.data.message)
             this.getTabList();

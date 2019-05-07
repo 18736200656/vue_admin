@@ -13,32 +13,15 @@
       <el-form-item label="分类级别" prop="level">
         <el-input v-model="formdata.level" placeholder="请输入分类级别" type="text" ></el-input>
       </el-form-item>
-      <!-- <el-form-item label="商品图片" class="upload_img">
-        <el-upload
-          action="/common/attachment/uploadFile"
-          list-type="picture-card"
-          :headers="{'Content-Type':'application/json;charset=utf-8 '}"
-          :on-preview="handlePictureCardPreview"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="formData.img" alt="" class="uploadImg">
-        </el-dialog>
-      </el-form-item> -->
       <el-form-item label="商品图片" class="upload_img">
         <el-upload
           action="/common/attachment/uploadFile"
           :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
+          :on-success="handleAvatarSuccess">
           <img v-if="formdata.img" :src="formdata.img" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-
       </el-form-item>
-      
       <el-form-item label="分类排序">
         <el-input v-model="formdata.sort" placeholder="请输入分类排序" type="text" ></el-input>
       </el-form-item>
@@ -91,38 +74,15 @@
             return
           }
         })
-      }
-    },
-    //上传图片
-    handleAvatarSuccess(file,res){
-      if(res.code==1){
-        this.formData.img = res.data.path
-      }else{
-        this.$message.error(res.msg);
-      }
-    },
-    //上传图片限制类型
-    beforeAvatarUpload(file){
-      var regExp = /\w\.(JPEG|jpeg|JPG|jpg|png|gif|bmp|swf)$/
-      if (file.type.match(regExp)){
-        this.$message.warning({
-          title: '警告',
-          message: '请上传格式为image/png, image/gif, image/jpg, image/jpeg,image/bmp，image/swf的图片'
-        })
-      }
-      let size = file.size / 1024 / 1024 / 2
-      if(size > 2) {
-        this.$message.warning({
-          title: '警告',
-          message: '图片大小必须小于2M'
-        })
-      }
-    },
-    //上传图片
-    handlePictureCardPreview(file){
-      console.log(file, '[[[[[[[[[[[[[[[[[[[[[[[[[[[[')
-      this.formdata.img = file.url;
-      this.dialogVisible = true;
+      },
+      //上传图片
+     handleAvatarSuccess(res,file){
+        if(res.code==1){
+          this.formdata.img = res.data.path
+        }else{
+          this.$message.error(res.msg);
+        }
+      },
     },
     watch:{
       channelData(val){
@@ -134,5 +94,31 @@
 <style scoped lang="less">
   .formbox{
     margin-top:20px;
+  }
+  
+</style>
+<style>
+ .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
   }
 </style>

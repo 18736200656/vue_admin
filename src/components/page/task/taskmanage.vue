@@ -80,7 +80,7 @@ export default {
           {
             fun:true,
             label:"操作",
-            wd:200,
+            wd:250,
             chilren:[
               {
                 num: '1',

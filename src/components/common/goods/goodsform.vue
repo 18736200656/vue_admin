@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="goodsform">
-      <el-form ref="form" :model="FormData" :rules="formRules" label-width= "80px">
+      <el-form ref="form" :model="FormData" :rules="formRules" label-width= "150px" label-position="left">
         <el-form-item label="商品名称" prop="name">
           <el-input v-model="FormData.name"></el-input>
         </el-form-item>
@@ -18,18 +18,6 @@
           <el-input v-model="FormData.searchName"></el-input>
         </el-form-item>
         <el-form-item label="商品图片" prop="img" class="upload_img">
-          <!-- <el-upload
-            action="/common/attachment/uploadFile"
-            list-type="picture-card"
-            :headers="headers"
-            :on-preview="handlePictureCardPreview"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="FormData.img" alt="" class="uploadImg">
-          </el-dialog> -->
           <el-upload
             class="avatar-uploader"
             action="/common/attachment/uploadFile"
@@ -42,14 +30,20 @@
         <el-form-item label="商品图片详情" prop="imgList">
           <el-input v-model="FormData.imgList"></el-input>
         </el-form-item>
-        <el-form-item label="商品分类一级" prop="levelOne">
-          <el-input v-model="FormData.levelOne"></el-input>
+        <el-form-item label="商品分类一级" prop="levelOne" >
+          <el-select v-model="FormData.levelOne" placeholder="请选择商品分类等级"> 
+            <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="商品分类二级" prop="levelTwo">
-          <el-input v-model="FormData.levelTwo"></el-input>
+          <el-select v-model="FormData.levelTwo" placeholder="请选择商品分类等级"> 
+            <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="商品分类三级" prop="levelThree">
-          <el-input v-model="FormData.levelThree"></el-input>
+          <el-select v-model="FormData.levelThree" placeholder="请选择商品分类等级"> 
+            <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="商品价格" prop="price">
           <el-input v-model="FormData.price"></el-input>
@@ -85,8 +79,9 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="form_bottom">
-      <el-button type="primary" @click="onSubmit">立即创建</el-button>
+    <div class="form_bottom"> 
+      <el-button type="primary" @click="onSubmit('true')" v-if="formdata.edit">保存</el-button>
+      <el-button type="primary" @click="onSubmit('false')" v-else>立即创建</el-button>
       <!--<el-button>取消</el-button>-->
     </div>
 
@@ -139,16 +134,23 @@ export default {
         rebate:{required: true, message: '请输入返利比例 ', trigger: 'blur'},
         couponId:{required: true, message: '请输入优惠券ID  ', trigger: 'blur'},
         url:{required: true, message: '请输入商品优惠卷推广链接', trigger: 'blur'},
-      }
+      },
+      options:[
+        {label:'一级',value:1},
+        {label:'二级',value:2},
+        {label:'三级',value:3},
+      ]
     }
   },
-  props:['creator','formdata'],
+  props:['formdata'],
   methods:{
-    onSubmit() {
+    onSubmit(val) {
+      this.FormData = Object.assign(this.FormData,{
+        type:val
+      })
       this.$refs.form.validate(valid =>{
         if (valid){
            this.$emit('update',this.FormData)
-           this.FormData =null
         }else{
           return false
         }
@@ -179,24 +181,13 @@ export default {
         })
       }
     },
-    //上传图片
-    uploadFile() {
-      this.$refs.upload.submit()
-    },
-    handlePictureCardPreview(file){
-      console.log(file, '[[[[[[[[[[[[[[[[[[[[[[[[[[[[')
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    }
   },
   created(){
-    this.FormData = this.formdata;
-    console.log(this.FormData,'====')
     this.FormData.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName
   },
   watch:{
    formdata(val){
-      this.FormData=val
+      this.FormData=val.data
    }
   }
 }

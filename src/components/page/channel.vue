@@ -1,12 +1,12 @@
 <template>
   <div class="channel">
     <search-box></search-box>
-    <table-box :tableData="tableData" :newData="searchData.filterData"></table-box>
+    <table-box :tableData="tableData"></table-box>
   </div>
 </template>
 <script>
 import searchBox from '../common/chanmel/search'
-import tableBox from '../common/table'
+import tableBox from '../common/chanmel/table'
 export default {
   name:'Channel',
   data(){
@@ -113,12 +113,6 @@ export default {
         ]
       }
     }
-  },
-  created(){
-
-  },
-  methods:{
-
   },
   components:{
     searchBox,tableBox
