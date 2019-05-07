@@ -9,17 +9,14 @@
       </el-form-item>
       <el-form-item label="任务截图" prop="taskImg" class="upload_img">
         <el-upload
+          class="avatar-uploader"
           action="/common/attachment/uploadFile"
-          list-type="picture-card"
-          :headers="headers"
-          :on-preview="handlePictureCardPreview"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <i class="el-icon-plus"></i>
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess">
+          <img v-if="formData.taskImg" :src="formData.taskImg" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="FormData.taskImg" alt="" class="uploadImg">
-        </el-dialog>
+        
       </el-form-item>
       <el-form-item align="right">
         <el-button type="primary" @click="submit('true')" v-if="FormData.edit">保存</el-button>
@@ -33,7 +30,6 @@
     name: 'formbox',
     data() {
       return {
-        headers:{'Content-Type':'application/json;charset=utf-8'},
         formData:{
           taskId:'', //		long	是	任务ID
           userId:'', //		long	是	用户ID
@@ -69,32 +65,14 @@
           }
         })
       },
-      handleAvatarSuccess(file){
-        console.log(file,'==]]]]');
-        this.FormData.img = URL.createObjectURL(file.raw);
-      },
-      //上传图片限制类型
-      beforeAvatarUpload(file){
-        var regExp = /\w\.(JPEG|jpeg|JPG|jpg|png|gif|bmp|swf)$/
-        if (file.type.match(regExp)){
-          this.$message.warning({
-            title: '警告',
-            message: '请上传格式为image/png, image/gif, image/jpg, image/jpeg,image/bmp，image/swf的图片'
-          })
-        }
-        let size = file.size / 1024 / 1024 / 2
-        if(size > 2) {
-          this.$message.warning({
-            title: '警告',
-            message: '图片大小必须小于2M'
-          })
+      //上传图片
+      handleAvatarSuccess(file,res){
+        if(res.code==1){
+          this.formData.taskImg = res.data.path
+        }else{
+          this.$message.error(res.msg);
         }
       },
-      handlePictureCardPreview(file){
-        console.log(file, '[[[[[[[[[[[[[[[[[[[[[[[[[[[[')
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      }
     },
     watch:{
       FormData(val){

@@ -14,30 +14,31 @@
         <el-input v-model="formdata.level" placeholder="请输入密码" type="password" ></el-input>
       </el-form-item>
       <!-- <el-form-item label="商品图片" class="upload_img">
-          <el-upload
-            action="/common/attachment/uploadFile"
-            list-type="picture-card"
-            :headers="{'Content-Type':'application/json;charset=utf-8 '}"
-            :on-preview="handlePictureCardPreview"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="formData.img" alt="" class="uploadImg">
-          </el-dialog>
-        </el-form-item>
+        <el-upload
+          action="/common/attachment/uploadFile"
+          list-type="picture-card"
+          :headers="{'Content-Type':'application/json;charset=utf-8 '}"
+          :on-preview="handlePictureCardPreview"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="formData.img" alt="" class="uploadImg">
+        </el-dialog>
+      </el-form-item> -->
       <el-form-item label="商品图片" class="upload_img">
         <el-upload
           action="/common/attachment/uploadFile"
           :show-file-list="false"
-          :headers="{'Content-Type':'application/json;charset=utf-8'}"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload">
           <img v-if="formdata.img" :src="formdata.img" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-      </el-form-item> -->
+
+      </el-form-item>
+      
       <el-form-item label="分类排序">
         <el-input v-model="formdata.sort" placeholder="请输入密码" type="password" ></el-input>
       </el-form-item>
@@ -92,10 +93,13 @@
         })
       }
     },
-    //上传成功
-    handleAvatarSuccess(file){
-      console.log(file,'==]]]]');
-      this.formdata.img = URL.createObjectURL(file.raw);
+    //上传图片
+    handleAvatarSuccess(file,res){
+      if(res.code==1){
+        this.formData.taskImg = res.data.path
+      }else{
+        this.$message.error(res.msg);
+      }
     },
     //上传图片限制类型
     beforeAvatarUpload(file){

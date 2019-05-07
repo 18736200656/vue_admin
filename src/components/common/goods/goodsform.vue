@@ -18,7 +18,7 @@
           <el-input v-model="FormData.searchName"></el-input>
         </el-form-item>
         <el-form-item label="商品图片" prop="img" class="upload_img">
-          <el-upload
+          <!-- <el-upload
             action="/common/attachment/uploadFile"
             list-type="picture-card"
             :headers="headers"
@@ -29,7 +29,15 @@
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="FormData.img" alt="" class="uploadImg">
-          </el-dialog>
+          </el-dialog> -->
+          <el-upload
+            class="avatar-uploader"
+            action="/common/attachment/uploadFile"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess">
+            <img v-if="FormData.img" :src="FormData.img" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </el-form-item>
         <el-form-item label="商品图片详情" prop="imgList">
           <el-input v-model="FormData.imgList"></el-input>
@@ -119,7 +127,7 @@ export default {
         content:{required: true, message: '请输入品描述', trigger: 'blur'},
         seascapes:{required: true, message: '请输入海景图片组', trigger: 'blur'},
         searchName:{required: true, message: '请输入商品搜索名称 ', trigger: 'blur'},
-//        img:{required: true, message: '请输入商品图片 ', trigger: 'change'},
+        img:{required: true, message: '请输入商品图片 ', trigger: 'change'},
         imgList:{required: true, message: '请输入商品图片详情 ', trigger: 'blur'},
         levelOne:{required: true, message: '请输入商品分类一级', trigger: 'blur'},
         levelTwo:{required: true, message: '请输入商品分类二级', trigger: 'blur'},
@@ -147,9 +155,12 @@ export default {
       })
       console.log('submit!');
     },
-    handleAvatarSuccess(file){
-      console.log(file,'==]]]]');
-      this.FormData.img = URL.createObjectURL(file.raw);
+    handleAvatarSuccess(file,res){
+      if(res.code==1){
+        this.FormData.img = res.data.path;
+      }else{
+        this.$message.error(res.msg);
+      }
     },
     //上传图片限制类型
     beforeAvatarUpload(file){
