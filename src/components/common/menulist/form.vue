@@ -2,16 +2,16 @@
   <div class="formbox">
     <el-form :model="formdata" ref="formdata" :rules="formRules" lable-width="100px" label-position="left">
       <el-form-item label="分类名称" prop="name">
-        <el-input v-model="formdata.name" placeholder="请输入渠道账号" type="text" ></el-input>
+        <el-input v-model="formdata.name" placeholder="请输入分类名称" type="text" ></el-input>
       </el-form-item>
       <el-form-item label="别名">
-        <el-input v-model="formdata.alias" placeholder="请输入渠道名称" type="text" ></el-input>
+        <el-input v-model="formdata.alias" placeholder="请输入别名" type="text" ></el-input>
       </el-form-item>
       <el-form-item label="上级分类ID">
-        <el-input v-model="formdata.parentId" placeholder="请输入邀请码" type="text" ></el-input>
+        <el-input v-model="formdata.parentId" placeholder="请输入上级分类ID" type="text" ></el-input>
       </el-form-item>
       <el-form-item label="分类级别" prop="level">
-        <el-input v-model="formdata.level" placeholder="请输入密码" type="password" ></el-input>
+        <el-input v-model="formdata.level" placeholder="请输入分类级别" type="text" ></el-input>
       </el-form-item>
       <!-- <el-form-item label="商品图片" class="upload_img">
         <el-upload
@@ -40,7 +40,7 @@
       </el-form-item>
       
       <el-form-item label="分类排序">
-        <el-input v-model="formdata.sort" placeholder="请输入密码" type="password" ></el-input>
+        <el-input v-model="formdata.sort" placeholder="请输入分类排序" type="text" ></el-input>
       </el-form-item>
       <el-form-item align="right">
         <el-button type="primary" @click="submit('true')" v-if="channelData.edit">确 定</el-button>
@@ -70,12 +70,12 @@
         dialogVisible:false
       }
     },
-    props:['channelData'],
-//      channelData:{
-//        type:Object,
-//        default:()=>{}
-//      }
-//    },
+    props:{
+      channelData:{
+        type:Object,
+        default:()=>{}
+      }
+    },
     created(){
       
     },
@@ -96,7 +96,7 @@
     //上传图片
     handleAvatarSuccess(file,res){
       if(res.code==1){
-        this.formData.taskImg = res.data.path
+        this.formData.img = res.data.path
       }else{
         this.$message.error(res.msg);
       }

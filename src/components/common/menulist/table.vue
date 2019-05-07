@@ -84,17 +84,15 @@
         type:Object,
         default:{}
       },
-      newData:{
-        type:Array,
-        default:()=>[]
-      },
     },
     watch:{
 
     },
     created(){
       this.getTabList();
-      this.channelData = this.newData;
+      bus.$on('updataMENU',data=>{
+        this.busData = data;
+      })
     },
     methods:{
       //选中
@@ -144,30 +142,20 @@
       closeDialog(data){
         console.log(data,'====,,,,')
         this.dialogVisible = false;
-        if (data.type){ //新增
-          this.$api[this.tableData.api[2]](data).then(res=>{
-            if (res.code ==1){
-              this.getTabList();
-              this.$message.success('新增成功')
-            }else{
-              this.$message.error(res.message)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
-        }
-        else{ //修改
-          this.$api[this.tableData.api[1]](data).then(res=>{
-            if (res.code ==1){
-              this.$message.success('修改成功')
-              this.getTabList();
-            }else{
-              this.$message.error(res.message)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
-        }
+                         // 2 新增 1 修改
+        let num = data.type ? '2' :'1'
+
+        this.$api[this.tableData.api[num]](data).then(res=>{
+          if (res.code ==1){
+            this.getTabList();
+            this.$message.success('新增成功')
+          }else{
+            this.$message.error(res.message)
+          }
+        }).catch((error) => {
+          Promise.reject(error);
+        })
+        
 
       },
 
