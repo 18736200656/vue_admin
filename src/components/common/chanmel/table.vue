@@ -2,7 +2,7 @@
 <div>
   <el-card class="tablelist">
     <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-      <el-button :type="item.type" @click="dialogVisible=true" :key="index"
+      <el-button :type="item.type" @click="addClick" :key="index"
                  v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
     </section>
     <section class="table_container">
@@ -181,7 +181,15 @@
             Promise.reject(error);
         })
 
-      }
+      },
+      //新增
+      addClick(){
+        this.dialogVisible=true
+        this.FormData={
+          edit:false,
+          data:{}
+        }
+      },
     }
   }
 </script>

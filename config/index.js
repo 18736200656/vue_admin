@@ -9,7 +9,7 @@ const environment = {
   test: {
     env: require('./test.env'),
     assetsPublicPath: '/',
-    productionSourceMap: false
+    productionSourceMap: true
   },
   build: {
     env: require('./prod.env'),
@@ -60,6 +60,7 @@ module.exports = {
   },
 
   build:merge({
+  // build:{
 
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
@@ -90,4 +91,5 @@ module.exports = {
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
   },environment[process.env.npm_lifecycle_event])
+  // }
 }

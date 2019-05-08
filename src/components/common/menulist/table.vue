@@ -140,7 +140,7 @@
        //新增
       addClick(){
         this.dialogVisible=true
-        this.FormData+{
+        this.FormData={
           edit:false,
           data:{}
         }
