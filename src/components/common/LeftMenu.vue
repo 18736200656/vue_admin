@@ -72,6 +72,11 @@ export default {
           name: "提现管理",
           path: "/cash",
         },
+        {
+          icon: "el-icon-picture-outline",
+          name: "广告管理",
+          path: "/addm",
+        },
       ]
     };
   },

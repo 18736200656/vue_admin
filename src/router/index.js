@@ -102,6 +102,14 @@ const routes=[
         },
         component:()=>import('@/components/page/cash')
       },
+      {
+        path:'addm',
+        name:'Addm',
+        meta:{
+          title:'提现管理'
+        },
+        component:()=>import('@/components/page/addmanage')
+      },
     ]
   },
 ]

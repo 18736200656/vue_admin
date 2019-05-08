@@ -1,8 +1,10 @@
 <template>
   <div>
     <el-card class="tablelist">
+
       <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-        <el-button :type="item.type" @click="addClick(item.api)" :key="index"
+        <i class="el-icon-s-fold"></i>用户列表
+        <el-button :type="item.type" @click="addClick(item.api)" :key="index" style="float: right;margin-bottom: 10px;"
                    v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
       </section>
       <section class="table_container">
@@ -181,16 +183,7 @@
               data:{}
             }
         }else{
-          //导出
-          let data = {
-            taskName:'', //	string	否	任务名称
-            userName:'', //		string	否	用户名称
-            status:'', //		string	否	状态 1：保存 2：审核通过 3：审核驳回
-            mobile:'', //		string	否	用户手机号
-            startTime:'', //		string	否	提交任务开始时间
-            endTime:'', //		string	否	提交任务结束时间
-          }
-          this.$api[this.tableData.api[3]](data).then(res=>{
+          this.$api[this.tableData.api[3]]().then(res=>{
           if (res.code ==1){
             console.log(res,'====')
             this.$message.success(res.data.message)

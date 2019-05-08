@@ -1,8 +1,17 @@
 <template>
   <div>
     <el-card class="tablelist">
-      <section class="tabe_btn">
-        <el-button type="primary" @click="addClick">新增</el-button>
+      <section class="tabe_btn" style="margin-bottom: 10px;overflow: hidden">
+        <el-button type="primary" @click="addClick" style="float: left;">新增</el-button>
+        <el-upload
+          style="float: left;margin-left:20px;"
+          class="upload-demo"
+          action="/goods/importGoods"
+          :before-upload="beforeUpload"
+          :on-success="uploadSuccess"
+          :on-error="uploadFail">
+          <el-button size="small" type="success">导入</el-button>
+        </el-upload>
       </section>
       <section class="table_container">
         <el-table
@@ -162,10 +171,29 @@
         }).catch((error) => {
           Promise.reject(error);
         })
-        
+
 
       },
-
+      //导入
+      uploadSuccess(res,file){      //4 导入
+        console.log(file,res, '=====导入的东西===----');
+      },
+      //上传错误
+      uploadFail(err, file, fileList) {
+        this.uploadTip = '点击上传'
+        this.processing = false
+        this.$message.error(err)
+      },
+      //限制
+      beforeUpload(file){
+        //上传前配置
+        let excelfileExtend = ".xls,.xlsx"//设置文件格式
+        let fileExtend = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+        if (excelfileExtend.indexOf(fileExtend) == 0) {
+          this.$message.error('文件格式错误')
+          return false
+        }
+      }
     }
   }
 </script>

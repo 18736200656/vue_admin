@@ -260,6 +260,31 @@ const api = {
       data:val
     })
   },
+  // ____________________________________________________用户管理____________________________________________
+  //新增用户消息通知
+  saveStudenChannel(val){
+    return axios({
+      url:'/saveUserNotice',
+      method:'POST',
+      data:val
+    })
+  },
+  //淘宝用户修改
+  editUserTaobao(val){
+    return axios({
+      url:'/userTaobao/editUserTaobao',
+      method:'POST',
+      data:val
+    })
+  },
+  //淘宝用户查询
+  queryUserTaobao(val){
+    return axios({
+      url:'/userTaobao/queryUserTaobao',
+      method:'POST',
+      data:val
+    })
+  },
   // _________________________附件上传_________ _________________________附件上传_________
   //图片上传
   uploadFile(val){

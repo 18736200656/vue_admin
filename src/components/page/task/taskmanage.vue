@@ -15,9 +15,14 @@ export default {
         type:'taskM',
         tableBtn:[
           {
-            api:'saveTask',
+            api:false,
             type:'primary',
             name:'新增'
+          },
+          {
+            api:true,
+            type:'primary',
+            name:'导出'
           },
         ],
                 //接口名字方法      //修改              删除            //导出         //新增           //审核用户
@@ -95,7 +100,7 @@ export default {
               {
                 num: '3',
                 type: 'succsess',
-                name: '导出'
+                name: '审核'
               }
             ]
           }

@@ -1,9 +1,8 @@
 <template>
   <div>
     <el-card class="tablelist">
-      <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-        <el-button :type="item.type" @click="addClick(item.api)" :key="index"
-                   v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
+      <section class="tabe_btn">
+        <el-button type="primary" @click="addClick">新增</el-button>
       </section>
       <section class="table_container">
         <el-table
@@ -21,12 +20,6 @@
             width="55">
           </el-table-column>
           <el-table-column
-            label="编号"
-            type="index"
-            align="center"
-            width="50">
-          </el-table-column>
-          <el-table-column
             v-for="(item,index) in tableData.thData"
             :key="index"
             :label="item.label"
@@ -35,9 +28,9 @@
             <template slot-scope="scope">
               <div v-if="item.fun">
                 <el-button
-                  size="mini" :disabled="v.num == scope.row[item.key] "
+                  size="mini"
                   v-for="(v,n) in item.chilren" :key="n" :type="v.type"
-                  @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
+                  @click="handleEdit(scope.$index, scope.row)">{{v.name}}</el-button>
               </div>
               <div v-else>
                 <span>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
@@ -61,8 +54,8 @@
     <el-dialog
       :visible.sync="dialogVisible"
       width="50%">
-      <span slot="title" class="dialog_tit">新增渠道管理</span>
-      <form-box :FormData="FormData" @update="closeDialog"></form-box>
+      <span slot="title" class="dialog_tit">新增商品分类</span>
+      <form-box :channelData="channelData" @update="closeDialog"></form-box>
     </el-dialog>
   </div>
 </template>
@@ -78,7 +71,7 @@
         currentPage: 1,
         pageSize: 10,
         dialogVisible:false,
-        FormData:[],
+        channelData:{},
         busData:{},
       }
     },
@@ -90,17 +83,13 @@
         type:Object,
         default:{}
       },
-      newData:{
-        type:Array,
-        default:()=>[]
-      },
     },
     watch:{
 
     },
     created(){
       this.getTabList();
-      bus.$on('updataCHN',data =>{
+      bus.$on('updataMENU',data=>{
         this.busData = data;
         this.getTabList();
       })
@@ -130,8 +119,8 @@
         });
         this.$api[this.tableData.api[0]](params).then(res=>{
           if(res.code==1){
-            this.tableList = res.data.list;
-            this.total = res.data.total
+            this.tableList = res.data;
+            this.total = res.data.length;
           }else{
             this.$message.error(res.message)
           }
@@ -139,86 +128,44 @@
           Promise.reject(error);
         })
       },
-      //启用还是禁用
-      handleEdit(index,val,num){
-        if(num=='1'){ //修改
-           let data = {
-            edit:true,
-            data:val,
-          }
-          this.FormData = data;
-          this.dialogVisible = true;
-        }else if(num=='2'){ //删除
-          this.$api[this.tableData.api[num]]({id:val.id}).then(res=>{
-            if(res.code==1){
-             this.$message.success(res.data.message)
-             this.getTabList()
-            }else{
-              this.$message.error(res.message)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
-        }else{ //导出 3
-          this.$api[this.tableData.api[num]](val).then(res=>{
-            if(res.code==1){
-               this.$message.success(res.data.message)
-              //  window.location.href = res.data.xx
-            }else{
-              this.$message.error(res.message)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
-        }
+      //修改
+      handleEdit(index,val){
+        this.dialogVisible = true;
+        let data ={
+          edit:true,
+          data:val
+        };
+        this.channelData = data;
       },
        //新增
-      addClick(val){
-        if(!val){
-           this.dialogVisible=true
-            this.FormData={
-              edit:false,
-              data:{}
-            }
-        }else{
-          //导出
-          let data = {
-            taskName:'', //	string	否	任务名称
-            userName:'', //		string	否	用户名称
-            status:'', //		string	否	状态 1：保存 2：审核通过 3：审核驳回
-            mobile:'', //		string	否	用户手机号
-            startTime:'', //		string	否	提交任务开始时间
-            endTime:'', //		string	否	提交任务结束时间
-          }
-          this.$api[this.tableData.api[3]](data).then(res=>{
-          if (res.code ==1){
-            console.log(res,'====')
-            this.$message.success(res.data.message)
-
-          }else{
-            this.$message.error(res.message)
-          }
-        }).catch((error) => {
-          Promise.reject(error);
-        })
+      addClick(){
+        this.dialogVisible=true
+        this.FormData={
+          edit:false,
+          data:{}
         }
-
       },
       //关闭弹窗
       closeDialog(data){
+        console.log(data,'====,,,,')
         this.dialogVisible = false;
-        let num = data.type ? '1' : '4'; //1 修改 4 新增
+                         // 2 新增 1 修改
+        let num = data.type ? '1' :'2'
+        console.log(num,data.type,'---')
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
-            this.$message.success(res.data.message)
             this.getTabList();
+            this.$message.success('新增成功')
           }else{
             this.$message.error(res.message)
           }
         }).catch((error) => {
           Promise.reject(error);
         })
-      }
+        
+
+      },
+
     }
   }
 </script>

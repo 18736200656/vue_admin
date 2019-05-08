@@ -4,7 +4,7 @@
       <div class="login_title">后台管理系统</div>
       <div class="form_box">
         <el-form :inline="true" class="login_form" size="large"
-                 :model="loginForm" :rules="loginRules" ref="loginForm">
+                 :model="loginForm" ref="loginForm">
           <el-form-item prop="name">
             <el-input type="text" placeholder="请输入用户名"
                       prefixIcon="el-icon-user-solid"
