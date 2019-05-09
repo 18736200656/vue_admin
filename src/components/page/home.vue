@@ -97,9 +97,23 @@
             label="商品分类"
             width="150">
             <template slot-scope="scope">
-              <div>商品等级一级分类：{{scope.row.levelOne}}</div>
+              <table border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td>商品等级一级分类：</td>
+                  <td>{{scope.row.levelOne}}</td>
+                </tr>
+                <tr>
+                  <td>商品等级二级分类：</td>
+                  <td>{{scope.row.levelTwo}}</td>
+                </tr>
+                <tr>
+                  <td>商品等级三级分类：</td>
+                  <td>{{scope.row.levelThree}}</td>
+                </tr>
+              </table>
+              <!-- <div>商品等级一级分类：{{scope.row.levelOne}}</div>
               <div>商品等级二级分类：{{scope.row.levelTwo}}</div>
-              <div>商品等级三级分类：{{scope.row.levelThree}}</div>
+              <div>商品等级三级分类：{{scope.row.levelThree}}</div> -->
             </template>
           </el-table-column>
           <el-table-column

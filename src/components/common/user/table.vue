@@ -3,7 +3,7 @@
     <el-card class="tablelist">
 
       <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-        <i class="el-icon-s-fold"></i>用户列表
+        <i class="iconfont  icon-wuxupailie"></i>用户列表
         <el-button :type="item.type" @click="addClick(item.api)" :key="index" style="float: right;margin-bottom: 10px;"
                    v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
       </section>
