@@ -20,12 +20,6 @@
           align="center"
           width="55">
         </el-table-column>
-         <el-table-column
-           label="编号"
-           type="index"
-           align="center"
-           width="50">
-         </el-table-column>
         <el-table-column
           v-for="(item,index) in tableData.thData"
           :key="index"
@@ -36,21 +30,14 @@
             <el-tag v-if="item.Tag" :type="scope.row[item.key]=='1' ?'':'info'">
               {{$valid.statusStr(scope.row[item.key])}}
             </el-tag>
-
             <div v-else-if="item.fun">
-              <!--<el-button type="success" size="mini"-->
-                         <!--:disabled="scope.row[item.key] !='1'"-->
-                <!--@click="handleEdit(scope.$index, scope.row,1)">启用</el-button>-->
-              <!--<el-button type="danger" size="mini"-->
-                         <!--:disabled="scope.row[item.key] !='2'"-->
-                <!--@click="handleEdit(scope.$index, scope.row,2)">禁用</el-button>-->
               <el-button
                 size="mini" :disabled="v.num == scope.row[item.key] "
                 v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                 @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
             </div>
-            <div v-else="!item.Tag">
-              <span>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
+            <div v-else style="cursor: pointer;">
+              <span :title="scope.row[item.key]" @click="lookUP(scope.$index,scope.row)">{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
             </div>
           </template>
         </el-table-column>
@@ -74,6 +61,36 @@
     <span slot="title" class="dialog_tit">新增渠道管理</span>
     <form-box :channelData="channelData" @update="closeDialog"></form-box>
   </el-dialog>
+  <el-dialog
+    :visible.sync="taskDialogVisible"
+    width="50%">
+    <span slot="title" class="dialog_tit">任务完成量</span>
+    <section style="margin-top:20px;">
+      <el-table
+        :data="taskList"
+        border
+        highlight-current-row
+        tooltip-effect="dark"
+        height="301px"
+        :header-cell-style="{background:'#f7f7f7'}"
+        style="width: 100%">
+        <el-table-column
+          prop="taskName"
+          align="center"
+          label="任务名称">
+        </el-table-column>
+        <el-table-column
+          prop="taskCount"
+          align="center"
+          label="完成量">
+        </el-table-column>
+      </el-table>
+    </section>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="taskDialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="taskDialogVisible=false">确 定</el-button>
+    </span>
+  </el-dialog>
 </div>
 </template>
 <script>
@@ -85,11 +102,13 @@
       return{
         tableList:[],
         total:0,
-        currentPage: 1,
+        currentPage:1,
         pageSize: 10,
         dialogVisible:false,
         channelData:[],
         busData:{},
+        taskDialogVisible:false,
+        taskList:[],
       }
     },
     components:{
@@ -158,8 +177,7 @@
         }
         this.$api[this.tableData.api[1]](data).then(res=>{
           if(res.code==1){
-            this.tableList = res.data.list;
-            this.total = res.data.total
+            this.taskList = res.data.list;
           }else{
             this.$message.error(res.message)
           }
@@ -190,6 +208,20 @@
           data:{}
         }
       },
+      //查看
+      lookUP(index,row){
+        this.taskDialogVisible = true;
+        let data={id:row.id}
+        this.$api[this.tableData.api[3]](data).then(res=>{
+          if(res.code==1){
+            this.taskList = res.data;
+          }else{
+            this.$message.error(res.message)
+          }
+        }).catch((error) => {
+          Promise.reject(error);
+        })
+      }
     }
   }
 </script>
@@ -223,6 +255,7 @@
   .el-table__header th {
     padding: 0;
     height: 60px;
+    
   }
 </style>
 

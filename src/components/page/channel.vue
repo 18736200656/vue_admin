@@ -58,39 +58,78 @@ export default {
             name:'新增'
           },
         ],
-                //接口名字方法       //启用。禁用             //新增
-        api:['queryStudenChannel','updateStudentChannel','saveStudenChannel'],
+                //接口名字方法       //启用。禁用             //新增             查看推广的学生完成量
+        api:['queryStudenChannel','updateStudentChannel','saveStudenChannel','queryChannelView'],
         thData:[
           {
-            key:'appCount',
-            label:"APP安装量",
+            key:'id',
+            label:"渠道ID",
+          },
+          {
+            key:'channelLoginName',
+            label:"渠道账号",
+
+          },
+          {
+            key:'channelName',
+            label:"渠道名称",
+          },
+           {
+            key:'inviteCode',
+            label:"邀请码",
+          },
+          {
+            key:'password',
+            label:"密码",
+          },
+          {
+            key:'totalAmount',
+            label:"总金额",
             align:'right'
           },
           {
-            key:'shopCount',
-            label:"收购完成量",
+            key:'amount',
+            label:"可用金额",
+            align:'right'
           },
           {
-            key:'creditCount',
-            label:"信用卡开卡量",
+            key:'taskAmount',
+            label:"任务金额",
             align:'right'
 
           },
           {
-            key:'cloudPayCount',
-            label:"云闪付完成量",
+            key:'withdrawAmount',
+            label:"提现金额",
             align:'right'
 
           },
           {
-            key:'jingdongCount',
-            label:"京东白条完成量",
+            key:'frozenAmount',
+            label:"冻结金额",
             align:'right'
           },
           {
             key:'status',
             label:"状态",
             Tag:true,
+          },
+          {
+            key:'statusName',
+            label:"状态名称",
+          },
+          
+          {
+            key:'createTime',
+            label:"创建时间",
+          },
+          {
+            key:'updateTime',
+            label:"更新时间",
+          },
+          {
+            key:'version',
+            label:"当前版本号",
           },
           {
             key:'status',

@@ -27,7 +27,7 @@ export default {
   },
   created(){
     let userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
-    this.username = userInfo.loginNickName
+    this.username = userInfo.loginNickName || ""
   },
   methods: {
     setDialogInfo(cmditem) {

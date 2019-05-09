@@ -2,16 +2,8 @@
   <div>
     <el-card class="tablelist">
       <section class="tabe_btn" style="margin-bottom: 10px;overflow: hidden">
-        <el-button type="primary" @click="addClick" style="float: left;">新增</el-button>
-        <el-upload
-          style="float: left;margin-left:20px;"
-          class="upload-demo"
-          action="/goods/importGoods"
-          :before-upload="beforeUpload"
-          :on-success="uploadSuccess"
-          :on-error="uploadFail">
-          <el-button size="small" type="success">导入</el-button>
-        </el-upload>
+        <el-button type="primary" @click="addClick" >新增</el-button>
+        <el-button type="success" @click="FiledialogVisible = true" >导入</el-button>
       </section>
       <section class="table_container">
         <el-table
@@ -66,6 +58,29 @@
       <span slot="title" class="dialog_tit">新增商品分类</span>
       <form-box :channelData="channelData" @update="closeDialog"></form-box>
     </el-dialog>
+     <el-dialog
+      :visible.sync="FiledialogVisible"
+      width="30%">
+      <span slot="title" class="dialog_tit">导入文件</span>
+        <el-card>
+          <el-upload
+            class="upload-demo"
+            ref="uploadFile"
+            drag
+            action="/goods/importGoods"
+            :before-upload="beforeUpload"
+            :on-success="uploadSuccess"
+            :on-error="uploadFail">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">只能上传.xlsx或。xls文件，且不超过500kb</div>
+          </el-upload>
+        </el-card>
+       <span slot="footer" class="dialog-footer">
+        <el-button @click="FiledialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitUpload">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -82,6 +97,7 @@
         dialogVisible:false,
         channelData:{},
         busData:{},
+        FiledialogVisible:false
       }
     },
     components:{
@@ -174,14 +190,24 @@
 
 
       },
+      submitUpload(){
+        this.FiledialogVisible = false;
+        this.$refs.uploadFile.submit();
+      },
       //导入
       uploadSuccess(res,file){      //4 导入
         console.log(file,res, '=====导入的东西===----');
+        if(res.code==1){
+          this.$message.success(res.data)
+          this.getTabList()
+        }else{
+          this.$message.error(res.msg)
+          return false
+        }
+        
       },
       //上传错误
       uploadFail(err, file, fileList) {
-        this.uploadTip = '点击上传'
-        this.processing = false
         this.$message.error(err)
       },
       //限制

@@ -168,6 +168,14 @@ const api = {
       data:val
     })
   },
+  //查看推广的学生完成量
+  queryChannelView(val){
+    return axios({
+      url:'/queryChannelView',
+      method:'POST',
+      data:val
+    })
+  },
   // ____________________________________________________任务详情____________________________________________
   //添加任务名称
   saveTask(val){

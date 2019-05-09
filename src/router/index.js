@@ -48,6 +48,7 @@ const routes=[
         path:'menu',
         name:'menu',
         meta:{
+          requireAuthor:true,
           title:'商品目录管理'
         },
         component:()=>import('@/components/page/menuList')
@@ -56,6 +57,7 @@ const routes=[
         path:'channel',
         name:'Channel',
         meta:{
+          requireAuthor:true,
           title:'渠道管理'
         },
         component:()=>import('@/components/page/channel')
@@ -64,6 +66,7 @@ const routes=[
         path:'user',
         name:'User',
         meta:{
+          requireAuthor:true,
           title:'用户管理'
         },
         component:()=>import('@/components/page/user')
@@ -72,6 +75,7 @@ const routes=[
         path:'task',
         name:'Task',
         meta:{
+          requireAuthor:true,
           title:'任务管理'
         },
         component:()=>import('@/components/page/task'),
@@ -80,6 +84,7 @@ const routes=[
             path:'taskD',
             name:'taskM',
             meta:{
+              requireAuthor:true,
               title:'任务详情'
             },
             component:()=>import('@/components/page/task/taskdetail')
@@ -88,6 +93,7 @@ const routes=[
             path:'taskM',
             name:'taskM',
             meta:{
+              requireAuthor:true,
               title:'任务管理'
             },
             component:()=>import('@/components/page/task/taskmanage')
@@ -98,6 +104,7 @@ const routes=[
         path:'cash',
         name:'Cash',
         meta:{
+          requireAuthor:true,
           title:'提现管理'
         },
         component:()=>import('@/components/page/cash')
@@ -106,6 +113,7 @@ const routes=[
         path:'addm',
         name:'Addm',
         meta:{
+          requireAuthor:true,
           title:'提现管理'
         },
         component:()=>import('@/components/page/addmanage')
@@ -127,6 +135,7 @@ router.beforeEach((to,from,next)=>{
     next({
       path: "/login",
     });
+    window.sessionStorage.removeItem('token');
     return
   }
   next();
