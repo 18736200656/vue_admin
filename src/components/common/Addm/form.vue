@@ -1,29 +1,20 @@
 <template>
   <div class="formbox">
     <el-form :model="formdata" ref="formdata" :rules="formRules" lable-width="100px" label-position="left">
-      <el-form-item label="分类名称" prop="name">
-        <el-input v-model="formdata.name" placeholder="请输入分类名称" type="text" ></el-input>
+      <el-form-item label="广告ID" prop="id" v-if="channelData.edit">
+        <el-input v-model="formdata.id" placeholder="请输入广告ID" type="text" ></el-input>
       </el-form-item>
-      <el-form-item label="别名">
-        <el-input v-model="formdata.alias" placeholder="请输入别名" type="text" ></el-input>
-      </el-form-item>
-      <el-form-item label="上级分类ID">
-        <el-input v-model="formdata.parentId" placeholder="请输入上级分类ID" type="text" ></el-input>
-      </el-form-item>
-      <el-form-item label="分类级别" prop="level">
-        <el-input v-model="formdata.level" placeholder="请输入分类级别" type="text" ></el-input>
-      </el-form-item>
-      <el-form-item label="商品图片" class="upload_img">
+      <el-form-item label="商品图片" class="upload_img" prop="imgUrl">
         <el-upload
           action="/common/attachment/uploadFile"
           :show-file-list="false"
           :on-success="handleAvatarSuccess">
-          <img v-if="formdata.img" :src="formdata.img" class="avatar">
+          <img v-if="formdata.imgUrl" :src="formdata.imgUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="分类排序">
-        <el-input v-model="formdata.sort" placeholder="请输入分类排序" type="text" ></el-input>
+      <el-form-item label="点击链接">
+        <el-input v-model="formdata.clickUrl" placeholder="请输入点击链接" type="text" ></el-input>
       </el-form-item>
       <el-form-item align="right">
         <el-button type="primary" @click="submit('true')" v-if="channelData.edit">确 定</el-button>
@@ -37,20 +28,16 @@
     name: 'formbox',
     data() {
       return {
-        headers:{'Content-Type':'application/json;charset=utf-8 '},
         formdata:{
-          name:'', //	string	是	分类名称
-          alias:'', //		string	否	别名
-          parentId:'', //		long	否	上级分类ID
-          level:'', //		int	是	分类级别
-          img:'', //		string	否	分类图片
-          sort:'', //		int	否	分类排序
+          id:'', //	string	
+          imgUrl:'', //		string
+          clickUrl:'', //		long	
         },
         formRules:{
-          name:{required:true, message:'分类名称不能为空',trigger: 'blur'}, //	渠道账号
-          level:{required:true, message:'分类级别不能为空',trigger: 'blur'},	//渠道名称
+          imgUrl:{required:true, message:'广告链接不能为空',trigger: 'change'},	//广告链接
         },
-        dialogVisible:false
+        id:{required:true, message:'广告ID不能为空',trigger: 'blur'}, //		广告ID
+        dialogVisible:false,
       }
     },
     props:{
@@ -64,6 +51,9 @@
     },
     methods:{
       submit(val){
+        if(this.channelData.edit){
+          this.formRules= Object.assign(this.formRules,{id:this.id})
+        }
         this.formdata=Object.assign(this.formdata,{
           type:val
         });
@@ -78,7 +68,7 @@
       //上传图片
      handleAvatarSuccess(res,file){
         if(res.code==1){
-          this.formdata.img = res.data.path
+          this.formdata.imgUrl = res.data.path
         }else{
           this.$message.error(res.msg);
         }

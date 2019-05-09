@@ -37,7 +37,7 @@
             <template slot-scope="scope">
               <div v-if="item.fun">
                 <el-button
-                  size="mini" :disabled="v.num == scope.row[item.key] "
+                  size="mini" v-if="scope.row[item.key] != v.num"
                   v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                   @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
               </div>

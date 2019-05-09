@@ -6,8 +6,11 @@
     </div>
     <el-card class="search">
       <el-form :model="formData" ref="formData" lable-width="100px" :inline="true">
-        <el-form-item label="上级ID">
-          <el-input v-model="formData.parentId" placeholder="请输入上级ID" type="text" ></el-input>
+        <el-form-item label="状态">
+          <el-select v-model="formData.status" placeholder="请选择状态">
+            <el-option label="启用" value="1"></el-option>
+            <el-option label="禁用" value="2"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item align="right">
           <el-button type="primary" @click="submit">查询</el-button>
@@ -24,14 +27,14 @@
     data() {
       return {
         formData:{
-//          level:'', //	分类级别
-          parentId:'',	//上级分类ID
+
+          status:'',
         }
       }
     },
     methods:{
       submit(){
-        bus.$emit('updataMENU',this.formData)
+        bus.$emit('updataADD',this.formData)
       }
     }
   }

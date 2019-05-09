@@ -17,39 +17,26 @@
               filterData:{},
               tableBtn:[
                 {
-                  api:'saveStudenChannel',
+                  api:'saveAdvertising',
                   type:'primary',
                   name:'新增'
                 },
               ],
-              //接口名字方法           //修改                //新增
-              api:['queryUserTaobao','editUserTaobao','saveUserNotice'],
+              //接口名字方法           //修改                删除               //新增             
+              api:['queryAdvertising','updateAdvertising','deleteAdvertising','saveAdvertising'],
               thData:[
                 {
-                  key:'appCount',
-                  label:"APP安装量",
-                  align:'right'
+                  key:'id',
+                  label:"广告ID",
+  
                 },
                 {
-                  key:'shopCount',
-                  label:"收购完成量",
+                  key:'imgUrl',
+                  label:"广告链接",
                 },
                 {
-                  key:'creditCount',
-                  label:"信用卡开卡量",
-                  align:'right'
-
-                },
-                {
-                  key:'cloudPayCount',
-                  label:"云闪付完成量",
-                  align:'right'
-
-                },
-                {
-                  key:'jingdongCount',
-                  label:"京东白条完成量",
-                  align:'right'
+                  key:'clickUrl',
+                  label:"点击链接",
                 },
                 {
                   key:'status',
@@ -58,9 +45,9 @@
                 },
                 {
                   key:'status',
-                  fun:true,
-                  label:"操作",
-                  wd:150,
+                  changeStatus:true,
+                  label:"启用/禁用",
+                  wd:100,
                   chilren:[
                     {
                       num: '1',
@@ -73,7 +60,29 @@
                       name: '禁用'
                     }
                   ]
-                }
+                },
+                {
+                  key:'version',
+                  label:"版本号",
+                },
+                {
+                  fun:true,
+                  label:"操作",
+                  wd:150,
+                  chilren:[
+                    {
+                      num: '1',
+                      type: 'primary',
+                      name: '修改'
+                    },
+                    {
+                      num: '2',
+                      type: 'danger',
+                      name: '删除'
+                    }
+                  ]
+                },
+                 
               ]
             }
           }

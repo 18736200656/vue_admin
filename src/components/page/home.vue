@@ -72,7 +72,7 @@
             label="商品标题"
             show-overflow-tooltip
             align="center"
-            width="250">
+            width="150">
             <template slot-scope="scope">
               <span>{{scope.row.title || "--"}}</span>
             </template>
@@ -88,6 +88,7 @@
           </el-table-column>
           <el-table-column
             label="商品图片"
+            align="center"
             width="120">
              <template slot-scope="scope">
               <img :src="scope.row.img" class="goods_img"/>
@@ -95,56 +96,62 @@
           </el-table-column>
           <el-table-column
             label="商品分类"
+            align="center"
             width="150">
             <template slot-scope="scope">
-              <table border="1" cellspacing="0" cellpadding="0">
+              <!-- <table border="1" cellspacing="0" cellpadding="0">
                 <tr>
                   <td>商品等级一级分类：</td>
                   <td>{{scope.row.levelOne}}</td>
                 </tr>
                 <tr>
                   <td>商品等级二级分类：</td>
-                  <td>{{scope.row.levelTwo}}</td>
+                  <td>{{scope.row.levelTwo || ''}}</td>
                 </tr>
                 <tr>
                   <td>商品等级三级分类：</td>
                   <td>{{scope.row.levelThree}}</td>
                 </tr>
-              </table>
-              <!-- <div>商品等级一级分类：{{scope.row.levelOne}}</div>
+              </table> -->
+              <div>商品等级一级分类：{{scope.row.levelOne}}</div>
               <div>商品等级二级分类：{{scope.row.levelTwo}}</div>
-              <div>商品等级三级分类：{{scope.row.levelThree}}</div> -->
+              <div>商品等级三级分类：{{scope.row.levelThree}}</div>
             </template>
           </el-table-column>
           <el-table-column
             prop="price"
             label="商品价格"
+            align="right"
             width="120">
           </el-table-column>
           <el-table-column
             prop="monSalesVolume"
             label="月销量"
+            align="right"
             width="120">
           </el-table-column>
-
           <el-table-column
             prop="incomeProportion"
             label="收入比例"
+            align="right"
             width="120">
           </el-table-column>
           <el-table-column
             prop="commission"
             label="佣金"
+            align="right"
             width="100">
           </el-table-column>
           <el-table-column
             prop="rebate"
             label="返利比例"
+            align="right"
             width="120">
           </el-table-column>
           <el-table-column
             prop="date"
             label="优惠券结束日期"
+            align="center"
             width="120">
           </el-table-column>
           <el-table-column
@@ -157,7 +164,6 @@
             </template>
           </el-table-column>
           <el-table-column
-            fixed="right"
             label="操作"
             align="center"
             width="200">
@@ -213,7 +219,7 @@ export default {
       tableData:[],
       currentPage: 1, //当前是第几页
       pageSize: 20, //一页显示多少
-      total: 20, //总共
+      total: 0, //总共
       dialogVisible: false,
       id: 0,
       goods1List: [],
@@ -359,7 +365,7 @@ export default {
       this.$api.queryGoods(data).then(res=>{
         if(res.code==1){
           this.tableData = res.data.rows;
-
+          this.total =  res.data.rows.length;
         }else{
           this.$message.error(res.msg)
         }

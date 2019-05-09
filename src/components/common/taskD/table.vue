@@ -32,7 +32,7 @@
             </el-tag>
             <div v-else-if="item.fun">
               <el-button
-                size="mini" :disabled="v.num == scope.row[item.key] "
+                size="mini" v-if="scope.row[item.key] != v.num"
                 v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                 @click="changeSatus(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
             </div>
@@ -190,10 +190,9 @@
         let params = {
           id:row.id
         };
-        this.$api[tableData.api[num]](params).then(res=>{
+        this.$api[this.tableData.api[num]](params).then(res=>{
           if(res.code==1){
-            this.tableList = res.data.list;
-            this.total = res.data.total
+            this.getTabList();
           }else{
             this.$message.error(res.message)
           }

@@ -98,8 +98,8 @@ export default {
                 name: '删除'
               },
               {
-                num: '3',
-                type: 'succsess',
+                num: '5',
+                type: 'success',
                 name: '审核'
               }
             ]
