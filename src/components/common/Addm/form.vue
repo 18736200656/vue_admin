@@ -6,6 +6,7 @@
       </el-form-item>
       <el-form-item label="商品图片" class="upload_img" prop="imgUrl">
         <el-upload
+          class="avatar-uploader"
           action="/common/attachment/uploadFile"
           :show-file-list="false"
           :on-success="handleAvatarSuccess">
@@ -101,14 +102,15 @@
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 80px;
+    height: 80px;
     display: block;
   }
+
 </style>
