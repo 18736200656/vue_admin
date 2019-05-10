@@ -69,11 +69,12 @@
             drag
             action="/goods/importGoods"
             :before-upload="beforeUpload"
-            :on-success="uploadSuccess"
+            :show-file-list='true'
+            :http-request="uploadFile"
             :on-error="uploadFail">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传.xlsx或。xls文件，且不超过500kb</div>
+            <div class="el-upload__tip" slot="tip">只能上传.xlsx,.xls文件，且不超过500kb</div>
           </el-upload>
         </el-card>
        <span slot="footer" class="dialog-footer">
@@ -97,7 +98,8 @@
         dialogVisible:false,
         channelData:{},
         busData:{},
-        FiledialogVisible:false
+        FiledialogVisible:false,
+        file:{}, //导入的文件
       }
     },
     components:{
@@ -190,32 +192,37 @@
 
 
       },
+      //导入确定按钮
       submitUpload(){
         this.FiledialogVisible = false;
-        this.$refs.uploadFile.submit();
+        this.$api[this.tableData.api[4]]({file:this.file}).then(res=>{
+          if (res.code ==1){
+            this.getTabList();
+            this.$message.success(res.data.message)
+          }else{
+            this.$message.error(res.msg)
+          }
+        }).catch((error) => {
+          Promise.reject(error);
+        })
+
       },
-      //导入
-      uploadSuccess(res,file){      //4 导入
-        console.log(file,res, '=====导入的东西===----');
-        if(res.code==1){
-          this.$message.success(res.data)
-          this.getTabList()
-        }else{
-          this.$message.error(res.msg)
-          return false
-        }
-        
+      uploadFile(item){      //4 导入
+        console.log(item, '=====导入的东西===----');
+        this.file = item.file.name
       },
       //上传错误
       uploadFail(err, file, fileList) {
-        this.$message.error(err)
+        this.$message.error(err,file)
       },
       //限制
       beforeUpload(file){
         //上传前配置
-        let excelfileExtend = ".xls,.xlsx"//设置文件格式
+        console.log(file,'-----')
+
+        let excelfileExtend = ".xls.xlsx"//设置文件格式
         let fileExtend = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-        if (excelfileExtend.indexOf(fileExtend) == 0) {
+        if (excelfileExtend.search(fileExtend) == -1) {
           this.$message.error('文件格式错误')
           return false
         }

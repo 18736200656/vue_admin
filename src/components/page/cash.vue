@@ -50,7 +50,7 @@
         tableData:{},
         currentPage:1, //当前是第几页
         pageSize:20, //一页显示多少
-        total:20, //总共
+        total:0, //总共
         FormData:{},
         dialogVisible:true,
       }

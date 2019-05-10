@@ -52,8 +52,11 @@ export default {
   box-sizing: border-box;
 }
 .content {
-  margin-top: 60px;
-  margin-left: 180px;
+  /* margin-top: 60px; */
+  top: 60px;
+  position: absolute;
+  right: 0;
+  left: 180px;
   width: auto;
   background: #f0f4fb;
   padding: 25px;
