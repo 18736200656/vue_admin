@@ -256,7 +256,7 @@ const api = {
   exportTaskUser(val){
     return axios({
       url:'/exportTaskUser',
-      method:'POST',
+      method:'get',
       data:val
     })
   },
@@ -289,6 +289,15 @@ const api = {
   queryUserTaobao(val){
     return axios({
       url:'/userTaobao/queryUserTaobao',
+      method:'POST',
+      data:val
+    })
+    
+  },
+  //新增消息
+  saveUserNotice(val){
+    return axios({
+      url:'/saveUserNotice',
       method:'POST',
       data:val
     })

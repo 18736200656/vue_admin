@@ -61,6 +61,7 @@
     <span slot="title" class="dialog_tit">新增渠道管理</span>
     <form-box :channelData="channelData" @update="closeDialog"></form-box>
   </el-dialog>
+  <!-- 任务完成量 -->
   <el-dialog
     :visible.sync="taskDialogVisible"
     width="50%">

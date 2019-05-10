@@ -16,21 +16,23 @@
           filterData:{},
           tableBtn:[
             {
-              api:'saveStudenChannel',
+              api:'saveUserNotice',
               type:'primary',
-              name:'导出数据'
+              name:'新增'
             },
-          ],
-          //接口名字方法           //修改                //新增
-          api:['queryUserTaobao','editUserTaobao','saveUserNotice'],
+          ], 
+          //接口名字方法           //修改                //新增          发送消息
+          api:['queryUserTaobao','editUserTaobao','saveUserNotice','saveUserNotice'],
           thData:[
             {
               key:'taobaoOpenUid',
               label:"淘宝ID",
+              wd:100,
             },
             {
               key:'taobaoName',
               label:"用户淘宝名",
+              wd:100,
             },
             {
               key:'shopCount',
@@ -86,17 +88,17 @@
               key:'status',
               fun:true,
               label:"操作",
-              wd:150,
+              wd:250,
               chilren:[
                 {
                   num: '1',
                   type: 'primary',
-                  name: '启用'
+                  name: '修改'
                 },
                 {
                   num: '2',
-                  type: 'danger',
-                  name: '禁用'
+                  type: '',
+                  name: '发送消息'
                 }
               ]
             }

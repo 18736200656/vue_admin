@@ -4,8 +4,11 @@
 
       <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
         <i class="iconfont  icon-wuxupailie"></i>用户列表
-        <el-button :type="item.type" @click="addClick(item.api)" :key="index" style="float: right;margin-bottom: 10px;"
+        <div style="margin-top:10px;">
+        <!-- <el-button type="primary" @click="addClick" >新增</el-button> -->
+        <el-button :type="item.type" @click="addClick" :key="index"
                    v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
+        </div>           
       </section>
       <section class="table_container">
         <el-table
@@ -33,6 +36,7 @@
             :key="index"
             :label="item.label"
             :align="item.align || 'center'"
+            show-overflow-tooltip
             :width=" item.wd || 'auto'">
             <template slot-scope="scope">
               <div v-if="item.fun">
@@ -66,6 +70,28 @@
       <span slot="title" class="dialog_tit">新增渠道管理</span>
       <form-box :FormData="FormData" @update="closeDialog"></form-box>
     </el-dialog>
+    <!-- 发送消息 -->
+    <el-dialog
+      :visible.sync="MessageDialogVisible"
+      width="30%">
+      <span slot="title" class="dialog_tit">发送消息</span>
+      <section style="margin-top:20px;">
+        <el-form :model="MessageForm" ref="MessageForm" :rules="formRules" lable-width="100px" label-position="left">
+          <el-form-item label="用户ID">
+            <el-input v-model="MessageForm.userId" disabled type="text"></el-input>
+          </el-form-item>
+           <el-form-item label="消息" prop="noticeMsg">
+            <el-input v-model="MessageForm.noticeMsg " placeholder="请输入发送的消息" type="textarea" ></el-input>
+          </el-form-item>
+           <el-form-item style="margin-top:20px;" align="right">
+             <el-button @click="MessageDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="submitMessage">确 定</el-button>
+          </el-form-item>
+        </el-form>
+      </section>
+    </el-dialog>
+
+
   </div>
 </template>
 <script>
@@ -77,11 +103,19 @@
       return{
         tableList:[],
         total:0,
-        currentPage: 1,
+        currentPage: 0,
         pageSize: 10,
         dialogVisible:false,
         FormData:[],
         busData:{},
+        MessageDialogVisible:false,
+        MessageForm:{
+          userId:'',
+          noticeMsg:'',
+        },
+        formRules:{
+          noticeMsg:{required:true, message:'消息不能为空',trigger: 'blur'}, //	任务ID
+        }
       }
     },
     components:{
@@ -91,11 +125,7 @@
       tableData:{
         type:Object,
         default:{}
-      },
-      newData:{
-        type:Array,
-        default:()=>[]
-      },
+      }
     },
     watch:{
 
@@ -132,7 +162,7 @@
         });
         this.$api[this.tableData.api[0]](params).then(res=>{
           if(res.code==1){
-            this.tableList = res.data.list;
+            this.tableList = res.data.rows;
             this.total = res.data.total
           }else{
             this.$message.error(res.message)
@@ -141,61 +171,27 @@
           Promise.reject(error);
         })
       },
-      //启用还是禁用
+      //修改 //发送消息
       handleEdit(index,val,num){
-        if(num=='1'){ //修改
+        if(num=='1'){ //  修改
            let data = {
             edit:true,
             data:val,
           }
           this.FormData = data;
           this.dialogVisible = true;
-        }else if(num=='2'){ //删除
-          this.$api[this.tableData.api[num]]({id:val.id}).then(res=>{
-            if(res.code==1){
-             this.$message.success(res.data.message)
-             this.getTabList()
-            }else{
-              this.$message.error(res.message)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
-        }else{ //导出 3
-          this.$api[this.tableData.api[num]](val).then(res=>{
-            if(res.code==1){
-               this.$message.success(res.data.message)
-              //  window.location.href = res.data.xx
-            }else{
-              this.$message.error(res.message)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
-        }
+        }else if(num=='2'){ //发送消息
+          this.MessageForm.userId = val.id;
+          this.MessageDialogVisible = true;
+        } 
       },
        //新增
-      addClick(val){
-        if(!val){
-           this.dialogVisible=true
-            this.FormData={
-              edit:false,
-              data:{}
-            }
-        }else{
-          this.$api[this.tableData.api[3]]().then(res=>{
-          if (res.code ==1){
-            console.log(res,'====')
-            this.$message.success(res.data.message)
-
-          }else{
-            this.$message.error(res.message)
-          }
-        }).catch((error) => {
-          Promise.reject(error);
-        })
+      addClick(){
+        this.dialogVisible=true
+        this.FormData={
+          edit:false,
+          data:{}
         }
-
       },
       //关闭弹窗
       closeDialog(data){
@@ -211,8 +207,29 @@
         }).catch((error) => {
           Promise.reject(error);
         })
-      }
-    }
+      },
+        //发送消息
+    submitMessage(){
+      this.$refs.MessageForm.validate(valid=>{
+        if(valid){
+          this.MessageDialogVisible = false
+          this.$api[this.tableData.api[2]](this.MessageForm).then(res=>{
+            if (res.code ==1){
+              this.$message.success(res.data.message)
+              this.getTabList();
+            }else{
+              this.$message.error(res.message)
+            }
+          }).catch((error) => {
+            Promise.reject(error);
+          })
+        }else{
+          return false
+        }
+      })
+    },
+    },
+  
   }
 </script>
 <style>
