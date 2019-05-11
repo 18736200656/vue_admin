@@ -81,6 +81,7 @@
         dialogVisible:false,
         FormData:[],
         busData:{},
+        baseUrl:'http://47.97.152.146/',
       }
     },
     components:{
@@ -91,13 +92,6 @@
         type:Object,
         default:{}
       },
-      newData:{
-        type:Array,
-        default:()=>[]
-      },
-    },
-    watch:{
-
     },
     created(){
       this.getTabList();
@@ -176,11 +170,11 @@
        //新增
       addClick(val){
         if(!val){
-           this.dialogVisible=true
-            this.FormData={
-              edit:false,
-              data:{}
-            }
+          this.dialogVisible=true
+          this.FormData={
+            edit:false,
+            data:{}
+          }
         }else{
           //导出
           // let data = {
@@ -191,8 +185,8 @@
           //   startTime:'', //		string	否	提交任务开始时间
           //   endTime:'', //		string	否	提交任务结束时间
           // }
-          console.log(process.env.NODE_BASE_URL,'----ip地址')
-          window.location.href = process.env.NODE_BASE_URL+'exportTaskUser'
+          console.log(this.baseUrl,'----ip地址')
+          window.location.href = this.baseUrl+'exportTaskUser'
         }
 
       },
@@ -211,7 +205,7 @@
           Promise.reject(error);
         })
       }
-    }
+    },
   }
 </script>
 <style>

@@ -359,13 +359,13 @@ export default {
     //商品列表
     queryGoodsList(){
       let data =Object.assign(this.goodsForm,{
-        currentPage:parseInt(this.currentPage -1), //当前是第几页
+        currentPage:this.currentPage , //当前是第几页
         pageSize:this.pageSize //一页显示多少
       })
       this.$api.queryGoods(data).then(res=>{
         if(res.code==1){
-          this.tableData = res.data.rows;
-          this.total =  res.data.rows.length;
+          this.tableData = res.data.list;
+          this.total =  res.data.total;
         }else{
           this.$message.error(res.msg)
         }

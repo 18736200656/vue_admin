@@ -302,6 +302,32 @@ const api = {
       data:val
     })
   },
+  //  _________________________提现管理_________ _________________________提现管理________
+    //分页查询提现列表
+    queryUserWithdrawList(val){
+      return axios({
+        url:'queryUserWithdrawList',
+        method:'POST',
+        data:val
+      })
+    },
+    //导出提现列表
+    exportUserWithdraw(val){
+      return axios({
+        url:'exportUserWithdraw',
+        method:'POST',
+        data:val
+      })
+      
+    },
+    //导入提现支付信息
+    importUserPay(val){
+      return axios({
+        url:'/importUserPay',
+        method:'POST',
+        data:val
+      })
+    },
   // _________________________附件上传_________ _________________________附件上传_________
   //图片上传
   uploadFile(val){
