@@ -64,7 +64,7 @@
         })
       },
       //上传图片
-      handleAvatarSuccess(file,res){
+      handleAvatarSuccess(res,file){
         console.log(file,res,'====')
         if(res.code==1){
           this.formData.taskImg = res.data.path

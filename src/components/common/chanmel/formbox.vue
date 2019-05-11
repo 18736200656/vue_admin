@@ -40,9 +40,9 @@
       }
     },
     props:{
-      channelData:{
+      FormData:{
         type:Array,
-        default:()=>[]
+        default:()=>{}
       }
     },
     created(){

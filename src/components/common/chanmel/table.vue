@@ -59,7 +59,7 @@
     :visible.sync="dialogVisible"
     width="50%">
     <span slot="title" class="dialog_tit">新增渠道管理</span>
-    <form-box :channelData="channelData" @update="closeDialog"></form-box>
+    <form-box :FormData="FormData" @update="closeDialog"></form-box>
   </el-dialog>
   <!-- 任务完成量 -->
   <el-dialog
@@ -106,7 +106,7 @@
         currentPage:1,
         pageSize: 10,
         dialogVisible:false,
-        channelData:[],
+        FormData:[],
         busData:{},
         taskDialogVisible:false,
         taskList:[],
@@ -119,18 +119,14 @@
       tableData:{
         type:Object,
         default:{}
-      },
-      newData:{
-        type:Array,
-        default:()=>[]
-      },
+      }
     },
     watch:{
 
     },
     created(){
       this.getTabList();
-      this.channelData = this.newData;
+      this.FormData = this.newData;
       bus.$on('updataCHN',data =>{
         this.busData = data;
         this.getTabList();

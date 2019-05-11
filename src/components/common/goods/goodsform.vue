@@ -157,7 +157,7 @@ export default {
       })
       console.log('submit!');
     },
-    handleAvatarSuccess(file,res){
+    handleAvatarSuccess(res,file){
       if(res.code==1){
         this.FormData.img = res.data.path;
       }else{

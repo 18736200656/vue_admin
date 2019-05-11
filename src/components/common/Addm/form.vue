@@ -1,7 +1,7 @@
 <template>
   <div class="formbox">
     <el-form :model="formdata" ref="formdata" :rules="formRules" lable-width="100px" label-position="left">
-      <el-form-item label="广告ID" prop="id" v-if="channelData.edit">
+      <el-form-item label="广告ID" prop="id" v-if="FormData.edit">
         <el-input v-model="formdata.id" placeholder="请输入广告ID" type="text" ></el-input>
       </el-form-item>
       <el-form-item label="商品图片" class="upload_img" prop="imgUrl">
@@ -18,7 +18,7 @@
         <el-input v-model="formdata.clickUrl" placeholder="请输入点击链接" type="text" ></el-input>
       </el-form-item>
       <el-form-item align="right">
-        <el-button type="primary" @click="submit('true')" v-if="channelData.edit">确 定</el-button>
+        <el-button type="primary" @click="submit('true')" v-if="FormData.edit">确 定</el-button>
         <el-button type="primary" @click="submit('false')" v-else>保 存</el-button>
       </el-form-item>
     </el-form>
@@ -42,7 +42,7 @@
       }
     },
     props:{
-      channelData:{
+      FormData:{
         type:Object,
         default:()=>{}
       }
@@ -52,7 +52,7 @@
     },
     methods:{
       submit(val){
-        if(this.channelData.edit){
+        if(this.FormData.edit){
           this.formRules= Object.assign(this.formRules,{id:this.id})
         }
         this.formdata=Object.assign(this.formdata,{
@@ -68,6 +68,7 @@
       },
       //上传图片
      handleAvatarSuccess(res,file){
+       console.log(file,res,'====')
         if(res.code==1){
           this.formdata.imgUrl = res.data.path
         }else{
@@ -76,7 +77,7 @@
       },
     },
     watch:{
-      channelData(val){
+      FormData(val){
         this.formdata = val.data;
       }
     }

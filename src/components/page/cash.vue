@@ -21,6 +21,7 @@ export default {
   name:'Channel',
   data(){
     return{
+      activeName:'first',
       tableData:{
         type:'Cash',
         filterData:{},

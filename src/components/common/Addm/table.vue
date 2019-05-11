@@ -24,6 +24,7 @@
             :key="index"
             :label="item.label"
             :align="item.align || 'center'"
+            show-overflow-tooltip
             :width=" item.wd || 'auto'">
             <template slot-scope="scope">
              <el-tag v-if="item.Tag" :type="scope.row[item.key]=='1' ?'':'info'">
@@ -64,7 +65,7 @@
       :visible.sync="dialogVisible"
       width="50%">
       <span slot="title" class="dialog_tit">新增商品分类</span>
-      <form-box :channelData="channelData" @update="closeDialog"></form-box>
+      <form-box :FormData="FormData" @update="closeDialog"></form-box>
     </el-dialog>
   </div>
 </template>
@@ -80,7 +81,7 @@
         currentPage: 1,
         pageSize: 10,
         dialogVisible:false,
-        channelData:{},
+        FormData:{},
         busData:{},
       }
     },
@@ -145,7 +146,7 @@
             edit:true,
             data:row
           };
-          this.channelData = data;
+          this.FormData = data;
         }else{
           this.$confirm('是否删除?', '提示', {
             confirmButtonText: '确定',

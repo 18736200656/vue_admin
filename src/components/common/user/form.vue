@@ -12,6 +12,7 @@
           class="avatar-uploader"
           action="/common/attachment/uploadFile"
           :show-file-list="false"
+          :on-remove="handleRemove"
           :on-success="handleAvatarSuccess">
           <img v-if="formData.taskImg" :src="formData.taskImg" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -64,12 +65,17 @@
         })
       },
       //上传图片
-      handleAvatarSuccess(file,res){
+      handleAvatarSuccess(res,file){
+        console.log(res,file,'===用戶')
         if(res.code==1){
           this.formData.taskImg = res.data.path
         }else{
           this.$message.error(res.msg);
         }
+      },
+      //成功后移除
+      handleRemove(file, fileList) {
+        console.log(file, fileList,'===移除');
       },
     },
     watch:{

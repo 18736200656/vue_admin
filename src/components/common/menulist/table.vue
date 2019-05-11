@@ -56,7 +56,7 @@
       :visible.sync="dialogVisible"
       width="50%">
       <span slot="title" class="dialog_tit">新增商品分类</span>
-      <form-box :channelData="channelData" @update="closeDialog"></form-box>
+      <form-box :FormData="FormData" @update="closeDialog"></form-box>
     </el-dialog>
      <el-dialog
       :visible.sync="FiledialogVisible"
@@ -96,7 +96,7 @@
         currentPage: 1,
         pageSize: 10,
         dialogVisible:false,
-        channelData:{},
+        FormData:{},
         busData:{},
         FiledialogVisible:false,
         file:{}, //导入的文件
@@ -162,7 +162,7 @@
           edit:true,
           data:val
         };
-        this.channelData = data;
+        this.FormData = data;
       },
        //新增
       addClick(){
