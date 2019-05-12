@@ -1,9 +1,23 @@
 <template>
   <div>
     <el-card class="tablelist">
+
       <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-        <el-button :type="item.type" @click="exportFile" :key="index"
-                   v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>   
+        <div style="margin-top:10px;">
+          <el-upload
+            class="upload-demo"
+            ref="uploadFile"
+            action="/importUserPay"
+            :before-upload="beforeUpload"
+            :show-file-list='true'
+            :http-request="uploadFile"
+            :on-error="uploadFail">
+            <!-- <i class="el-icon-upload"></i> -->
+            <el-button size="small" type="success">导入</el-button>
+            <!-- <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">只能上传.xlsx,.xls文件，且不超过500kb</div> -->
+          </el-upload>
+        </div>           
       </section>
       <section class="table_container">
         <el-table
@@ -20,8 +34,14 @@
             align="center"
             width="55">
           </el-table-column>
+          <!-- <el-table-column
+            label="编号"
+            type="index"
+            align="center"
+            width="50">
+          </el-table-column> -->
           <el-table-column
-            v-for="(item,index) in tableData.thData"
+            v-for="(item,index) in tableData.thData2"
             :key="index"
             :label="item.label"
             :align="item.align || 'center'"
@@ -53,13 +73,6 @@
         </div>
       </section>
     </el-card>
-    <el-dialog
-      :visible.sync="dialogVisible"
-      width="50%">
-      <span slot="title" class="dialog_tit">新增渠道管理</span>
-      <form-box :FormData="FormData" @update="closeDialog"></form-box>
-    </el-dialog>
-  
   </div>
 </template>
 <script>
@@ -131,39 +144,36 @@
           Promise.reject(error);
         })
       },
-      //修改 //发送消息
-      handleEdit(index,val,num){
-        if(num=='1'){ //  修改
-           let data = {
-            edit:true,
-            data:val,
-          }
-          this.FormData = data;
-          this.dialogVisible = true;
-        }else if(num=='2'){ //发送消息
-          this.MessageForm.userId = val.id;
-          this.MessageDialogVisible = true;
-        } 
-      },
-       //导出
-      exportFile(){
-       window.location.href="http://47.97.152.146/exportUserWithdraw"
-      },
-      //关闭弹窗
-      closeDialog(data){
-        this.dialogVisible = false;
-        let num = data.type ? '1' : '4'; //1 修改 4 新增
-        this.$api[this.tableData.api[num]](data).then(res=>{
-          if (res.code ==1){
-            this.$message.success(res.data.message)
-            this.getTabList();
+      uploadFile(item){      //2 导入
+        console.log(item, '=====导入的东西===----');
+        this.file = item.file.name
+        this.$api[this.tableData.api[2]]({file:this.file}).then(res=>{
+          if(res.code==1){
+             this.getTabList();
           }else{
             this.$message.error(res.message)
           }
         }).catch((error) => {
           Promise.reject(error);
         })
+       
       },
+      //上传错误
+      uploadFail(err, file, fileList) {
+        this.$message.error(err,file)
+      },
+      //限制
+      beforeUpload(file){
+        //上传前配置
+        console.log(file,'-----')
+
+        let excelfileExtend = ".xls.xlsx"//设置文件格式
+        let fileExtend = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+        if (excelfileExtend.search(fileExtend) == -1) {
+          this.$message.error('文件格式错误')
+          return false
+        }
+      }
     },
   
   }

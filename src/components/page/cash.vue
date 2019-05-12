@@ -7,7 +7,7 @@
           <table-box :tableData="tableData"></table-box>
         </el-tab-pane>
         <el-tab-pane label="已支付" name="second">配置管理
-          <table-box :tableData="tableData"></table-box>
+          <table-box2 :tableData="tableData"></table-box2>
         </el-tab-pane>
       </el-tabs>
     </section>
@@ -15,8 +15,9 @@
   </div>
 </template>
 <script>
-import searchBox from '../common/chanmel/search'
-import tableBox from '../common/chanmel/table'
+import searchBox from '../common/cash/search'
+import tableBox from '../common/cash/table'
+import tableBox2 from '../common/cash/table2'
 export default {
   name:'Channel',
   data(){
@@ -29,7 +30,7 @@ export default {
           {
             api:'saveStudenChannel',
             type:'primary',
-            name:'新增'
+            name:'导出'
           },
         ],
                 //接口名字方法       //导出提现列表           //导入提现支付信息             查看推广的学生完成量
@@ -37,98 +38,112 @@ export default {
         thData:[
           {
             key:'id',
-            label:"渠道ID",
+            label:"提现ID",
           },
-          {
-            key:'channelLoginName',
-            label:"渠道账号",
+          // {
+          //   key:'userId',
+          //   label:"用户ID",
 
-          },
+          // },
           {
-            key:'channelName',
-            label:"渠道名称",
+            key:'userName',
+            label:"用户名称",
           },
            {
-            key:'inviteCode',
-            label:"邀请码",
+            key:'withdrawAccount',
+            label:"提现账号",
           },
+          // {
+          //   key:'amount',
+          //   label:"提现金额",
+          // },
           {
-            key:'password',
-            label:"密码",
-          },
-          {
-            key:'totalAmount',
-            label:"总金额",
+            key:'payAmount',
+            label:"支付金额",
             align:'right'
           },
-          {
-            key:'amount',
-            label:"可用金额",
-            align:'right'
-          },
-          {
-            key:'taskAmount',
-            label:"任务金额",
-            align:'right'
-
-          },
-          {
-            key:'withdrawAmount',
-            label:"提现金额",
-            align:'right'
-
-          },
-          {
-            key:'frozenAmount',
-            label:"冻结金额",
-            align:'right'
-          },
+           
+          // {
+          //   key:'payTime',
+          //   label:"支付时间",
+          // },
           {
             key:'status',
             label:"状态",
             Tag:true,
           },
+          // {
+          //   key:'createTime',
+          //   label:"提现时间",
+          // },
+          // {
+          //   key:'updateTime',
+          //   label:"最后修改时间",
+
+          // },
+          // {
+          //   key:'version',
+          //   label:"当前版本号",
+          // },
+         
+        ],
+        thData2:[
           {
-            key:'statusName',
-            label:"状态名称",
+            key:'id',
+            label:"提现ID",
           },
-          
+          // {
+          //   key:'userId',
+          //   label:"用户ID",
+
+          // },
           {
-            key:'createTime',
-            label:"创建时间",
+            key:'userName',
+            label:"用户名称",
           },
+          //  {
+          //   key:'withdrawAccount',
+          //   label:"提现账号",
+          // },
+          // {
+          //   key:'amount',
+          //   label:"提现金额",
+          // },
           {
-            key:'updateTime',
-            label:"更新时间",
+            key:'payAmount',
+            label:"支付金额",
+            align:'right'
           },
+           
           {
-            key:'version',
-            label:"当前版本号",
+            key:'payTime',
+            label:"支付时间",
           },
-          {
-            key:'status',
-            fun:true,
-            label:"操作",
-            wd:150,
-            chilren:[
-              {
-                num: '1',
-                type: 'primary',
-                name: '启用'
-              },
-              {
-                num: '2',
-                type: 'danger',
-                name: '禁用'
-              }
-            ]
-          }
+          // {
+          //   key:'status',
+          //   label:"状态",
+          //   Tag:true,
+          // },
+          // {
+          //   key:'createTime',
+          //   label:"提现时间",
+          // },
+          // {
+          //   key:'updateTime',
+          //   label:"最后修改时间",
+
+          // },
+          // {
+          //   key:'version',
+          //   label:"当前版本号",
+          // },
+         
         ]
       }
     }
   },
   components:{
-    searchBox,tableBox
+    searchBox,tableBox,tableBox2
   },
 }
 </script>
