@@ -3,10 +3,10 @@
     <search-box></search-box>
     <section class="cash_section">
       <el-tabs v-model="activeName" type="border-card">
-        <el-tab-pane label="提现申请" name="first">用户管理
+        <el-tab-pane label="提现申请" name="first">
           <table-box :tableData="tableData"></table-box>
         </el-tab-pane>
-        <el-tab-pane label="已支付" name="second">配置管理
+        <el-tab-pane label="已支付" name="second">
           <table-box2 :tableData="tableData"></table-box2>
         </el-tab-pane>
       </el-tabs>

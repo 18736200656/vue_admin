@@ -92,7 +92,7 @@
     },
     created(){
       this.getTabList();
-      bus.$on('updataCHN',data =>{
+      bus.$on('updataCASH',data =>{
         this.busData = data;
         this.getTabList();
       })

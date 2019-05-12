@@ -58,7 +58,7 @@
             if(beginDate){
               return this.$format.date(item.getTime()).split('-').join('') > beginDate
             }
-        }
+          }
         },
         beginDateAfter:{
           disabledDate:(item)=>{
@@ -73,7 +73,7 @@
     },
     methods:{
       submit(){
-        bus.$emit('updataUSR',this.formData)
+        bus.$emit('updataCASH',this.formData)
       }
     }
   }
