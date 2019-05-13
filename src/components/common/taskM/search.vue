@@ -75,6 +75,7 @@
     methods:{
       submit(){
         bus.$emit('updataTKM',this.formData)
+        this.formData={}
       }
     }
   }

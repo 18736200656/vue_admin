@@ -399,6 +399,7 @@ export default {
         if(res.code==1){
           this.tableData = res.data.list;
           this.total =  res.data.total;
+          this.goodsForm={}
         }else{
           this.$message.error(res.msg)
         }
@@ -446,7 +447,8 @@ export default {
     //导入确定按钮
     submitUpload(){
       this.FiledialogVisible = false;
-      this.$api.importGoods({file:this.file}).then(res=>{
+      let params = {file:this.file}
+      this.$api.importGoods(params).then(res=>{
         if (res.code ==1){
           this.queryGoodsList();
           this.$message.success(res.data.message)

@@ -32,6 +32,7 @@
                   v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                   @click="handleEdit(scope.$index, scope.row)">{{v.name}}</el-button>
               </div>
+              <img :src="scope.row[item.img]" alt="" v-else-if="item.imgShow" class="cate_img">
               <div v-else>
                 <span>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
               </div>
@@ -202,7 +203,11 @@
     padding: 0;
     height: 60px;
   }
- 
+  .cate_img{
+    width: 50px;
+    height: 40px;
+    border-radius: 4px;
+  }
 </style>
 
 

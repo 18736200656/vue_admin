@@ -35,6 +35,7 @@
     methods:{
       submit(){
         bus.$emit('updataADD',this.formData)
+        this.formData={}
       }
     }
   }

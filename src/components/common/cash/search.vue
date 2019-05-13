@@ -78,6 +78,7 @@
     methods:{
       submit(){
         bus.$emit('updataCASH',this.formData)
+        this.formData={}
       }
     }
   }

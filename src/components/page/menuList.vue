@@ -39,6 +39,7 @@
               label:"级别",
             },
             {
+              imgShow:true,
               key:'cateImgs',
               label:"图片组",
             },

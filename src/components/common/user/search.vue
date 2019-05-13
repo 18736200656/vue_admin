@@ -35,7 +35,8 @@
     },
     methods:{
       submit(){
-        bus.$emit('updataUSR',this.formData)
+        bus.$emit('updataUSR',this.formData);
+        this.formData={}
       }
     }
   }

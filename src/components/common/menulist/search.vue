@@ -32,6 +32,7 @@
     methods:{
       submit(){
         bus.$emit('updataMENU',this.formData)
+        this.formData={}
       }
     }
   }

@@ -175,7 +175,10 @@
         }
         this.$api[this.tableData.api[1]](data).then(res=>{
           if(res.code==1){
-            this.taskList = res.data.list;
+            // this.$message.success(res.data)
+            // this.taskList = res.data.list;
+            this.getTabList();
+
           }else{
             this.$message.error(res.message)
           }
