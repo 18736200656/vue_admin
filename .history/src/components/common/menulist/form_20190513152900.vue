@@ -11,7 +11,7 @@
         <el-input v-model="formdata.parentId" placeholder="请输入上级分类ID" type="text" ></el-input>
       </el-form-item>
        <el-form-item label="商品分类等级" prop="level" >
-          <el-select v-model="formdata.level" placeholder="请选择商品分类等级"> 
+          <el-select v-model="FormData.level" placeholder="请选择商品分类等级"> 
             <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
           </el-select>
         </el-form-item>
