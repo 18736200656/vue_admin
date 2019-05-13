@@ -100,7 +100,6 @@ export default {
   top: 0;
   width: 180px;
   background-color: #21212c;
-  height: 100%;
 }
 .top_box{
   margin-bottom:18px;

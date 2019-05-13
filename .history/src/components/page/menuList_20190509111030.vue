@@ -15,7 +15,7 @@
           type:'menulist',
           filterData:{},
            //列表查询                    / /修改                //新增                //分类          //导入
-          api:['queryGoodsCategory','updateGoodsCategory','addGoodsCategory','queryGoodsList'],
+          api:['queryGoodsCategory','updateGoodsCategory','addGoodsCategory','queryGoodsList','importGoods'],
           thData:[
             {
               key:'id',

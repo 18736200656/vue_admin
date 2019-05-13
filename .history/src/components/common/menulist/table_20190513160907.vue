@@ -74,7 +74,8 @@
         dialogVisible:false,
         FormData:{},
         busData:{},
-       
+        FiledialogVisible:false,
+        file:{}, //导入的文件
       }
     },
     components:{
@@ -167,7 +168,41 @@
 
 
       },
-     
+      //导入确定按钮
+      submitUpload(){
+        this.FiledialogVisible = false;
+        this.$api[this.tableData.api[4]]({file:this.file}).then(res=>{
+          if (res.code ==1){
+            this.getTabList();
+            this.$message.success(res.data.message)
+          }else{
+            this.$message.error(res.msg)
+          }
+        }).catch((error) => {
+          Promise.reject(error);
+        })
+
+      },
+      uploadFile(item){      //4 导入
+        console.log(item, '=====导入的东西===----');
+        this.file = item.file.name
+      },
+      //上传错误
+      uploadFail(err, file, fileList) {
+        this.$message.error(err,file)
+      },
+      //限制
+      beforeUpload(file){
+        //上传前配置
+        console.log(file,'-----')
+
+        let excelfileExtend = ".xls.xlsx"//设置文件格式
+        let fileExtend = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+        if (excelfileExtend.search(fileExtend) == -1) {
+          this.$message.error('文件格式错误')
+          return false
+        }
+      }
     }
   }
 </script>

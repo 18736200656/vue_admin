@@ -14,7 +14,7 @@
         tableData:{
           type:'menulist',
           filterData:{},
-           //列表查询                    / /修改                //新增                //分类          //导入
+           //列表查询                    / /修改                //新增                //分类         
           api:['queryGoodsCategory','updateGoodsCategory','addGoodsCategory','queryGoodsList'],
           thData:[
             {

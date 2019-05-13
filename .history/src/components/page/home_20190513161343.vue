@@ -443,7 +443,7 @@ export default {
         that.goods3List = result
       });
     },
-    //导入确定按钮
+    //
     submitUpload(){
       this.FiledialogVisible = false;
       this.$api.importGoods({file:this.file}).then(res=>{
