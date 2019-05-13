@@ -100,6 +100,7 @@ export default {
   top: 0;
   width: 180px;
   background-color: #21212c;
+  height: 100%;
 }
 .top_box{
   margin-bottom:18px;
@@ -113,10 +114,6 @@ export default {
 .menu_page {
   min-height: 100%;
   background-color: #21212c;
-}
-
-.sidebar {
-  overflow: hidden;
 }
 .sidebar::-webkit-scrollbar {
   width: 0;
