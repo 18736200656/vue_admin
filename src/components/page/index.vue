@@ -48,7 +48,7 @@ export default {
 .index {
   width: 100%;
   height: 100%;
-  position: relative;
+  /* position: relative; */
   box-sizing: border-box;
 }
 .content {

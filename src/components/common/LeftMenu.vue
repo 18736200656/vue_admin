@@ -115,10 +115,6 @@ export default {
   min-height: 100%;
   background-color: #21212c;
 }
-
-.sidebar {
-  overflow: hidden;
-}
 .sidebar::-webkit-scrollbar {
   width: 0;
 }
