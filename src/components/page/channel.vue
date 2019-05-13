@@ -5,8 +5,8 @@
   </div>
 </template>
 <script>
-import searchBox from '../common/chanmel/search'
-import tableBox from '../common/chanmel/table'
+import searchBox from '../common/channel/search'
+import tableBox from '../common/channel/table'
 export default {
   name:'Channel',
   data(){

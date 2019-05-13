@@ -159,6 +159,7 @@
           if(res.code==1){
             this.tableList = res.data.list;
             this.total = res.data.total
+            this.params={}
           }else{
             this.$message.error(res.message)
           }
