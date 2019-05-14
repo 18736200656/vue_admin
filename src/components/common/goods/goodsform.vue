@@ -184,6 +184,10 @@ export default {
         })
       }
     },
+    //重置
+    reset(){
+      this.$refs.form.resetFields();
+    }
   },
   created(){
     this.FormData.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName

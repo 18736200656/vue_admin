@@ -86,6 +86,10 @@
             return
           }
         })
+      },
+      //重置
+      reset(){
+        this.$refs.formData.resetFields();
       }
     },
     watch:{

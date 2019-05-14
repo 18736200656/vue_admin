@@ -66,9 +66,10 @@
     </el-card>
     <el-dialog
       :visible.sync="dialogVisible"
+      @close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增渠道管理</span>
-      <form-box :FormData="FormData" @update="closeDialog"></form-box>
+      <form-box :FormData="FormData" @update="closeDialog" ref="formbox"></form-box>
     </el-dialog>
     <!-- 发送消息 -->
     <el-dialog
@@ -115,7 +116,8 @@
         },
         formRules:{
           noticeMsg:{required:true, message:'消息不能为空',trigger: 'blur'}, //	任务ID
-        }
+        },
+        type:'',
       }
     },
     components:{
@@ -196,6 +198,7 @@
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
+        this.type = data.ref;
         let num = data.type=='true' ? '1' : '4'; //1 修改 4 新增
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
@@ -209,25 +212,30 @@
         })
       },
         //发送消息
-    submitMessage(){
-      this.$refs.MessageForm.validate(valid=>{
-        if(valid){
-          this.MessageDialogVisible = false
-          this.$api[this.tableData.api[2]](this.MessageForm).then(res=>{
-            if (res.code ==1){
-              this.$message.success(res.data.message)
-              this.getTabList();
-            }else{
-              this.$message.error(res.message)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
-        }else{
-          return false
-        }
-      })
-    },
+      submitMessage(){
+        this.$refs.MessageForm.validate(valid=>{
+          if(valid){
+            this.MessageDialogVisible = false
+            this.$api[this.tableData.api[2]](this.MessageForm).then(res=>{
+              if (res.code ==1){
+                this.$message.success(res.data.message)
+                this.getTabList();
+              }else{
+                this.$message.error(res.message)
+              }
+            }).catch((error) => {
+              Promise.reject(error);
+            })
+          }else{
+            return false
+          }
+        })
+      },
+      //关闭弹窗
+      beforeClose(){
+        this.dialogVisible = false;
+        this.$refs.formbox.reset();
+      }
     },
   
   }

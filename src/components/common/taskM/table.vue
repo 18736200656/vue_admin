@@ -61,9 +61,10 @@
     </el-card>
     <el-dialog
       :visible.sync="dialogVisible"
+      @close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增渠道管理</span>
-      <form-box :FormData="FormData" @update="closeDialog"></form-box>
+      <form-box :FormData="FormData" @update="closeDialog" ref="formData"></form-box>
     </el-dialog>
   </div>
 </template>
@@ -204,6 +205,11 @@
         }).catch((error) => {
           Promise.reject(error);
         })
+      },
+       //关闭弹窗
+      beforeClose(){
+        this.dialogVisible = false;
+        this.$refs.formData.reset();
       }
     },
   }

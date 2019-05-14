@@ -91,6 +91,10 @@
           this.$message.error(res.msg);
         }
       },
+      //重置
+      reset(){
+        this.$refs.formdata.resetFields();
+      }
     },
     watch:{
       FormData(val){

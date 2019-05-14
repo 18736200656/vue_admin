@@ -1,10 +1,10 @@
 <template>
   <div class="formbox">
-    <el-form :model="formData" ref="formData" :rules="formRules" lable-width="100px" label-position="left">
-      <el-form-item label="任务ID" prop="channelLoginName">
+    <el-form :model="formData" ref="formbox" :rules="formRules" lable-width="100px" label-position="left">
+      <el-form-item label="任务ID" prop="taskId">
         <el-input v-model="formData.taskId" placeholder="请输入任务ID" type="text" ></el-input>
       </el-form-item>
-      <el-form-item label="用户ID" prop="channelName">
+      <el-form-item label="用户ID" prop="userId">
         <el-input v-model="formData.userId" placeholder="请输入用户ID" type="text" ></el-input>
       </el-form-item>
       <el-form-item label="任务截图" prop="taskImg" class="upload_img">
@@ -46,6 +46,10 @@
       FormData:{
         type:Object,
         default:()=>{}
+      },
+      ref:{
+        type:String,
+        default:''
       }
     },
     created(){
@@ -54,9 +58,10 @@
      methods:{
       submit(val){
         this.formData = Object.assign(this.formData,{
-          type:val
+          type:val,
+          // ref:'formData'
         })
-        this.$refs.formData.validate(valid =>{
+        this.$refs.formbox.validate(valid =>{
           if (valid){
             this.$emit('update',this.formData)
           }else{
@@ -77,6 +82,10 @@
       handleRemove(file, fileList) {
         console.log(file, fileList,'===移除');
       },
+      //重置
+      reset(){
+        this.$refs.formbox.resetFields();
+      }
     },
     watch:{
       FormData(val){

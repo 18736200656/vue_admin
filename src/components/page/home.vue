@@ -200,11 +200,12 @@
     <!-- 商品弹出 -->
      <el-dialog
       :visible.sync="dialogVisible"
+      @close="beforeClose"
       width="40%">
       <span slot="title" class="dialog-header">
         {{'商品信息'}}
       </span>
-      <goods-form @update="closeDialog" :formdata="formdata"></goods-form>
+      <goods-form @update="closeDialog" :formdata="formdata" ref="form"></goods-form>
     </el-dialog>
     <!-- 导入xlsx -->
      <el-dialog
@@ -478,7 +479,12 @@ export default {
         this.$message.error('文件格式错误')
         return false
       }
-    }
+    },
+     //关闭弹窗
+      beforeClose(){
+        this.dialogVisible = false;
+        this.$refs.form.reset();
+      }
 
   },
   components:{
