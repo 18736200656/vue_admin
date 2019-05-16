@@ -11,13 +11,13 @@ const _axios = axios.create({
 })
 // axios.defaults.headers.common['Authorization'] = token;
 axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let loading;
 _axios.interceptors.request.use(
   config=>{
     let token = window.sessionStorage.getItem('token');
-    config.headers.token = token
-
+    config.headers.common[token] = encodeURI(token) || ''
     loading = Loading.service({
       lock: true,
       text: "加载中...",
@@ -35,7 +35,7 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   res=>{
     loading.close();
-    return res;
+    return res.data;
   },
   error=>{
     loading.close();
@@ -47,7 +47,7 @@ _axios.interceptors.response.use(
       // 清除token
       window.sessionStorage.removeItem('token')
       // 页面跳转
-      router.push("/login");
+      router.replace({path:"/login"});
     }
     if(status == 404){
       Message.error("请求地址不存在！");

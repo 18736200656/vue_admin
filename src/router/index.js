@@ -15,7 +15,7 @@ const routes=[
     meta:{
       title:'登录页面'
     },
-    component:()=>import('@/components/page/login')
+    component:()=>import('@/components/page/login2')
   },
   {
     path:'/lock',
@@ -48,6 +48,7 @@ const routes=[
         path:'menu',
         name:'menu',
         meta:{
+          requireAuthor:true,
           title:'商品目录管理'
         },
         component:()=>import('@/components/page/menuList')
@@ -56,6 +57,7 @@ const routes=[
         path:'channel',
         name:'Channel',
         meta:{
+          requireAuthor:true,
           title:'渠道管理'
         },
         component:()=>import('@/components/page/channel')
@@ -64,6 +66,7 @@ const routes=[
         path:'user',
         name:'User',
         meta:{
+          requireAuthor:true,
           title:'用户管理'
         },
         component:()=>import('@/components/page/user')
@@ -72,17 +75,48 @@ const routes=[
         path:'task',
         name:'Task',
         meta:{
+          requireAuthor:true,
           title:'任务管理'
         },
-        component:()=>import('@/components/page/task')
+        component:()=>import('@/components/page/task'),
+        children: [
+          {
+            path:'taskD',
+            name:'taskM',
+            meta:{
+              requireAuthor:true,
+              title:'任务详情'
+            },
+            component:()=>import('@/components/page/task/taskdetail')
+          },
+          {
+            path:'taskM',
+            name:'taskM',
+            meta:{
+              requireAuthor:true,
+              title:'任务管理'
+            },
+            component:()=>import('@/components/page/task/taskmanage')
+          },
+        ]
       },
       {
         path:'cash',
         name:'Cash',
         meta:{
+          requireAuthor:true,
           title:'提现管理'
         },
         component:()=>import('@/components/page/cash')
+      },
+      {
+        path:'addm',
+        name:'Addm',
+        meta:{
+          requireAuthor:true,
+          title:'提现管理'
+        },
+        component:()=>import('@/components/page/addmanage')
       },
     ]
   },
@@ -97,7 +131,14 @@ router.beforeEach((to,from,next)=>{
   if(to.meta && to.meta.title){
     document.title = to.meta.title
   }
-  next()
+  if (to.meta && to.meta.requireAuthor && !token) {
+    next({
+      path: "/login",
+    });
+    window.sessionStorage.removeItem('token');
+    return
+  }
+  next();
 });
 
 export default router

@@ -77,7 +77,7 @@ const api = {
   //更新商品分类
   updateGoodsCategory(val){
     return axios({
-      url:'/goodsCategory/addGoodsCategory/goodsCategory/updateGoodsCategory',
+      url:'/goodsCategory/updateGoodsCategory',
       method:'POST',
       data:val
     })
@@ -86,6 +86,14 @@ const api = {
   queryGoodsCategory(val){
     return axios({
       url:'/goodsCategory/addGoodsCategory/goodsCategory/queryGoodsCategory',
+      method:'POST',
+      data:val
+    })
+  },
+  //商品分类
+  queryGoodsCategory(val){
+    return axios({
+      url:'/goodsCategory/queryGoodsList',
       method:'POST',
       data:val
     })
@@ -107,7 +115,7 @@ const api = {
       data:val
     })
   },
-  
+
   //查询广告
   queryAdvertising(val){
     return axios({
@@ -116,7 +124,7 @@ const api = {
       data:val
     })
   },
-  
+
   //更新广告
   updateAdvertising(val){
     return axios({
@@ -125,7 +133,7 @@ const api = {
       data:val
     })
   },
-  
+
   //删除广告
   deleteAdvertising(val){
     return axios({
@@ -143,7 +151,7 @@ const api = {
       data:val
     })
   },
-  
+
   //分页查询渠道列表
   queryStudenChannel(val){
     return axios({
@@ -160,6 +168,166 @@ const api = {
       data:val
     })
   },
+  //查看推广的学生完成量
+  queryChannelView(val){
+    return axios({
+      url:'/queryChannelView',
+      method:'POST',
+      data:val
+    })
+  },
+  // ____________________________________________________任务详情____________________________________________
+  //添加任务名称
+  saveTask(val){
+    return axios({
+      url:'/saveTask',
+      method:'POST',
+      data:val
+    })
+  },
+
+  //更新任务详情
+  updateTask(val){
+    return axios({
+      url:'/updateTask',
+      method:'POST',
+      data:val
+    })
+  },
+  //分页查询任务列表
+  queryTaskList(val){
+    return axios({
+      url:'/queryTaskList',
+      method:'POST',
+      data:val
+    })
+  },
+  //启用任务详情
+  enableTask(val){
+    return axios({
+      url:'/enableTask',
+      method:'POST',
+      data:val
+    })
+  },
+  //禁用任务详情
+  disableTask(val){
+    return axios({
+      url:'/disableTask',
+      method:'POST',
+      data:val
+    })
+  },
+  // ____________________________________________________任务管理____________________________________________
+  //新增任务数据
+  saveTaskUser(val){
+    return axios({
+      url:'/saveTaskUser',
+      method:'POST',
+      data:val
+    })
+  },
+
+  //更新用户任务截图
+  updateTaskUser(val){
+    return axios({
+      url:'/updateTaskUser',
+      method:'POST',
+      data:val
+    })
+  },
+  //	删除任务数据
+  deleteTaskUser(val){
+    return axios({
+      url:'/deleteTaskUser',
+      method:'POST',
+      data:val
+    })
+  },
+  //审核用户任务数据
+  reviewTaskUser(val){
+    return axios({
+      url:'/reviewTaskUser',
+      method:'POST',
+      data:val
+    })
+  },
+  //导出任务数据
+  exportTaskUser(val){
+    return axios({
+      url:'/exportTaskUser',
+      method:'get',
+      data:val
+    })
+  },
+  //分页查询用户任务数据
+  queryTaskUserList(val){
+    return axios({
+      url:'/queryTaskUserList',
+      method:'POST',
+      data:val
+    })
+  },
+  // ____________________________________________________用户管理____________________________________________
+  //新增用户消息通知
+  saveStudenChannel(val){
+    return axios({
+      url:'/saveUserNotice',
+      method:'POST',
+      data:val
+    })
+  },
+  //淘宝用户修改
+  editUserTaobao(val){
+    return axios({
+      url:'/userTaobao/editUserTaobao',
+      method:'POST',
+      data:val
+    })
+  },
+  //淘宝用户查询
+  queryUserTaobao(val){
+    return axios({
+      url:'/userTaobao/queryUserTaobao',
+      method:'POST',
+      data:val
+    })
+    
+  },
+  //新增消息
+  saveUserNotice(val){
+    return axios({
+      url:'/saveUserNotice',
+      method:'POST',
+      data:val
+    })
+  },
+  //  _________________________提现管理_________ _________________________提现管理________
+    //分页查询提现列表
+    queryUserWithdrawList(val){
+      return axios({
+        url:'queryUserWithdrawList',
+        method:'POST',
+        data:val
+      })
+    },
+    //导出提现列表
+    exportUserWithdraw(val){
+      return axios({
+        url:'exportUserWithdraw',
+        method:'POST',
+        data:val
+      })
+      
+    },
+    //导入提现支付信息
+    importUserPay(val){
+      return axios({
+        url:'/importUserPay',
+        method:'POST',
+        data:val
+      })
+    },
   // _________________________附件上传_________ _________________________附件上传_________
   //图片上传
   uploadFile(val){

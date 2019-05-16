@@ -52,7 +52,7 @@
                     //     {required: true, message: '请输入验证码', trigger: 'blur'},
                     //     {max: 4, message: '请输入4位数字', trigger: 'blur'},
                     //     {validator: this.ValidateCaptcha, trigger: 'blur'},
-                       
+
                     // ]
                 },
                 sys_error: '',
@@ -78,7 +78,7 @@
             ValidatePassword (rule, value, callback) {
                 if (value.match(/^\d{6,}$/)) {
                 callback(new Error('不能使用纯数字的密码'))
-                } else if (/^([a-z0-9\.\@\!\#\$\%\^\&\*\(\)\-\+]){6,20}$/i == false) {
+                } else if (/^([a-z0-9\.\@\!\#\$\%\^\&\*\(\)\-\+]){6,20}$/i.test(value) == false) {
                 callback(new Error('请输入6-20位数字、字母和特殊字符（仅限!@#$%^&*()-+）'))
                 } else {
                 callback()
@@ -92,18 +92,28 @@
                             loginName: this.loginForm.phone,
                             password: this.loginForm.password
                         }
-                        if(this.validate) data.validate = this.loginForm.validate
                         this.$api.adminLogin(data).then(res => {
-                            if(res.code==1){
+                            console.log(res,'===res')
+                            if(res.code=='1'){
+                                window.sessionStorage.setItem('token',res.data.token);
+                                window.sessionStorage.setItem('userInfo',JSON.stringify(res.data))
                                 console.log(res.data,'=========登录结果')
-                                this.$router.push('home');
+                                this.$router.push({
+                                    path:'/home',
+                                    params:{
+                                        loginName:res.data.loginName,
+                                        loginNickName:res.data.loginNickName,
+                                        isDeleted:res.data.isDeleted,
+                                        id:res.data.id
+                                    }
+                                });
 
                             }else{
-                                this.$message.error(res.msg) 
-                                this.validate = res.data.validate
+                                this.$message.error(res.msg)
                             }
-                        }).catch(error => {
-                           this.$message.error(error.msg) 
+                        }).catch(err => {
+                           this.$message.error(err)
+                           return Promise.reject(err);
                         })
                     } else {
                         console.log('error submit!!');

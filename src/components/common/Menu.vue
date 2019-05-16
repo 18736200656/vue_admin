@@ -18,9 +18,11 @@
   </div>
 </template>
 
+
 <script>
+import bus from '../../utils/bus'
 export default {
-  name: "Menu",
+	name: "Menu",
   props: {
     items: Array
   },
@@ -28,13 +30,21 @@ export default {
     return {
       // collapse: false,
     };
-  }
+	},
+	methods:{
+		 collapseChage() {
+      //点击隐藏左侧菜单栏，
+      this.collapse = !this.collapse;
+      //非父子组件传值
+      bus.$emit("collapse", this.collapse);
+    },
+	}
 };
 </script>
 <style >
 	.menu_page {
 		position: fixed;
-		top: 71px;
+		/* top: 71px; */
 		left: 0;
 		min-height: 100%;
 		background-color: #324057;

@@ -1,20 +1,13 @@
 <template>
   <div class="index">
-    这是首页页面
-    <Header></Header>
     <LeftMenu></LeftMenu>
-    <div class="rightContainer" :class="{'content-collapse':collapse}">
-      <!-- <Tags/> -->
-      <div class="content">
-        <transition name="move" mode="out-in">
-          <!--<keep-alive :include="tagsList">-->
-            <!--<router-view></router-view>-->
-          <!--</keep-alive>-->
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
-        </transition>
-      </div>
+    <Header></Header>
+    <div class="content" :width="height+'px'">
+      <transition name="move" mode="out-in">
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </transition>
     </div>
   </div>
 </template>
@@ -29,7 +22,9 @@ export default {
   data() {
     return {
       tagsList: [],
-      collapse: false
+      collapse: false,
+      wd:0,
+      height:0
     };
   },
   components: {
@@ -37,21 +32,15 @@ export default {
     LeftMenu,
     Tags
   },
-  created() {
-    //内容区域跟随变化
-    bus.$on("collapse", msg => {
-      console.log(msg);
-      this.collapse = msg;
-    }),
-      // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
-      bus.$on("tags", msg => {
-        let arr = [];
-        for (let i = 0, len = msg.length; i < len; i++) {
-          msg[i].name && arr.push(msg[i].name);
-        }
-        this.tagsList = arr;
-        // console.log(tags)
-      });
+  mounted() {
+    window.addEventListener('resize',this.getclientW,false);
+  },
+  methods:{
+    getclientW(){
+//      console.log(document.body.clientWidth ,'---000');
+      this.wd= document.body.clientWidth - 180
+      this.height= document.body.clientWidth - 60
+    }
   }
 };
 </script>
@@ -59,26 +48,19 @@ export default {
 .index {
   width: 100%;
   height: 100%;
-  overflow: hidden;
-}
-.content {
-  width: auto;
-  height: 100%;
-  padding: 10px;
-  overflow-y: scroll;
+  	/* position: relative; */
   box-sizing: border-box;
 }
-.rightContainer.content-collapse {
-  left: 48px;
-}
-.rightContainer {
-  position: fixed;
-  left: 180px;
+.content {
+  /* margin-top: 60px; */
+  top: 60px;
+  position: absolute;
   right: 0;
-  top: 72px;
-  height: 100%;
-  overflow-y: scroll;
-  padding-bottom: 30px;
-  transition: left 0.3s ease-in-out;
+  left: 180px;
+  width: auto;
+  background: #f0f4fb;
+  padding: 25px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 </style>

@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-import vForm from './Form'
+import vForm from './goods/goodsform'
 export default {
   name:"Dialog",
   data(){
