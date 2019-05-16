@@ -148,7 +148,7 @@ export default {
         type:val
       });
       if(val){
-
+          
       }
       this.$refs.form.validate(valid =>{
         if (valid){

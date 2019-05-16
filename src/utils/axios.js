@@ -47,7 +47,7 @@ _axios.interceptors.response.use(
       // 清除token
       window.sessionStorage.removeItem('token')
       // 页面跳转
-      router.push({path:"/login"});
+      router.replace({path:"/login"});
     }
     if(status == 404){
       Message.error("请求地址不存在！");
