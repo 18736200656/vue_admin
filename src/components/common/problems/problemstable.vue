@@ -63,14 +63,14 @@
       :visible.sync="dialogVisible"
       @close="beforeClose"
       width="50%">
-      <span slot="title" class="dialog_tit">新增任务数据</span>
+      <span slot="title" class="dialog_tit">新增常见问题</span>
       <form-box :FormData="FormData" @update="closeDialog" ref="formData"></form-box>
     </el-dialog>
   </div>
 </template>
 <script>
   import bus from '../../../utils/bus'
-  import formBox from './form'
+  import formBox from './problemsform'
   export default {
     name:'Table',
     data(){
@@ -96,7 +96,7 @@
     },
     created(){
       this.getTabList();
-      bus.$on('updataCHN',data =>{
+      bus.$on('updataTKM',data =>{
         this.busData = data;
         this.getTabList();
       })
@@ -126,6 +126,7 @@
         });
         this.$api[this.tableData.api[0]](params).then(res=>{
           if(res.code==1){
+              debugger
             this.tableList = res.data.list;
             this.total = res.data.total
           }else{

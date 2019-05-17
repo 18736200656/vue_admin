@@ -332,7 +332,16 @@ const api = {
   //图片上传
   uploadFile(val){
     return axios({
-      url:'/goodsCategory/addGoodsCategory/common/attachment/uploadFile',
+      url:'/common/attachment/uploadFile',
+      method:'POST',
+      data:val
+    })
+  },
+    // _________________________常见问题_________ _________________________常见问题_________
+  //分页查询常见问题
+  queryUserProblemsList(val){
+    return axios({
+      url:'/queryUserProblemsList',
       method:'POST',
       data:val
     })
