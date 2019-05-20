@@ -72,10 +72,22 @@ export default {
           {
             key:'createTime',
             label:"提交任务时间",
+            keyS:'createTimeS',
+            handdle:function(val){
+              if(val){
+                return this.$valid.timeDate(val)
+              }
+            }
           },
           {
             key:'updateTime',
             label:"最后更新时间",
+            keyS:'updateTimeS',
+            handdle:function(val){
+              if(val){
+                return this.$valid.timeDate(val)
+              }
+            }
           },
            {
             key:'version',

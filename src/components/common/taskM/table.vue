@@ -41,7 +41,8 @@
                   @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
               </div>
               <div v-else>
-                <span>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
+                <span v-if="item.key== 'updateTime' || item.key== 'createTime'">{{$valid.timeDate(scope.row[item.key]) || '--'}}</span>
+                <span v-else>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
               </div>
             </template>
           </el-table-column>
