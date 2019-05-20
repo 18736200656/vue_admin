@@ -21,7 +21,7 @@ export default {
           },
           {
             api:true,
-            type:'primary',
+            type:'success',
             name:'导出'
           },
         ],

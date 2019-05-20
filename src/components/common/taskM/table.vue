@@ -70,7 +70,7 @@
 </template>
 <script>
   import bus from '../../../utils/bus'
-  import formBox from './form'
+  import formBox from '../taskM/form'
   export default {
     name:'Table',
     data(){
@@ -172,10 +172,7 @@
       addClick(val){
         if(!val){
           this.dialogVisible=true
-          this.FormData={
-            edit:false,
-            data:{}
-          }
+        
         }else{
           //导出
           // let data = {
@@ -187,7 +184,8 @@
           //   endTime:'', //		string	否	提交任务结束时间
           // }
           console.log(this.baseUrl,'----ip地址')
-          window.location.href = this.baseUrl+'exportTaskUser'
+          window.open(this.baseUrl+'exportTaskUser','_blank')
+
         }
 
       },
@@ -200,7 +198,7 @@
             this.$message.success(res.data.message)
             this.getTabList();
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);
