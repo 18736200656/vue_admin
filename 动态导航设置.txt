@@ -23,7 +23,7 @@
     <span slot="title">{{item.name}}</span>
   </el-menu-item>
 </div>
-
+  
 =========================父组件===============================
 
 <el-menu :default-active="$route.path" router>
