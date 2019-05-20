@@ -29,7 +29,7 @@
 <el-menu :default-active="$route.path" router>
   <menuItem v-for="(item,index) in routes" :item="item" :key="index"></menuItem>
 </el-menu>
-
+       
 ============================*注意：===========================
 
 *注意：**要在一个组件中，递归调用他自己需要在这个组件上面，要设置name名字。 
