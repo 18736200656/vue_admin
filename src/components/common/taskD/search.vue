@@ -38,6 +38,7 @@
     methods:{
       submit(){
         bus.$emit('updataTASKD',this.formData)
+        this.formData={}
       }
     }
   }
