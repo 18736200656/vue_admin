@@ -55,7 +55,6 @@
         this.formData = Object.assign(this.formData,{
           type:val
         })
-        console.log(this.formData,'====')
         this.$refs.formData.validate(valid =>{
           if (valid){
             this.$emit('update',this.formData)

@@ -27,9 +27,9 @@
             show-overflow-tooltip
             :width=" item.wd || 'auto'">
             <template slot-scope="scope">
-             <el-tag v-if="item.Tag" :type="scope.row[item.key]=='1' ?'':'info'">
+              <el-tag v-if="item.Tag" :type="scope.row[item.key]=='1' ?'':'info'">
               {{$valid.statusStr(scope.row[item.key])}}
-            </el-tag>
+              </el-tag>
             <div v-else-if="item.changeStatus">
               <el-button
                 size="mini"
@@ -133,7 +133,7 @@
             this.tableList = res.data;
             this.total = res.data.length;
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);
@@ -191,15 +191,15 @@
       closeDialog(data){
         console.log(data,'====,,,,')
         this.dialogVisible = false;
-                         // 2 新增 1 修改
-        let num = data.type=='true' ? '3' :'1'
+                         // 3 新增 1 修改
+        let num = data.type=='true' ? '1' :'3'
         console.log(num,data.type,'---')
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
             this.getTabList();
             this.$message.success(res.data.message)
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);

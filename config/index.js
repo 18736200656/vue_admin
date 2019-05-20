@@ -24,16 +24,16 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      '/':{
-        target: 'http://47.97.152.146/',
-        secure: true,
-        changOrigin: true,
-        pathRewrite:{
-          '^/':''
-        }
-      }
-    },
+    // proxyTable: {
+    //   '/':{
+    //     target: 'http://47.97.152.146/',
+    //     secure: true,
+    //     changOrigin: true,
+    //     pathRewrite:{
+    //       '^/':''
+    //     }
+    //   }
+    // },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

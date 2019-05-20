@@ -41,8 +41,7 @@
                   @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
               </div>
               <div v-else>
-                <span v-if="item.key== 'updateTime' || item.key== 'createTime'">{{$valid.timeDate(scope.row[item.key]) || '--'}}</span>
-                <span v-else>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
+                <span>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
               </div>
             </template>
           </el-table-column>
@@ -64,14 +63,14 @@
       :visible.sync="dialogVisible"
       @close="beforeClose"
       width="50%">
-      <span slot="title" class="dialog_tit">新增任务数据</span>
+      <span slot="title" class="dialog_tit">新增常见问题</span>
       <form-box :FormData="FormData" @update="closeDialog" ref="formData"></form-box>
     </el-dialog>
   </div>
 </template>
 <script>
   import bus from '../../../utils/bus'
-  import formBox from '../taskM/form'
+  import formBox from './problemsform'
   export default {
     name:'Table',
     data(){
@@ -97,7 +96,7 @@
     },
     created(){
       this.getTabList();
-      bus.$on('updataCHN',data =>{
+      bus.$on('updataTKM',data =>{
         this.busData = data;
         this.getTabList();
       })
@@ -127,6 +126,7 @@
         });
         this.$api[this.tableData.api[0]](params).then(res=>{
           if(res.code==1){
+              debugger
             this.tableList = res.data.list;
             this.total = res.data.total
           }else{
@@ -173,7 +173,10 @@
       addClick(val){
         if(!val){
           this.dialogVisible=true
-        
+          this.FormData={
+            edit:false,
+            data:{}
+          }
         }else{
           //导出
           // let data = {
@@ -185,8 +188,7 @@
           //   endTime:'', //		string	否	提交任务结束时间
           // }
           console.log(this.baseUrl,'----ip地址')
-          window.open(this.baseUrl+'exportTaskUser','_blank')
-
+          window.location.href = this.baseUrl+'exportTaskUser'
         }
 
       },
@@ -199,7 +201,7 @@
             this.$message.success(res.data.message)
             this.getTabList();
           }else{
-            this.$message.error(res.msg)
+            this.$message.error(res.message)
           }
         }).catch((error) => {
           Promise.reject(error);

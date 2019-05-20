@@ -118,6 +118,15 @@ const routes=[
         },
         component:()=>import('@/components/page/addmanage')
       },
+      {
+        path:'problems',
+        name:'problems',
+        meta:{
+          requireAuthor:true,
+          title:'常见问题'
+        },
+        component:()=>import('@/components/page/problems')
+      },
     ]
   },
 ]

@@ -77,6 +77,11 @@ export default {
           name: "广告管理",
           path: "/addm",
         },
+        {
+          icon: "el-icon-picture",
+          name: "常见问题",
+          path: "/problems",
+        },
       ]
     };
   },

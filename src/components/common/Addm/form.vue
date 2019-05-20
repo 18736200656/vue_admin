@@ -5,14 +5,16 @@
         <el-input v-model="formdata.id" placeholder="请输入广告ID" type="text" ></el-input>
       </el-form-item>
       <el-form-item label="商品图片" class="upload_img" prop="imgUrl">
-        <el-upload
+        <!-- <el-upload
           class="avatar-uploader"
           action="/common/attachment/uploadFile"
           :show-file-list="false"
+          :on-remove="removeImg"
           :on-success="handleAvatarSuccess">
           <img v-if="formdata.imgUrl" :src="formdata.imgUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        </el-upload> -->
+        <upload-img :value="formdata.imgUrl" @input="uploadImg"></upload-img> 
       </el-form-item>
       <el-form-item label="点击链接">
         <el-input v-model="formdata.clickUrl" placeholder="请输入点击链接" type="text" ></el-input>
@@ -67,17 +69,34 @@
         })
       },
       //上传图片
-     handleAvatarSuccess(res,file){
-       console.log(file,res,'====')
-        if(res.code==1){
-          this.formdata.imgUrl = res.data.path
-        }else{
-          this.$message.error(res.msg);
-        }
+      handleAvatarSuccess(res,file){
+        // let imgs = URL.createObjectURL(file.raw);
+        console.log(res,file,'----图谱按')
+          var result = file.response; 
+          if(result.code==1){
+            this.formdata.imgUrl = result.data.path
+          }else{
+            this.$message.error(result.msg);
+          }
+        // if(res.code==1){
+        //   this.formdata.imgUrl = res.data.path
+        //   // this.removeImg()
+        // }else{ 
+        //   this.$message.error(res.msg);
+        // }
       },
       //重置
       reset(){
         this.$refs.formdata.resetFields();
+      },
+      //
+      removeImg(file,fileList){
+        console.log(file,fileList,'移除图片')
+        // this.formdata.imgUrl =''
+      },
+      //上传若
+      uploadImg(val){
+        this.formdata.imgUrl = val
       }
     },
     watch:{

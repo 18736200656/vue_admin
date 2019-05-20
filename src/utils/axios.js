@@ -2,22 +2,26 @@ import axios from 'axios'
 import {Loading,Message} from 'element-ui';
 import router from '../router'
 
-// let baseURL = process.env.NODE_BASE_URL;
-// console.log(baseURL,'===========baseURL+++++++++++++')
+let baseurl = process.env.NODE_BASE_URL;
+console.log(baseurl,'===========baseURL+++++++++++++')
 
+axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 const _axios = axios.create({
   timeout:5000,
-  // baseUrl:baseURL
-})
+  baseURL:baseurl
+});
+
 // axios.defaults.headers.common['Authorization'] = token;
-axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let loading;
 _axios.interceptors.request.use(
   config=>{
     let token = window.sessionStorage.getItem('token');
-    config.headers.common[token] = encodeURI(token) || ''
+    if(token){
+      config.headers.common['token'] = encodeURI(token)
+    }
     loading = Loading.service({
       lock: true,
       text: "加载中...",

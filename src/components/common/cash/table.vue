@@ -147,7 +147,8 @@
       },
        //导出
       exportFile(){
-       window.location.href="http://47.97.152.146/exportUserWithdraw"
+        window.open(this.baseUrl+'exportUserWithdraw','_blank')
+      //  window.location.href="http://47.97.152.146/exportUserWithdraw"
       },
       //关闭弹窗
       closeDialog(data){

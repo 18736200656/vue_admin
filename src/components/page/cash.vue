@@ -29,7 +29,7 @@ export default {
         tableBtn:[
           {
             api:'saveStudenChannel',
-            type:'primary',
+            type:'success',
             name:'导出'
           },
         ],
