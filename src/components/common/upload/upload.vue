@@ -55,10 +55,7 @@
       }
     },
 		created() {
-      let _this = this;
-      // _this.upLoad = axios.defaults.baseURL + Api.upLoad;
-      _this.upLoad = 'http://47.97.152.146/common/attachment/uploadFile';
-
+      this.upLoad = process.env.NODE_BASE_URL+'common/attachment/uploadFile';
 		},
 		methods: {
 			// 上传成功

@@ -1,5 +1,5 @@
 <template>
-  <div class="formbox">
+  <div class="form">
     <el-form :model="formData" ref="formbox" :rules="formRules" lable-width="100px" label-position="left">
       <el-form-item label="任务ID" prop="taskId">
         <el-input v-model="formData.taskId" placeholder="请输入任务ID" type="text" ></el-input>
@@ -8,7 +8,7 @@
         <el-input v-model="formData.userId" placeholder="请输入用户ID" type="text" ></el-input>
       </el-form-item>
       <el-form-item label="任务截图" prop="taskImg" class="upload_img">
-        <el-upload
+        <!-- <el-upload
           class="avatar-uploader"
           action="/common/attachment/uploadFile"
           :show-file-list="false"
@@ -16,7 +16,8 @@
           :on-success="handleAvatarSuccess">
           <img v-if="formData.taskImg" :src="formData.taskImg" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        </el-upload> -->
+        <uploadImg :value="formData.taskImg" :title="'上传图片'" @input="updateImg"></uploadImg>
       </el-form-item>
       <el-form-item align="right">
         <el-button type="primary" @click="submit('true')" v-if="FormData.edit">保存</el-button>
@@ -27,7 +28,7 @@
 </template>
 <script>
   export default {
-    name: 'formbox',
+    name: 'form',
     data() {
       return {
         formData:{
@@ -56,6 +57,9 @@
 
     },
      methods:{
+      updateImg(val){
+        this.formData.taskImg = val
+      },
       submit(val){
         this.formData = Object.assign(this.formData,{
           type:val,
@@ -63,7 +67,7 @@
         })
         this.$refs.formbox.validate(valid =>{
           if (valid){
-            this.$emit('update',this.formData)
+            this.$emit('updatelist',this.formData)
           }else{
             return
           }

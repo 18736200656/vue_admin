@@ -16,14 +16,15 @@
           </el-select>
         </el-form-item>
       <el-form-item label="商品图片" class="upload_img">
-        <el-upload
+        <!-- <el-upload
           class="avatar-uploader"
           action="/common/attachment/uploadFile"
           :show-file-list="false"
           :on-success="handleAvatarSuccess">
           <img v-if="formdata.img" :src="formdata.img" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        </el-upload> -->
+        <uploadImg :value="formdata.img" :title="'上传图片'" @input="updateImg"></uploadImg>
       </el-form-item>
       <el-form-item label="分类排序">
         <el-input v-model="formdata.sort" placeholder="请输入分类排序" type="text" ></el-input>
@@ -40,6 +41,7 @@
     name: 'formbox',
     data() {
       return {
+        updateImg:'',
         headers:{'Content-Type':'application/json;charset=utf-8 '},
         formdata:{
           name:'', //	string	是	分类名称
@@ -71,6 +73,9 @@
       
     },
     methods:{
+      updateImg(val){
+        this.formdata.img = val
+      },
       submit(val){
         this.formdata=Object.assign(this.formdata,{
           type:val

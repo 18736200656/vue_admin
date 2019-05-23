@@ -2,7 +2,7 @@
 <div>
   <el-card class="tablelist">
     <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-      <el-button :type="item.type" @click="addClick" :key="index"
+      <el-button :type="item.type" @click="dialogVisible=true" :key="index"
                  v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
     </section>
     <section class="table_container">
@@ -60,7 +60,7 @@
     @close="beforeClose"
     width="50%">
     <span slot="title" class="dialog_tit">新增渠道管理</span>
-    <form-box :FormData="FormData" @update="closeDialog" ref="FormData"></form-box>
+    <form-box @updatelist="closeDialog" ref="channelform"></form-box>
   </el-dialog>
   <!-- 任务完成量 -->
   <el-dialog
@@ -97,7 +97,7 @@
 </template>
 <script>
   import bus from '../../../utils/bus'
-  import formBox from './formbox'
+  import formBox from '../channel/formbox'
   export default {
     name:'Table',
     data(){
@@ -107,7 +107,6 @@
         currentPage:1,
         pageSize: 10,
         dialogVisible:false,
-        FormData:[],
         busData:{},
         taskDialogVisible:false,
         taskList:[],
@@ -127,7 +126,6 @@
     },
     created(){
       this.getTabList();
-      this.FormData = this.newData;
       bus.$on('updataCHN',data =>{
         this.busData = data;
         this.getTabList();
@@ -192,6 +190,7 @@
       closeDialog(data){
         this.dialogVisible = false;
         this.$api[this.tableData.api[2]](data).then(res=>{
+           debugger
             if (res.code ==1){
               this.getTabList();
             }else{
@@ -203,13 +202,13 @@
 
       },
       //新增
-      addClick(){
-        this.dialogVisible=true
-        this.FormData={
-          edit:false,
-          data:{}
-        }
-      },
+      // addClick(){
+      //   this.dialogVisible=true
+      //   this.FormData={
+      //     edit:false,
+      //     data:{}
+      //   }
+      // },
       //查看
       lookUP(index,row){
         this.taskDialogVisible = true;
@@ -227,7 +226,7 @@
       //关闭弹窗
       beforeClose(){
         this.dialogVisible = false;
-        this.$refs.FormData.reset();
+        this.$refs.channelform.reset();
       }
     }
   }

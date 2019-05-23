@@ -10,18 +10,18 @@ export default {
   name: 'App',
   created(){
     //鼠标划入滚动条展现，鼠标划出滚动条隐藏
-   function scrollbarShowHidden(element){
-     element.setAtrribute('className','scrollbarHide');
-     element.hover(function() {
-       element.setAtrribute('className','scrollbarShow');
-     }, function() {
-       element.removeAtrribute('scrollbarShow');
-     });
-   }
-   var tag = document.getElementsByClassName('.el-table__body-wrapper')[0];
-   var app = document.getElementById('app')
-   scrollbarShowHidden(tag);
-   scrollbarShowHidden(app);
+  //  function scrollbarShowHidden(element){
+  //    element.setAtrribute('className','scrollbarHide');
+  //    element.hover(function() {
+  //      element.setAtrribute('className','scrollbarShow');
+  //    }, function() {
+  //      element.removeAtrribute('scrollbarShow');
+  //    });
+  //  }
+  //  var tag = document.getElementsByClassName('.el-table__body-wrapper')[0];
+  //  var app = document.getElementById('app')
+  //  scrollbarShowHidden(tag);
+  //  scrollbarShowHidden(app);
   }
 }
 
