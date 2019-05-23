@@ -60,7 +60,7 @@
     @close="beforeClose"
     width="50%">
     <span slot="title" class="dialog_tit">新增渠道管理</span>
-    <form-box @updatelist="closeDialog" ref="channelform"></form-box>
+    <form-box  @chanel.sync="closeDialog" ref="channelform"></form-box>
   </el-dialog>
   <!-- 任务完成量 -->
   <el-dialog
@@ -160,7 +160,7 @@
             this.total = res.data.total
             this.params={}
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);
@@ -179,7 +179,7 @@
             this.getTabList();
 
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);
@@ -194,7 +194,7 @@
             if (res.code ==1){
               this.getTabList();
             }else{
-              this.$message.error(res.message)
+              this.$message.error(res.msg)
             }
         }).catch((error) => {
             Promise.reject(error);
@@ -217,7 +217,7 @@
           if(res.code==1){
             this.taskList = res.data;
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);

@@ -138,7 +138,7 @@
             this.tableList = res.data.list;
             this.total = res.data.total
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);
@@ -151,7 +151,7 @@
           if(res.code==1){
              this.getTabList();
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);

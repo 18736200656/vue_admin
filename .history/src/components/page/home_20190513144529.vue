@@ -391,7 +391,7 @@ export default {
             cb && cb(res.data)
           }
         }else{
-          this.$message.error(res.message)
+          this.$message.error(res.msg)
         }
       }).catch(error=>{
         this.$message.error(res.messag)

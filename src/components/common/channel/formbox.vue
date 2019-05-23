@@ -53,7 +53,8 @@
         this.$refs.channelform.validate(valid =>{
           if (valid){
             console.log(this.formData,'=====formthis.formData')
-            this.$emit('updatelist',this.formData)
+            this.$emit('update:chanel',this.formData)
+            console.log(this.formData,'=++++formthis.formData')
           }else{
             return
           }
