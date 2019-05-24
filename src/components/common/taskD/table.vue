@@ -145,7 +145,7 @@
             this.tableList = res.data.list;
             this.total = res.data.total;
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);
@@ -173,12 +173,12 @@
       closeDialog(data){
         this.dialogVisible = false;
         let num = data.type=='true' ? '4' : '3'; //4修改 3 新增
-        if(params.type){ //修改
+        if(data.type){ //修改
           this.$api[this.tableData.api[num]](data).then(res=>{
             if (res.code ==1){
               this.getTabList();
             }else{
-              this.$message.error(res.message)
+              this.$message.error(res.msg)
             }
           }).catch((error) => {
               Promise.reject(error);
@@ -195,7 +195,7 @@
           if(res.code==1){
             this.getTabList();
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);

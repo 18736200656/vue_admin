@@ -18,14 +18,15 @@
           <el-input v-model="FormData.searchName"></el-input>
         </el-form-item>
         <el-form-item label="商品图片" prop="img" class="upload_img">
-          <el-upload
+          <!-- <el-upload
             class="avatar-uploader"
             action="/common/attachment/uploadFile"
             :show-file-list="false"
             :on-success="handleAvatarSuccess">
             <img v-if="FormData.img" :src="FormData.img" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
+          </el-upload> -->
+          <uploadImg :value="FormData.img" :title="'上传图片'" @input="updateImg"></uploadImg>
         </el-form-item>
         <el-form-item label="商品图片详情" prop="imgList">
           <el-input v-model="FormData.imgList"></el-input>
@@ -143,6 +144,9 @@ export default {
   },
   props:['formdata'],
   methods:{
+    updateImg(val){
+      this.Formdata.img = val
+    },
     onSubmit(val) {
       this.FormData = Object.assign(this.FormData,{
         type:val

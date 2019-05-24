@@ -1,6 +1,6 @@
 <template>
   <div class="formbox">
-    <el-form :model="formData" ref="formData" :rules="formRules" lable-width="100px" label-position="left">
+    <el-form :model="formData" ref="channelform" :rules="formRules" lable-width="100px" label-position="left">
       <el-form-item label="渠道账号" prop="channelLoginName">
         <el-input v-model="formData.channelLoginName" placeholder="请输入渠道账号" type="text" ></el-input>
       </el-form-item>
@@ -40,19 +40,21 @@
       }
     },
     props:{
-      FormData:{
-        type:Array,
-        default:()=>{}
-      }
+      // FormData:{
+      //   type:Array,
+      //   default:()=>{}
+      // }
     },
     created(){
 
     },
     methods:{
       submit(val){
-        this.$refs.formData.validate(valid =>{
+        this.$refs.channelform.validate(valid =>{
           if (valid){
-            this.$emit('update',this.formData)
+            console.log(this.formData,'=====formthis.formData')
+            this.$emit('update:chanel',this.formData)
+            console.log(this.formData,'=++++formthis.formData')
           }else{
             return
           }
@@ -60,7 +62,7 @@
       },
       //重置
       reset(){
-        this.$refs.formData.resetFields();
+        this.$refs.channelform.resetFields();
       }
     }
   }

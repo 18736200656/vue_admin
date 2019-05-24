@@ -128,7 +128,7 @@
             this.tableList = res.data.list;
             this.total = res.data.total
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);
@@ -149,7 +149,7 @@
              this.$message.success(res.data.message)
              this.getTabList()
             }else{
-              this.$message.error(res.message)
+              this.$message.error(res.msg)
             }
           }).catch((error) => {
             Promise.reject(error);
@@ -160,7 +160,7 @@
                this.$message.success(res.data.message)
               //  window.location.href = res.data.xx
             }else{
-              this.$message.error(res.message)
+              this.$message.error(res.msg)
             }
           }).catch((error) => {
             Promise.reject(error);
@@ -199,7 +199,7 @@
             this.$message.success(res.data.message)
             this.getTabList();
           }else{
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
           }
         }).catch((error) => {
           Promise.reject(error);
