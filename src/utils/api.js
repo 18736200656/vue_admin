@@ -1,9 +1,9 @@
-import axios from './axios'
-
+import _axios from '../utils/axios'
+console.log(_axios,'axios========')
 const api = {
   //_______________ 登录_______________ 登录_______________ 登录
   adminLogin:(val)=>{
-    return axios({
+    return _axios({
       url:'/adminLogin',
       method:'POST',
       data:val
@@ -12,7 +12,7 @@ const api = {
   //_______________ 商品管理_______________________________
   //商品查询
   queryGoods(val){
-    return axios({
+    return _axios({
       url:'/goods/queryGoods',
       method:'POST',
       data:val
@@ -20,7 +20,7 @@ const api = {
   },
   //商品新增
   addGoods(val){
-    return axios({
+    return _axios({
       url:'/goods/addGoods',
       method:'POST',
       data:val
@@ -28,7 +28,7 @@ const api = {
   },
   //商品信息
   goodsInfo(val){
-    return axios({
+    return _axios({
       url:'/goods/goodsInfo',
       method:'POST',
       data:val
@@ -36,7 +36,7 @@ const api = {
   },
   //商品修改
   editGoods(val){
-    return axios({
+    return _axios({
       url:'/goods/editGoods',
       method:'POST',
       data:val
@@ -44,7 +44,7 @@ const api = {
   },
   //商品删除
   delGoods(val){
-    return axios({
+    return _axios({
       url:'/goods/delGoods',
       method:'POST',
       data:val
@@ -52,7 +52,7 @@ const api = {
   },
   //商品导入
   importGoods(val){
-    return axios({
+    return _axios({
       url:'/goods/importGoods',
       method:'POST',
       data:val
@@ -60,7 +60,7 @@ const api = {
   },
    //商品新增
    addGoods(val){
-    return axios({
+    return _axios({
       url:'/goods/addGoods',
       method:'POST',
       data:val
@@ -68,7 +68,7 @@ const api = {
   },
   //新增商品分类
   addGoodsCategory(val){
-    return axios({
+    return _axios({
       url:'/goodsCategory/addGoodsCategory',
       method:'POST',
       data:val
@@ -76,7 +76,7 @@ const api = {
   },
   //更新商品分类
   updateGoodsCategory(val){
-    return axios({
+    return _axios({
       url:'/goodsCategory/updateGoodsCategory',
       method:'POST',
       data:val
@@ -84,7 +84,7 @@ const api = {
   },
   //分页查询商品列表
   queryGoodsCategory(val){
-    return axios({
+    return _axios({
       url:'/goodsCategory/addGoodsCategory/goodsCategory/queryGoodsCategory',
       method:'POST',
       data:val
@@ -92,7 +92,7 @@ const api = {
   },
   //商品分类
   queryGoodsCategory(val){
-    return axios({
+    return _axios({
       url:'/goodsCategory/queryGoodsList',
       method:'POST',
       data:val
@@ -101,7 +101,7 @@ const api = {
   // ____________________________________内容管理________________________________________________
    //新增用户消息通知
    saveUserNotice(val){
-    return axios({
+    return _axios({
       url:'/saveUserNotice',
       method:'POST',
       data:val
@@ -109,7 +109,7 @@ const api = {
   },
   //新增广告管理
   saveAdvertising(val){
-    return axios({
+    return _axios({
       url:'/saveAdvertising',
       method:'POST',
       data:val
@@ -118,7 +118,7 @@ const api = {
 
   //查询广告
   queryAdvertising(val){
-    return axios({
+    return _axios({
       url:'/queryAdvertising',
       method:'POST',
       data:val
@@ -127,7 +127,7 @@ const api = {
 
   //更新广告
   updateAdvertising(val){
-    return axios({
+    return _axios({
       url:'/updateAdvertising',
       method:'POST',
       data:val
@@ -136,7 +136,7 @@ const api = {
 
   //删除广告
   deleteAdvertising(val){
-    return axios({
+    return _axios({
       url:'/deleteAdvertising',
       method:'POST',
       data:val
@@ -145,7 +145,7 @@ const api = {
   // ____________________________________________________渠道管理____________________________________________
   //新增渠道管理
   saveStudenChannel(val){
-    return axios({
+    return _axios({
       url:'/saveStudenChannel',
       method:'POST',
       data:val
@@ -154,7 +154,7 @@ const api = {
 
   //分页查询渠道列表
   queryStudenChannel(val){
-    return axios({
+    return _axios({
       url:'/queryStudenChannel',
       method:'POST',
       data:val
@@ -162,7 +162,7 @@ const api = {
   },
   //更新渠道管理
   updateStudentChannel(val){
-    return axios({
+    return _axios({
       url:'/updateStudentChannel',
       method:'POST',
       data:val
@@ -170,7 +170,7 @@ const api = {
   },
   //查看推广的学生完成量
   queryChannelView(val){
-    return axios({
+    return _axios({
       url:'/queryChannelView',
       method:'POST',
       data:val
@@ -179,7 +179,7 @@ const api = {
   // ____________________________________________________任务详情____________________________________________
   //添加任务名称
   saveTask(val){
-    return axios({
+    return _axios({
       url:'/saveTask',
       method:'POST',
       data:val
@@ -188,7 +188,7 @@ const api = {
 
   //更新任务详情
   updateTask(val){
-    return axios({
+    return _axios({
       url:'/updateTask',
       method:'POST',
       data:val
@@ -196,7 +196,7 @@ const api = {
   },
   //分页查询任务列表
   queryTaskList(val){
-    return axios({
+    return _axios({
       url:'/queryTaskList',
       method:'POST',
       data:val
@@ -204,7 +204,7 @@ const api = {
   },
   //启用任务详情
   enableTask(val){
-    return axios({
+    return _axios({
       url:'/enableTask',
       method:'POST',
       data:val
@@ -212,7 +212,7 @@ const api = {
   },
   //禁用任务详情
   disableTask(val){
-    return axios({
+    return _axios({
       url:'/disableTask',
       method:'POST',
       data:val
@@ -221,7 +221,7 @@ const api = {
   // ____________________________________________________任务管理____________________________________________
   //新增任务数据
   saveTaskUser(val){
-    return axios({
+    return _axios({
       url:'/saveTaskUser',
       method:'POST',
       data:val
@@ -230,7 +230,7 @@ const api = {
 
   //更新用户任务截图
   updateTaskUser(val){
-    return axios({
+    return _axios({
       url:'/updateTaskUser',
       method:'POST',
       data:val
@@ -238,7 +238,7 @@ const api = {
   },
   //	删除任务数据
   deleteTaskUser(val){
-    return axios({
+    return _axios({
       url:'/deleteTaskUser',
       method:'POST',
       data:val
@@ -246,7 +246,7 @@ const api = {
   },
   //审核用户任务数据
   reviewTaskUser(val){
-    return axios({
+    return _axios({
       url:'/reviewTaskUser',
       method:'POST',
       data:val
@@ -254,7 +254,7 @@ const api = {
   },
   //导出任务数据
   exportTaskUser(val){
-    return axios({
+    return _axios({
       url:'/exportTaskUser',
       method:'get',
       data:val
@@ -262,7 +262,7 @@ const api = {
   },
   //分页查询用户任务数据
   queryTaskUserList(val){
-    return axios({
+    return _axios({
       url:'/queryTaskUserList',
       method:'POST',
       data:val
@@ -271,7 +271,7 @@ const api = {
   // ____________________________________________________用户管理____________________________________________
   //新增用户消息通知
   saveStudenChannel(val){
-    return axios({
+    return _axios({
       url:'/saveUserNotice',
       method:'POST',
       data:val
@@ -279,7 +279,7 @@ const api = {
   },
   //淘宝用户修改
   editUserTaobao(val){
-    return axios({
+    return _axios({
       url:'/userTaobao/editUserTaobao',
       method:'POST',
       data:val
@@ -287,16 +287,16 @@ const api = {
   },
   //淘宝用户查询
   queryUserTaobao(val){
-    return axios({
+    return _axios({
       url:'/userTaobao/queryUserTaobao',
       method:'POST',
       data:val
     })
-    
+
   },
   //新增消息
   saveUserNotice(val){
-    return axios({
+    return _axios({
       url:'/saveUserNotice',
       method:'POST',
       data:val
@@ -305,7 +305,7 @@ const api = {
   //  _________________________提现管理_________ _________________________提现管理________
     //分页查询提现列表
     queryUserWithdrawList(val){
-      return axios({
+      return _axios({
         url:'queryUserWithdrawList',
         method:'POST',
         data:val
@@ -313,16 +313,16 @@ const api = {
     },
     //导出提现列表
     exportUserWithdraw(val){
-      return axios({
+      return _axios({
         url:'exportUserWithdraw',
         method:'POST',
         data:val
       })
-      
+
     },
     //导入提现支付信息
     importUserPay(val){
-      return axios({
+      return _axios({
         url:'/importUserPay',
         method:'POST',
         data:val
@@ -331,7 +331,7 @@ const api = {
   // _________________________附件上传_________ _________________________附件上传_________
   //图片上传
   uploadFile(val){
-    return axios({
+    return _axios({
       url:'/common/attachment/uploadFile',
       method:'POST',
       data:val
@@ -340,7 +340,7 @@ const api = {
     // _________________________常见问题_________ _________________________常见问题_________
   //分页查询常见问题
   queryUserProblemsList(val){
-    return axios({
+    return _axios({
       url:'/queryUserProblemsList',
       method:'POST',
       data:val

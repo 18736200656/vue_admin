@@ -36,8 +36,9 @@
                 v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                 @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
             </div>
-            <div v-else style="cursor: pointer;">
-              <span :title="scope.row[item.key]" @click="lookUP(scope.$index,scope.row)">{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
+            <div v-else>
+              <span style="color: #409eff;cursor: pointer;" v-if="item.key=='id'" @click="lookUP(scope.$index,scope.row)">{{scope.row[item.key]}}</span>
+              <span :title="scope.row[item.key]" v-else>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
             </div>
           </template>
         </el-table-column>
@@ -60,7 +61,7 @@
     @close="beforeClose"
     width="50%">
     <span slot="title" class="dialog_tit">新增渠道管理</span>
-    <form-box  @chanel.sync="closeDialog" ref="channelform"></form-box>
+    <channel-form  @chanel="closeDialog" ref="channelform"></channel-form>
   </el-dialog>
   <!-- 任务完成量 -->
   <el-dialog
@@ -97,7 +98,7 @@
 </template>
 <script>
   import bus from '../../../utils/bus'
-  import formBox from '../channel/formbox'
+  import channelForm from '../channel/channelForm'
   export default {
     name:'Table',
     data(){
@@ -113,7 +114,7 @@
       }
     },
     components:{
-      formBox
+      channelForm
     },
     props:{
       tableData:{
@@ -190,7 +191,6 @@
       closeDialog(data){
         this.dialogVisible = false;
         this.$api[this.tableData.api[2]](data).then(res=>{
-           debugger
             if (res.code ==1){
               this.getTabList();
             }else{
@@ -201,14 +201,6 @@
         })
 
       },
-      //新增
-      // addClick(){
-      //   this.dialogVisible=true
-      //   this.FormData={
-      //     edit:false,
-      //     data:{}
-      //   }
-      // },
       //查看
       lookUP(index,row){
         this.taskDialogVisible = true;
@@ -261,7 +253,7 @@
   .el-table__header th {
     padding: 0;
     height: 60px;
-    
+
   }
 </style>
 

@@ -3,17 +3,17 @@ import {Loading,Message} from 'element-ui';
 import router from '../router'
 
 let baseurl = process.env.NODE_BASE_URL;
-console.log(baseurl,'===========baseURL+++++++++++++')
 
-axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
+// axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
 const _axios = axios.create({
   timeout:5000,
-  baseURL:baseurl
+  baseURL:baseurl,
+  headers:{
+    'Content-Type':'application/json; charset=utf-8'
+  }
 });
-
-// axios.defaults.headers.common['Authorization'] = token;
-
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let loading;
 _axios.interceptors.request.use(

@@ -192,7 +192,7 @@
         console.log(data,'====,,,,')
         this.dialogVisible = false;
                          // 3 新增 1 修改
-        let num = data.type=='true' ? '1' :'3'
+        let num = data.type ? '1' :'3'
         console.log(num,data.type,'---')
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){

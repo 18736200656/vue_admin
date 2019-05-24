@@ -14,8 +14,8 @@
         <el-input v-model="formData.password" placeholder="请输入密码" type="password" ></el-input>
       </el-form-item>
       <el-form-item align="right">
-        <el-button type="primary" @click="submit('true')">确 定</el-button>
-        <!--<el-button @click="submit('false')">取 消</el-button>-->
+        <el-button type="primary" @click="submit">确 定</el-button>
+        <!--<el-button @click="submit(false)">取 消</el-button>-->
       </el-form-item>
     </el-form>
   </div>
@@ -49,14 +49,12 @@
 
     },
     methods:{
-      submit(val){
+      submit(){
         this.$refs.channelform.validate(valid =>{
           if (valid){
-            console.log(this.formData,'=====formthis.formData')
-            this.$emit('update:chanel',this.formData)
-            console.log(this.formData,'=++++formthis.formData')
+            this.$emit('chanel',this.formData)
           }else{
-            return
+            return false
           }
         })
       },

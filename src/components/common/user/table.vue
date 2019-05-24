@@ -7,7 +7,7 @@
         <!-- <el-button type="primary" @click="addClick" >新增</el-button> -->
         <el-button :type="item.type" @click="dialogVisible=true" :key="index"
                    v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
-        </div>           
+        </div>
       </section>
       <section class="table_container">
         <el-table
@@ -68,7 +68,7 @@
       @close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增用户管理</span>
-      <userform :FormData="userFormData" @updatelist="closeDialog" ref="formbox"></userform>
+      <userform :userFormData="userFormData" @updatelist="closeDialog" ref="formbox"></userform>
     </el-dialog>
     <!-- 发送消息 -->
     <el-dialog
@@ -175,24 +175,27 @@
       //修改 //发送消息
       handleEdit(index,val,num){
         if(num=='1'){ //  修改
-           let data = {
+           let userData = {
             edit:true,
             data:val,
           }
-          this.userFormData = data;
+          this.userFormData = userData;
           this.dialogVisible = true;
         }else if(num=='2'){ //发送消息
           this.MessageForm.userId = val.id;
           this.MessageDialogVisible = true;
-        } 
+        }
       },
       //新增 编辑
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
-        this.type = data.ref;
-        debugger
-        let num = data.type=='true' ? '1' : '2'; //1 修改 2 新增
+        this.type = data.type;
+        let num = data.type ? '1' : '2'; //1 修改 2 新增
+        this.getList(data,num);
+      },
+      //更新状态
+      getList(data,num){
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
             this.$message.success(res.data)
@@ -230,7 +233,7 @@
         this.$refs.formbox.reset();
       }
     },
-  
+
   }
 </script>
 <style>

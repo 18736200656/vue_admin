@@ -193,7 +193,7 @@
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
-        let num = data.type=='true' ? '1' : '4'; //1 修改 4 新增
+        let num = data.type ? '1' : '4'; //1 修改 4 新增
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
             this.$message.success(res.data.message)

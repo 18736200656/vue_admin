@@ -172,7 +172,7 @@
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
-        let num = data.type=='true' ? '4' : '3'; //4修改 3 新增
+        let num = data.type ? '4' : '3'; //4修改 3 新增
         if(data.type){ //修改
           this.$api[this.tableData.api[num]](data).then(res=>{
             if (res.code ==1){

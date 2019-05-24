@@ -59,7 +59,7 @@
       <span slot="title" class="dialog_tit">新增商品分类</span>
       <form-box :FormData="FormData" @update="closeDialog" ref="formdata"></form-box>
     </el-dialog>
-    
+
   </div>
 </template>
 <script>
@@ -76,7 +76,7 @@
         dialogVisible:false,
         FormData:{},
         busData:{},
-       
+
       }
     },
     components:{
@@ -151,10 +151,9 @@
       },
       //关闭弹窗
       closeDialog(data){
-        console.log(data,'====,,,,')
         this.dialogVisible = false;
                          // 2 新增 1 修改
-        let num = data.type=='true' ? '1' :'2'
+        let num = data.type ? '1' :'2'
         console.log(num,data.type,'---')
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
@@ -174,7 +173,7 @@
         this.dialogVisible = false;
         this.$refs.formdata.reset();
       }
-     
+
     }
   }
 </script>

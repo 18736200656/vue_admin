@@ -9,8 +9,6 @@ import uploadImg from './components/common/upload/index'
 
 Vue.prototype.$api = api; //接口
 Vue.prototype.$valid = valid; //状态
-console.log(uploadImg,'===uploadImg')
-Vue.config.productionTip = false
 Vue.use(ElementUI,{size: "small"});
 Vue.use(uploadImg) //上传组件
 new Vue({

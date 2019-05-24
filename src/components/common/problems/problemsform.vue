@@ -18,8 +18,8 @@
         </el-upload>
       </el-form-item>
       <el-form-item align="right">
-        <el-button type="primary" @click="submit('true')" v-if="FormData.edit">保存</el-button>
-        <el-button @click="submit('false')" v-else>确 定</el-button>
+        <el-button type="primary" @click="submit(true)" v-if="FormData.edit">保存</el-button>
+        <el-button @click="submit(false)" v-else>确 定</el-button>
       </el-form-item>
     </el-form>
   </div>

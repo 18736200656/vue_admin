@@ -30,8 +30,8 @@
         <el-input v-model="formdata.sort" placeholder="请输入分类排序" type="text" ></el-input>
       </el-form-item>
       <el-form-item align="right">
-        <el-button type="primary" @click="submit('true')" v-if="FormData.edit">确 定</el-button>
-        <el-button type="primary" @click="submit('false')" v-else>保 存</el-button>
+        <el-button type="primary" @click="submit(true)" v-if="FormData.edit">确 定</el-button>
+        <el-button type="primary" @click="submit(false)" v-else>保 存</el-button>
       </el-form-item>
     </el-form>
   </div>
