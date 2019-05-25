@@ -50,7 +50,7 @@
       }
     },
     created(){
-
+      this.formdata = this.userFormData.data
     },
      methods:{
       updateImg(val){

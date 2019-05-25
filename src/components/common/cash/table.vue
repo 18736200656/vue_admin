@@ -3,7 +3,7 @@
     <el-card class="tablelist">
       <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
         <el-button :type="item.type" @click="exportFile" :key="index"
-                   v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>   
+                   v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
       </section>
       <section class="table_container">
         <el-table
@@ -42,6 +42,7 @@
         </el-table>
         <div class="b_pagation">
           <el-pagination
+            background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
@@ -59,7 +60,7 @@
       <span slot="title" class="dialog_tit">新增渠道管理</span>
       <form-box :FormData="FormData" @update="closeDialog"></form-box>
     </el-dialog>
-  
+
   </div>
 </template>
 <script>
@@ -143,7 +144,7 @@
         }else if(num=='2'){ //发送消息
           this.MessageForm.userId = val.id;
           this.MessageDialogVisible = true;
-        } 
+        }
       },
        //导出
       exportFile(){
@@ -166,7 +167,7 @@
         })
       },
     },
-  
+
   }
 </script>
 <style>

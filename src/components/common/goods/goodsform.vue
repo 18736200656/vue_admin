@@ -186,7 +186,7 @@ export default {
   },
   created(){
     this.FormData.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName;
-    this.FormData=this.formdata
+    this.FormData=this.formdata.data
   },
   watch:{
    formdata(val){

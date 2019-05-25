@@ -41,6 +41,7 @@
         </el-table>
         <div class="b_pagation">
           <el-pagination
+            background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"

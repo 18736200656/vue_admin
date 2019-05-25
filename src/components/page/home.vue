@@ -173,6 +173,7 @@
         </el-table>
         <div class="page_block">
           <el-pagination
+            background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"

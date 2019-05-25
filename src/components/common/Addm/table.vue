@@ -50,6 +50,7 @@
         </el-table>
         <div class="b_pagation">
           <el-pagination
+            background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
@@ -156,7 +157,7 @@
           }).then(() => {
             //删除商品
             this.deleteAdvertising(row,num)
-            
+
           }).catch(() => {
             this.$message({
               type: 'info',
@@ -165,7 +166,7 @@
           });
         }
       },
-      
+
       //删除
       deleteAdvertising(row,num){
          this.$api[this.tableData.api[num]](row).then(res=>{
@@ -204,7 +205,7 @@
         }).catch((error) => {
           Promise.reject(error);
         })
-        
+
 
       },
       //启用禁用

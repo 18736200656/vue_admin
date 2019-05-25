@@ -29,6 +29,8 @@ html,body,
   color: #2c3e50;
 }
 
-
+.el-table{
+  height: 500px;
+}
 
 </style>

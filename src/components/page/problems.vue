@@ -21,11 +21,11 @@ export default {
           },
           {
             api:true,
-            type:'primary',
-            name:'修改'
+            type:'success',
+            name:'導出'
           },
         ],
-                //接口名字方法      
+                //接口名字方法
         api:['queryUserProblemsList','saveUserProblems','updateUserProblems','deleteUserProblems'],
         thData:[
           {
@@ -57,7 +57,7 @@ export default {
               }
             ]
           }
-          
+
         ]
       }
     }

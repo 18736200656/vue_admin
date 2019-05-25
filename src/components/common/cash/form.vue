@@ -49,7 +49,7 @@
       }
     },
     created(){
-
+      this.formdata = this.formData.data;
     },
      methods:{
       updateImg(val){

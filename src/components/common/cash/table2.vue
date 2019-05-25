@@ -17,7 +17,7 @@
             <!-- <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传.xlsx,.xls文件，且不超过500kb</div> -->
           </el-upload>
-        </div>           
+        </div>
       </section>
       <section class="table_container">
         <el-table
@@ -62,6 +62,7 @@
         </el-table>
         <div class="b_pagation">
           <el-pagination
+            background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
@@ -156,7 +157,7 @@
         }).catch((error) => {
           Promise.reject(error);
         })
-       
+
       },
       //上传错误
       uploadFail(err, file, fileList) {
@@ -175,7 +176,7 @@
         }
       }
     },
-  
+
   }
 </script>
 <style>

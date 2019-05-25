@@ -36,7 +36,7 @@
       }
     },
     created(){
-
+      this.formdata = this.formData.data;
     },
      methods:{
       submit(val){
