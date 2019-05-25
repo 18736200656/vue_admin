@@ -62,16 +62,16 @@
     </el-card>
     <el-dialog
       :visible.sync="dialogVisible"
-      @close="beforeClose"
+      :before-close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增任务数据</span>
-      <form-box :FormData="FormData" @update="closeDialog" ref="formData"></form-box>
+      <taskform :taskFormData="taskFormData" @update="closeDialog" ref="taskform"></taskform>
     </el-dialog>
   </div>
 </template>
 <script>
   import bus from '../../../utils/bus'
-  import formBox from '../taskM/form'
+  import taskform from './taskform'
   export default {
     name:'Table',
     data(){
@@ -81,13 +81,13 @@
         currentPage: 1,
         pageSize: 10,
         dialogVisible:false,
-        FormData:[],
+        taskFormData:[],
         busData:{},
         baseUrl:'http://47.97.152.146/',
       }
     },
     components:{
-      formBox
+      taskform
     },
     props:{
       tableData:{
@@ -99,6 +99,8 @@
       this.getTabList();
       bus.$on('updataCHN',data =>{
         this.busData = data;
+        this.currentPage= 1
+        this.pageSize= 10
         this.getTabList();
       })
     },
@@ -109,13 +111,11 @@
       },
       //一页显示
       handleSizeChange(val){
-        console.log(val,'一页显示多少');
         this.pageSize=val
         this.getTabList();
       },
       //跳转到第几页
       handleCurrentChange(val){
-        console.log(val,'当前页面是')
         this.currentPage = val;
         this.getTabList();
       },
@@ -143,13 +143,14 @@
             edit:true,
             data:val,
           }
-          this.FormData = data;
+          this.taskFormData = data;
           this.dialogVisible = true;
         }else if(num=='2'){ //删除
           this.$api[this.tableData.api[num]]({id:val.id}).then(res=>{
             if(res.code==1){
              this.$message.success(res.data.message)
-             this.getTabList()
+             this.getTabList();
+             this.$refs.taskform.reset();
             }else{
               this.$message.error(res.msg)
             }
@@ -173,7 +174,10 @@
       addClick(val){
         if(!val){
           this.dialogVisible=true
-        
+          this.taskFormData={
+            edit:false,
+            data:{},
+          }
         }else{
           //导出
           // let data = {
@@ -186,7 +190,6 @@
           // }
           console.log(this.baseUrl,'----ip地址')
           window.open(this.baseUrl+'exportTaskUser','_blank')
-
         }
 
       },
@@ -206,9 +209,9 @@
         })
       },
        //关闭弹窗
-      beforeClose(){
-        this.dialogVisible = false;
-        this.$refs.formData.reset();
+      beforeClose(done){
+        done();
+        this.$refs.taskform.reset();
       }
     },
   }

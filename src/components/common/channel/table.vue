@@ -58,7 +58,7 @@
   </el-card>
   <el-dialog
     :visible.sync="dialogVisible"
-    @close="beforeClose"
+    :before-close="beforeClose"
     width="50%">
     <span slot="title" class="dialog_tit">新增渠道管理</span>
     <channel-form  @chanel="closeDialog" ref="channelform"></channel-form>
@@ -128,6 +128,8 @@
     created(){
       this.getTabList();
       bus.$on('updataCHN',data =>{
+        this.currentPage =1,
+        this.pageSize= 10,
         this.busData = data;
         this.getTabList();
       })
@@ -139,13 +141,11 @@
       },
       //一页显示
       handleSizeChange(val){
-        console.log(val,'一页显示多少');
         this.pageSize=val
         this.getTabList();
       },
       //跳转到第几页
       handleCurrentChange(val){
-        console.log(val,'当前页面是')
         this.currentPage = val;
         this.getTabList();
       },
@@ -216,8 +216,8 @@
         })
       },
       //关闭弹窗
-      beforeClose(){
-        this.dialogVisible = false;
+      beforeClose(done){
+        done();
         this.$refs.channelform.reset();
       }
     }

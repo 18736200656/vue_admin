@@ -14,7 +14,7 @@
           <img v-if="formdata.imgUrl" :src="formdata.imgUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload> -->
-        <upload-img :value="formdata.imgUrl" @input="uploadImg"></upload-img> 
+        <upload-img :value="formdata.imgUrl" @input="uploadImg"></upload-img>
       </el-form-item>
       <el-form-item label="点击链接">
         <el-input v-model="formdata.clickUrl" placeholder="请输入点击链接" type="text" ></el-input>
@@ -32,9 +32,9 @@
     data() {
       return {
         formdata:{
-          id:'', //	string	
+          id:'', //	string
           imgUrl:'', //		string
-          clickUrl:'', //		long	
+          clickUrl:'', //		long
         },
         formRules:{
           imgUrl:{required:true, message:'广告链接不能为空',trigger: 'change'},	//广告链接
@@ -50,7 +50,7 @@
       }
     },
     created(){
-      
+      this.formdata = this.FormData.data;
     },
     methods:{
       submit(val){
@@ -72,7 +72,7 @@
       handleAvatarSuccess(res,file){
         // let imgs = URL.createObjectURL(file.raw);
         console.log(res,file,'----图谱按')
-          var result = file.response; 
+          var result = file.response;
           if(result.code==1){
             this.formdata.imgUrl = result.data.path
           }else{
@@ -81,7 +81,7 @@
         // if(res.code==1){
         //   this.formdata.imgUrl = res.data.path
         //   // this.removeImg()
-        // }else{ 
+        // }else{
         //   this.$message.error(res.msg);
         // }
       },
@@ -110,7 +110,7 @@
   .formbox{
     margin-top:20px;
   }
-  
+
 </style>
 <style>
  .avatar-uploader .el-upload {

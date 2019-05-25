@@ -31,6 +31,7 @@
           </el-form-item>
           <el-form-item size="mini">
             <el-button type="primary" @click="queryGoodsList">查询</el-button>
+            <el-button type="primary" @click="resetForm">重置</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -104,20 +105,6 @@
             align="center"
             width="150">
             <template slot-scope="scope">
-              <!-- <table border="1" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td>商品等级一级分类：</td>
-                  <td>{{scope.row.levelOne}}</td>
-                </tr>
-                <tr>
-                  <td>商品等级二级分类：</td>
-                  <td>{{scope.row.levelTwo || ''}}</td>
-                </tr>
-                <tr>
-                  <td>商品等级三级分类：</td>
-                  <td>{{scope.row.levelThree}}</td>
-                </tr>
-              </table> -->
               <div>商品等级一级分类：{{scope.row.levelOne}}</div>
               <div>商品等级二级分类：{{scope.row.levelTwo}}</div>
               <div>商品等级三级分类：{{scope.row.levelThree}}</div>
@@ -200,7 +187,7 @@
     <!-- 商品弹出 -->
      <el-dialog
       :visible.sync="dialogVisible"
-      @close="beforeClose"
+      :before-close="beforeClose"
       width="40%">
       <span slot="title" class="dialog-header">
         {{'商品信息'}}
@@ -210,7 +197,7 @@
     <!-- 导入xlsx -->
      <el-dialog
       :visible.sync="FiledialogVisible"
-      width="30%">
+      width="21%">
       <span slot="title" class="dialog_tit">导入文件</span>
         <el-card>
           <el-upload
@@ -272,20 +259,26 @@ export default {
   },
   methods:{
     handleSelectionChange(val){
-      console.log(val,'选中数据---')
       this.selectDatas = val
     },
     handleSizeChange(val){
-      console.log(val,'一页显示多少');
       this.pageSize=val
       this.queryGoodsList()
     },
     handleCurrentChange(val){
-      console.log(val,'当前页面是')
       this.currentPage = val;
       this.queryGoodsList()
     },
-
+    //重置
+    resetForm(){
+      this.goodsForm={
+        name: '',
+        title: '',
+        level1: '',
+        level2: '',
+        level3: '',
+      }
+    },
      //新增
     addClick(){
       this.dialogVisible=true
@@ -311,7 +304,7 @@ export default {
           type: 'warning'
         }).then(() => {
           //删除商品
-          this.$api.delGoods({ids:row.id}).then(res=>{
+          this.$api.delGoods({ids:[row.id]}).then(res=>{
             if(res.code==1){
               this.queryGoodsList()
               this.$message({
@@ -324,7 +317,7 @@ export default {
           }).catch(error=>{
             return Promise.reject(error)
           })
-          
+
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -372,13 +365,12 @@ export default {
         });
       });
     },
-
     // 关闭弹窗
     closeDialog(params){
       this.dialogVisible=false;
-      console.log(params.type,'-----')
+      console.log(params.type,params,'--goodsForm---')
                           //  1修改      2新增
-      let api = params.type=='true' ? 'editGoods' : 'addGoods'
+      let api = params.type ? 'editGoods' : 'addGoods'
       this.$api[api](params).then(res=>{
         if(res.code==1){
           this.$message.success(res.data);
@@ -408,7 +400,6 @@ export default {
         return Promise.reject(error)
       })
     },
-
     //商品分类查询
     queryGoodsCategory(evel,parentId,cb){
       //一级分类
@@ -453,6 +444,7 @@ export default {
         if (res.code ==1){
           this.queryGoodsList();
           this.$message.success(res.data.message)
+          this.$refs.form.reset();
         }else{
           this.$message.error(res.msg)
         }
@@ -481,14 +473,14 @@ export default {
       }
     },
      //关闭弹窗
-      beforeClose(){
-        this.dialogVisible = false;
-        this.$refs.form.reset();
-      }
+    beforeClose(done){
+      done();
+      this.$refs.form.reset();
+
+    }
 
   },
   components:{
-//    DialogEidt,
     goodsForm
   }
 }

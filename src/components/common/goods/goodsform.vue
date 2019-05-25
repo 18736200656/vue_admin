@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="goodsform">
-      <el-form ref="form" :model="FormData" :rules="formRules" label-width= "150px" label-position="left">
+      <el-form ref="goodsform" :model="FormData" :rules="formRules" label-width= "150px" label-position="left">
         <el-form-item label="商品名称" prop="name">
           <el-input v-model="FormData.name"></el-input>
         </el-form-item>
@@ -32,17 +32,17 @@
           <el-input v-model="FormData.imgList"></el-input>
         </el-form-item>
         <el-form-item label="商品分类一级" prop="levelOne" >
-          <el-select v-model="FormData.levelOne" placeholder="请选择商品分类等级"> 
+          <el-select v-model="FormData.levelOne" placeholder="请选择商品分类等级">
             <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="商品分类二级" prop="levelTwo">
-          <el-select v-model="FormData.levelTwo" placeholder="请选择商品分类等级"> 
+          <el-select v-model="FormData.levelTwo" placeholder="请选择商品分类等级">
             <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="商品分类三级" prop="levelThree">
-          <el-select v-model="FormData.levelThree" placeholder="请选择商品分类等级"> 
+          <el-select v-model="FormData.levelThree" placeholder="请选择商品分类等级">
             <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
           </el-select>
         </el-form-item>
@@ -75,17 +75,12 @@
             <el-date-picker type="date" placeholder="选择日期" v-model="FormData.date" style="width: 100%;"></el-date-picker>
           </el-col>
         </el-form-item>
-        <el-form-item>
-
-        </el-form-item>
       </el-form>
     </div>
-    <div class="form_bottom"> 
+    <div class="form_bottom">
       <el-button type="primary" @click="onsubmit(true)" v-if="formdata.edit">保存</el-button>
       <el-button type="primary" @click="onsubmit(false)" v-else>立即创建</el-button>
-      <!--<el-button>取消</el-button>-->
     </div>
-
   </div>
 </template>
 <script>
@@ -145,21 +140,17 @@ export default {
   props:['formdata'],
   methods:{
     updateImg(val){
-      this.Formdata.img = val
+      this.FormData.img = val
     },
-    onSubmit(val) {
-      this.FormData = Object.assign(this.FormData,{
-        type:val
-      });
-      if(val){
-          
-      }
-      this.$refs.form.validate(valid =>{
+    onsubmit(val) {
+      this.FormData.type = val
+      this.$refs.goodsform.validate(valid =>{
         if (valid){
+          console.log(this.FormData,'==========this.FormData')
+          debugger
           this.$emit('update',this.FormData)
         }else{
-          //重置
-          // this.$refs.form.resetFields();
+          return false
         }
       })
       console.log('submit!');
@@ -190,11 +181,12 @@ export default {
     },
     //重置
     reset(){
-      this.$refs.form.resetFields();
+      this.$refs.goodsform.resetFields();
     }
   },
   created(){
-    this.FormData.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName
+    this.FormData.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName;
+    this.FormData=this.formdata
   },
   watch:{
    formdata(val){
@@ -206,7 +198,7 @@ export default {
 <style scoped>
   .goodsform{
     margin-top:15px;
-    max-height: 400px;
+    max-height: 600px;
     overflow: auto;
   }
   .form_bottom{

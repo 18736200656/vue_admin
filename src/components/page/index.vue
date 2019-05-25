@@ -2,7 +2,7 @@
   <div class="index">
     <LeftMenu></LeftMenu>
     <Header></Header>
-    <div class="content" :width="height+'px'">
+    <div class="content" :width="height+'px'" ref="content">
       <transition name="move" mode="out-in">
         <keep-alive>
           <router-view></router-view>
@@ -34,13 +34,27 @@ export default {
   },
   mounted() {
     window.addEventListener('resize',this.getclientW,false);
+    var con = this.$refs.content;
+    this.scrollbarShowHidden(con);
+
   },
   methods:{
     getclientW(){
-//      console.log(document.body.clientWidth ,'---000');
       this.wd= document.body.clientWidth - 180
       this.height= document.body.clientWidth - 60
+    },
+
+    //鼠标划入滚动条展现，鼠标划出滚动条隐藏
+    scrollbarShowHidden(element){
+      element.setAttribute('className','scrollbarHide');
+      element.onMouseEnter =function() {
+        element.setAttribute('className','scrollbarShow');
+      };
+      element.onMouseLeave =function (){
+        element.removeAtrribute('scrollbarShow');
+      };
     }
+
   }
 };
 </script>
@@ -63,4 +77,13 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
 }
+</style>
+<style>
+  /*chrome滚动条颜色设置*/
+
+  *::-webkit-scrollbar {width:15px; height:15px; background-color:transparent;} /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+  *::-webkit-scrollbar-track {background-color:#f0f6ff;  } /*定义滚动条轨道 内阴影+圆角*/
+  *::-webkit-scrollbar-thumb {background-color:#73abb1; border-radius:6px;} /*定义滑块 内阴影+圆角*/
+  .scrollbarHide::-webkit-scrollbar{display: none}
+  .scrollbarShow::-webkit-scrollbar{display: block}
 </style>

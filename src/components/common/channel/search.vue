@@ -23,6 +23,7 @@
         </el-form-item>
         <el-form-item align="right">
           <el-button type="primary" @click="submit">查询</el-button>
+          <el-button type="" @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -46,7 +47,14 @@
     methods:{
       submit(){
         bus.$emit('updataCHN',this.formData)
-        this.formData={}
+      },
+      resetForm(){
+        this.formData={
+            channelLoginName:'', //	渠道账号
+            channelName:'',	//渠道名称
+            inviteCode:'',	//	邀请码
+            status:'',		//状态
+        }
       }
     }
   }

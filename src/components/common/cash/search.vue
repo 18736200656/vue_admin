@@ -37,6 +37,7 @@
           </el-form-item>
         <el-form-item align="right">
           <el-button type="primary" @click="submit">查询</el-button>
+          <el-button type="primary" @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -60,7 +61,7 @@
           disabledDate:(item)=>{
             let beginDate = this.formData.endTime
             if(beginDate){
-              return this.$valid.date(item.getTime()).split('-').join('') > beginDate
+              return this.$valid.formdate(item.getTime()).split('-').join('') > beginDate
             }
           }
         },
@@ -68,7 +69,7 @@
           disabledDate:(item)=>{
             let beginDate = this.formData.startTime
             if(beginDate){
-              return this.$valid.date(item.getTime()).split('-').join('') < beginDate
+              return this.$valid.formdate(item.getTime()).split('-').join('') < beginDate
             }
           }
         },
@@ -78,7 +79,15 @@
     methods:{
       submit(){
         bus.$emit('updataCASH',this.formData)
-        this.formData={}
+      },
+      resetForm(){
+        this.formData={
+          userName:'', //			string	否	用户名
+            status:'', //			string	否	状态1:未支付 2:已支付
+            withdrawAccount:'', //			string	否	提现账号
+            startTime:'', //			string	否	提现开始时间
+            endTime:'', //			string	否	提现结束时间
+        }
       }
     }
   }

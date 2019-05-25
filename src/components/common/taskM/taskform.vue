@@ -1,6 +1,6 @@
 <template>
   <div class="formbox">
-    <el-form :model="formData" ref="formData" :rules="formRules" lable-width="100px" label-position="left">
+    <el-form :model="formData" ref="taskform" :rules="formRules" lable-width="100px" label-position="left">
       <el-form-item label="任务ID" prop="channelLoginName">
         <el-input v-model="formData.taskId" placeholder="请输入任务ID" type="text" ></el-input>
       </el-form-item>
@@ -19,7 +19,7 @@
         <uploadImg :value="formData.taskImg" :title="'上传图片'" @input="updateImg"></uploadImg>
       </el-form-item>
       <el-form-item align="right">
-        <el-button type="primary" @click="submit(true)" v-if="FormData.edit">保存</el-button>
+        <el-button type="primary" @click="submit(true)" v-if="taskFormData.edit">保存</el-button>
         <el-button @click="submit(false)" v-else>确 定</el-button>
       </el-form-item>
     </el-form>
@@ -43,25 +43,24 @@
       }
     },
     props:{
-      FormData:{
+      taskFormData:{
         type:Object,
         default:()=>{}
       }
     },
     created(){
-
+      this.formData =  this.taskFormData.data
     },
      methods:{
       updateImg(val){
-        this.formdata.img = val
-      }, 
+        this.formData.taskImg = val
+      },
       submit(val){
-        this.formData = Object.assign(this.formData,{
-          type:val
-        })
+        this.formData.type= val;
         console.log(this.formData,'====')
-        this.$refs.formData.validate(valid =>{
+        this.$refs.taskform.validate(valid =>{
           if (valid){
+            console.log(this.formData,'++++')
             this.$emit('update',this.formData)
           }else{
             return
@@ -79,11 +78,11 @@
       },
        //重置
       reset(){
-        this.$refs.formData.resetFields();
+        this.$refs.taskform.resetFields();
       }
     },
     watch:{
-      FormData(val){
+      taskFormData(val){
         this.formData = val.data
       }
     }

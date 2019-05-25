@@ -61,7 +61,7 @@
     </el-card>
     <el-dialog
       :visible.sync="dialogVisible"
-      @close="beforeClose"
+      :before-close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增常见问题</span>
       <form-box :FormData="FormData" @update="closeDialog" ref="formData"></form-box>
@@ -208,8 +208,8 @@
         })
       },
        //关闭弹窗
-      beforeClose(){
-        this.dialogVisible = false;
+      beforeClose(done){
+        done();
         this.$refs.formData.reset();
       }
     },

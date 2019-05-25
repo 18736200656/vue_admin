@@ -4,9 +4,7 @@
       <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
         <i class="iconfont icon-wuxupailie"></i>用户列表
         <div style="margin-top:10px;">
-        <!-- <el-button type="primary" @click="addClick" >新增</el-button> -->
-        <el-button :type="item.type" @click="dialogVisible=true" :key="index"
-                   v-for="(item,index) in tableData.tableBtn">{{item.name}}</el-button>
+         <el-button type="primary" @click="addClick">新增</el-button>
         </div>
       </section>
       <section class="table_container">
@@ -65,7 +63,7 @@
     </el-card>
     <el-dialog
       :visible.sync="dialogVisible"
-      @close="beforeClose"
+      @before-close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增用户管理</span>
       <userform :userFormData="userFormData" @updatelist="closeDialog" ref="formbox"></userform>
@@ -145,15 +143,22 @@
       },
       //一页显示
       handleSizeChange(val){
-        console.log(val,'一页显示多少');
         this.pageSize=val
         this.getTabList();
       },
       //跳转到第几页
       handleCurrentChange(val){
-        console.log(val,'当前页面是')
         this.currentPage = val;
         this.getTabList();
+      },
+      //新增
+      addClick(){
+        this.dialogVisible = true;
+        let userData = {
+          edit:false,
+          data:{},
+        }
+        this.userFormData = userData;
       },
       //获取数据
       getTabList(){
@@ -189,8 +194,8 @@
       //新增 编辑
       //关闭弹窗
       closeDialog(data){
+        console.log(data,'===table --[[[[[[]]]]]-form')
         this.dialogVisible = false;
-        this.type = data.type;
         let num = data.type ? '1' : '2'; //1 修改 2 新增
         this.getList(data,num);
       },
@@ -214,7 +219,7 @@
             this.MessageDialogVisible = false
             this.$api[this.tableData.api[3]](this.MessageForm).then(res=>{
               if (res.code ==1){
-                this.$message.success(res.data.message)
+                this.$message.success('发送成功')
                 this.getTabList();
               }else{
                 this.$message.error(res.msg)
@@ -228,8 +233,8 @@
         })
       },
       //关闭弹窗
-      beforeClose(){
-        this.dialogVisible = false;
+      beforeClose(done){
+        done();
         this.$refs.formbox.reset();
       }
     },

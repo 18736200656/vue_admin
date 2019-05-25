@@ -44,7 +44,6 @@ _axios.interceptors.response.use(
   error=>{
     loading.close();
     Message.error(JSON.stringify(error.message));
-    // console.log(error,'----')
     const {status} =error.res;
     if (status == 401) {
       Message.error("token值无效，请重新登录");

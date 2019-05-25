@@ -36,6 +36,7 @@
         </el-form-item>
         <el-form-item align="right">
           <el-button type="primary" @click="submit">查询</el-button>
+          <el-button type="primary" @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -75,7 +76,14 @@
     methods:{
       submit(){
         bus.$emit('updataTKM',this.formData)
-        this.formData={}
+      },
+      resetForm(){
+        this.formData={
+          taskName:'', //		string	否	任务名称
+          status:'', //		string	否	数据状态 1：保存 2：审核通过 3：审核驳回
+          startTime:'', //		string	否	提交任务开始时间
+          endTime:'', //		string	否	提交任务结束时间
+        }
       }
     }
   }

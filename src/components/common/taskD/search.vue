@@ -17,6 +17,7 @@
         </el-form-item>
         <el-form-item align="right">
           <el-button type="primary" @click="submit">查询</el-button>
+          <el-button type="primary" @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -38,7 +39,10 @@
     methods:{
       submit(){
         bus.$emit('updataTASKD',this.formData)
-        this.formData={}
+      },
+      resetForm(){
+        this.formData.taskName=''
+        this.formData.status=''
       }
     }
   }

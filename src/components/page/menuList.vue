@@ -40,7 +40,7 @@
             },
             {
               imgShow:true,
-              key:'cateImgs',
+              key:'img',
               label:"图片组",
             },
             {

@@ -3,7 +3,7 @@
     <div class="avatar-uploader">
       <div v-if="imageUrl" class="avatar">
         <div class="avatar-cover">
-          <i @click="dialogVisible = true" class="el-icon-view"></i>
+          <!--<i @click="dialogVisible = true" class="el-icon-view"></i>-->
           <i @click="removeImg" class="el-icon-delete"></i>
         </div>
         <img :src="imageUrl">
@@ -19,14 +19,14 @@
       </el-upload>
       <p slot="tip" class="el-upload-tip">{{placeholder}}</p>
     </div>
-    <el-dialog
-      :title="title"
-      :visible.sync="dialogVisible">
-      <img :src="imageUrl" style="width: 100%">
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
+    <!--<el-dialog-->
+      <!--:title="title"-->
+      <!--:visible.sync="dialogVisible">-->
+      <!--<img :src="imageUrl" style="width: 100%">-->
+      <!--<span slot="footer" class="dialog-footer">-->
+        <!--<el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
+      <!--</span>-->
+    <!--</el-dialog>-->
   </div>
 </template>
 

@@ -11,7 +11,7 @@ module.exports = {
     return data.status[val];
   },
   //日期
-  date(item){
+  formdate(item){
     let date = new Date(item);
     var Y = date.getFullYear();
     var M = date.getMonth()+1;

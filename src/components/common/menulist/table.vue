@@ -32,7 +32,7 @@
                   v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                   @click="handleEdit(scope.$index, scope.row)">{{v.name}}</el-button>
               </div>
-              <img :src="scope.row[item.img]" alt="" v-else-if="item.imgShow" class="cate_img">
+              <img :src="scope.row[item.key]" alt="" v-else-if="item.imgShow" class="cate_img">
               <div v-else>
                 <span>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
               </div>
@@ -54,7 +54,7 @@
     </el-card>
     <el-dialog
       :visible.sync="dialogVisible"
-      @close="beforeClose"
+      @before-close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增商品分类</span>
       <form-box :FormData="FormData" @update="closeDialog" ref="formdata"></form-box>
@@ -105,13 +105,12 @@
       },
       //一页显示
       handleSizeChange(val){
-        console.log(val,'一页显示多少');
         this.pageSize=val
         this.getTabList();
       },
       //跳转到第几页
       handleCurrentChange(val){
-        console.log(val,'当前页面是')
+
         this.currentPage = val;
         this.getTabList();
       },
@@ -169,8 +168,8 @@
 
       },
       //关闭弹窗
-      beforeClose(){
-        this.dialogVisible = false;
+      beforeClose(done){
+        done();
         this.$refs.formdata.reset();
       }
 

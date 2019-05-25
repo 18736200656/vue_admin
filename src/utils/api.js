@@ -1,5 +1,5 @@
 import _axios from '../utils/axios'
-console.log(_axios,'axios========')
+
 const api = {
   //_______________ 登录_______________ 登录_______________ 登录
   adminLogin:(val)=>{

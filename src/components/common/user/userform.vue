@@ -39,7 +39,7 @@
         formRules:{
           taskId:{required:true, message:'任务ID不能为空',trigger: 'blur'}, //	任务ID
           userId:{required:true, message:'用户ID不能为空',trigger: 'blur'},	//用户ID
-          taskImg:{required:true, message:'任务截图不能为空',trigger: 'change'},	//	任务截图
+          taskImg:{required:true, message:'任务截图不能为空',trigger: 'input'},	//	任务截图
         }
       }
     },
@@ -58,8 +58,10 @@
       },
       submit(val){
         this.formData.type =val;
+        console.log(this.formData,'==--form')
         this.$refs.formbox.validate(valid =>{
           if (valid){
+            console.log(this.formData,'===this.formData ---form')
             this.$emit('updatelist',this.formData)
           }else{
             return

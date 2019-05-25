@@ -40,7 +40,7 @@
               <div>1:{{scope.row.oneText}}</div>
               <div>2:{{scope.row.twoText}}</div>
               <div>3:{{scope.row.thirdText}}</div>
-       
+
               <!-- <span v-for="v in item.chiildren" :key="v.name">{{v.name}}:{{scope.row[v._key]}}</span> -->
             </div>
              <div v-else-if="item.taskImg">
@@ -78,10 +78,10 @@
   </el-card>
   <el-dialog
     :visible.sync="dialogVisible"
-    @close="beforeClose"
+    :before-close="beforeClose"
     width="50%">
     <span slot="title" class="dialog_tit">新增渠道管理</span>
-    <form-box :FormData="FormData" @update="closeDialog" ref="formData"></form-box>
+    <form-box :FormData="FormData" @update="closeDialog" ref="taskD"></form-box>
   </el-dialog>
 </div>
 </template>
@@ -111,10 +111,12 @@
       },
     },
     created(){
-      this.getTabList();
+      this.getTaskDList();
       bus.$on('updataTASKD',data =>{
+        this.currentPage= 1;
+        this.pageSize= 10;
         this.busData = data;
-        this.getTabList();
+        this.getTaskDList();
       })
     },
     methods:{
@@ -124,18 +126,16 @@
       },
       //一页显示
       handleSizeChange(val){
-        console.log(val,'一页显示多少');
         this.pageSize=val
-        this.getTabList();
+        this.getTaskDList();
       },
       //跳转到第几页
       handleCurrentChange(val){
-        console.log(val,'当前页面是')
         this.currentPage = val;
-        this.getTabList();
+        this.getTaskDList();
       },
       //获取数据
-      getTabList(){
+      getTaskDList(){
         let params =Object.assign(this.busData,{
           currentPage :this.currentPage,
           pageSize:this.pageSize
@@ -172,18 +172,18 @@
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
+        console.log(data,'+++++data')
         let num = data.type ? '4' : '3'; //4修改 3 新增
-        if(data.type){ //修改
-          this.$api[this.tableData.api[num]](data).then(res=>{
-            if (res.code ==1){
-              this.getTabList();
-            }else{
-              this.$message.error(res.msg)
-            }
-          }).catch((error) => {
-              Promise.reject(error);
-          })
-        }
+        this.$api[this.tableData.api[num]](data).then(res=>{
+          if (res.code ==1){
+            this.getTaskDList();
+          }else{
+            this.$message.error(res.msg)
+          }
+        }).catch((error) => {
+            Promise.reject(error);
+        })
+
       },
       //改变状态
       changeSatus(index,row,val){
@@ -193,7 +193,7 @@
         };
         this.$api[this.tableData.api[num]](params).then(res=>{
           if(res.code==1){
-            this.getTabList();
+            this.getTaskDList();
           }else{
             this.$message.error(res.msg)
           }
@@ -202,11 +202,11 @@
         })
       },
        //关闭弹窗
-      beforeClose(){
-        this.dialogVisible = false;
-        this.$refs.formData.reset();
+      beforeClose(done){
+        done();
+        this.$refs.taskD.reset();
       }
-      
+
     }
   }
 </script>
