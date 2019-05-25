@@ -126,7 +126,6 @@
         });
         this.$api[this.tableData.api[0]](params).then(res=>{
           if(res.code==1){
-              debugger
             this.tableList = res.data.list;
             this.total = res.data.total
           }else{
@@ -138,31 +137,15 @@
       },
       //启用还是禁用
       handleEdit(index,val,num){
-        if(num=='1'){ //修改
-           let data = {
-            edit:true,
-            data:val,
-          }
-          this.FormData = data;
-          this.dialogVisible = true;
-        }else if(num=='2'){ //删除
-          this.$api[this.tableData.api[num]]({id:val.id}).then(res=>{
+        debugger;
+        if(num=='1'){ //删除
+          this.$api[this.tableData.api[3]]({id:val.id}).then(res=>{
             if(res.code==1){
-             this.$message.success(res.data.message)
+             this.$message.success("操作成功!")
              this.getTabList()
             }else{
-              this.$message.error(res.message)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
-        }else{ //导出 3
-          this.$api[this.tableData.api[num]](val).then(res=>{
-            if(res.code==1){
-               this.$message.success(res.data.message)
-              //  window.location.href = res.data.xx
-            }else{
-              this.$message.error(res.message)
+              debugger;
+              this.$message.error(res.msg)
             }
           }).catch((error) => {
             Promise.reject(error);
@@ -171,6 +154,7 @@
       },
        //新增
       addClick(val){
+        debugger;
         if(!val){
           this.dialogVisible=true
           this.FormData={
@@ -178,27 +162,23 @@
             data:{}
           }
         }else{
-          //导出
-          // let data = {
-          //   taskName:'', //	string	否	任务名称
-          //   userName:'', //		string	否	用户名称
-          //   status:'', //		string	否	状态 1：保存 2：审核通过 3：审核驳回
-          //   mobile:'', //		string	否	用户手机号
-          //   startTime:'', //		string	否	提交任务开始时间
-          //   endTime:'', //		string	否	提交任务结束时间
-          // }
-          console.log(this.baseUrl,'----ip地址')
-          window.location.href = this.baseUrl+'exportTaskUser'
+          debugger;
+          this.dialogVisible=true
+          this.FormData={
+            edit:false,
+            data:{}
+          }
         }
 
       },
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
-        let num = data.type=='true' ? '1' : '4'; //1 修改 4 新增
+        let num = data.type=='true' ? '2' : '1'; //2 修改 1 新增
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
-            this.$message.success(res.data.message)
+            debugger;
+            this.$message.success("操作成功!")
             this.getTabList();
           }else{
             this.$message.error(res.message)

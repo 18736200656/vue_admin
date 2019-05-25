@@ -346,6 +346,24 @@ const api = {
       data:val
     })
   },
+
+  //删除常见问题
+  deleteUserProblems(val){
+    return axios({
+      url:'/deleteUserProblems',
+      method:'POST',
+      data:val
+    })
+  },
+
+  //新增常见问题
+  saveUserProblems(val){
+    return axios({
+      url:'/saveUserProblems',
+      method:'POST',
+      data:val
+    })
+  },
 }
 
 export default api;
