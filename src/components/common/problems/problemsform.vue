@@ -1,21 +1,11 @@
 <template>
   <div class="formbox">
     <el-form :model="formData" ref="formData" :rules="formRules" lable-width="100px" label-position="left">
-      <el-form-item label="任务ID" prop="channelLoginName">
-        <el-input v-model="formData.taskId" placeholder="请输入任务ID" type="text" ></el-input>
+      <el-form-item label="问题" prop="channelLoginName">
+        <el-input v-model="formData.title" placeholder="请输入问题" type="text" ></el-input>
       </el-form-item>
-      <el-form-item label="用户ID" prop="channelName">
-        <el-input v-model="formData.userId" placeholder="请输入用户ID" type="text" ></el-input>
-      </el-form-item>
-      <el-form-item label="任务截图" prop="taskImg" class="upload_img">
-        <el-upload
-          class="avatar-uploader"
-          action="/common/attachment/uploadFile"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess">
-          <img v-if="formData.taskImg" :src="formData.taskImg" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+      <el-form-item label="答案" prop="channelName">
+        <el-input v-model="formData.answer" placeholder="请输入答案" type="text" ></el-input>
       </el-form-item>
       <el-form-item align="right">
         <el-button type="primary" @click="submit(true)" v-if="FormData.edit">保存</el-button>
@@ -30,14 +20,12 @@
     data() {
       return {
         formData:{
-          taskId:'', //		long	是	任务ID
-          userId:'', //		long	是	用户ID
-          taskImg:'', //		string	是	任务截图
+          title:'', //		long	是	任务ID
+          answer:'', //		long	是	用户ID
         },
         formRules:{
-          taskId:{required:true, message:'任务ID不能为空',trigger: 'blur'}, //	任务ID
-          userId:{required:true, message:'用户ID不能为空',trigger: 'blur'},	//用户ID
-          taskImg:{required:true, message:'任务截图不能为空',trigger: 'change'},	//	任务截图
+          title:{required:true, message:'问题不能为空',trigger: 'blur'}, //	任务ID
+          answer:{required:true, message:'答案不能为空',trigger: 'blur'},	//用户ID
         }
       }
     },
@@ -62,15 +50,6 @@
             return
           }
         })
-      },
-      //上传图片
-      handleAvatarSuccess(res,file){
-        console.log(file,res,'====')
-        if(res.code==1){
-          this.formData.taskImg = res.data.path
-        }else{
-          this.$message.error(res.msg);
-        }
       },
        //重置
       reset(){
