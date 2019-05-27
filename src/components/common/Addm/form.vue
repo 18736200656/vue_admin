@@ -4,7 +4,7 @@
       <el-form-item label="广告ID" prop="id" v-if="FormData.edit">
         <el-input v-model="formdata.id" placeholder="请输入广告ID" type="text" ></el-input>
       </el-form-item>
-      <el-form-item label="商品图片" class="upload_img" prop="imgUrl">
+      <el-form-item label="广告图片" class="upload_img" prop="imgUrl">
         <!-- <el-upload
           class="avatar-uploader"
           action="/common/attachment/uploadFile"
@@ -14,7 +14,7 @@
           <img v-if="formdata.imgUrl" :src="formdata.imgUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload> -->
-        <upload-img :value="formdata.imgUrl" @input="uploadImg"></upload-img>
+        <upload-img :value="formdata.imgUrl" @input="uploadImg" ></upload-img>
       </el-form-item>
       <el-form-item label="点击链接">
         <el-input v-model="formdata.clickUrl" placeholder="请输入点击链接" type="text" ></el-input>

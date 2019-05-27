@@ -25,18 +25,20 @@
               //接口名字方法           //修改                删除               //新增             
               api:['queryAdvertising','updateAdvertising','deleteAdvertising','saveAdvertising'],
               thData:[
-                {
-                  key:'id',
-                  label:"广告ID",
+                // {
+                //   key:'id',
+                //   label:"广告ID",
   
-                },
+                // },
                 {
                   key:'imgUrl',
-                  label:"广告链接",
+                  label:"广告",
+                  img:true,
                 },
                 {
                   key:'clickUrl',
                   label:"点击链接",
+                  link:true
                 },
                 {
                   key:'status',
@@ -47,7 +49,6 @@
                   key:'status',
                   changeStatus:true,
                   label:"启用/禁用",
-                  wd:100,
                   chilren:[
                     {
                       num: '1',
@@ -61,14 +62,13 @@
                     }
                   ]
                 },
-                {
-                  key:'version',
-                  label:"版本号",
-                },
+                // {
+                //   key:'version',
+                //   label:"版本号",
+                // },
                 {
                   fun:true,
                   label:"操作",
-                  wd:150,
                   chilren:[
                     {
                       num: '1',

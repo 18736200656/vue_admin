@@ -7,11 +7,9 @@
     </section>
     <section class="table_container">
        <el-table
-        ref="multipleTable"
+         stripe
         :class="tableData.type+'_table'"
         :data="tableList"
-        highlight-current-row
-        tooltip-effect="dark"
         :header-cell-style="{background:'#f7f7f7'}"
         @selection-change="handleSelectionChange"
         height="380">
@@ -81,7 +79,7 @@
     :visible.sync="dialogVisible"
     :before-close="beforeClose"
     width="50%">
-    <span slot="title" class="dialog_tit">新增渠道管理</span>
+    <span slot="title" class="dialog_tit">{{edit ?'新增' :'修改'}}任务详情</span>
     <form-box :FormData="FormData" @update="closeDialog" ref="taskD"></form-box>
   </el-dialog>
 </div>
@@ -100,6 +98,7 @@
         dialogVisible:false,
         FormData:{},
         busData:{},
+        edit:false,
       }
     },
     components:{
@@ -158,12 +157,14 @@
           edit:true,
           data:val,
         }
+        this.edit = true;
         this.FormData = data;
         this.dialogVisible = true;
       },
       //新增
       addClick(){
         this.dialogVisible=true
+        this.edit = false;
         this.FormData={
           edit:false,
           data:{}

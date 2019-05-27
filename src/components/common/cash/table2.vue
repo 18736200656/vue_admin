@@ -21,11 +21,10 @@
       </section>
       <section class="table_container">
         <el-table
+          stripe
           ref="multipleTable"
           :class="tableData.type+'_table'"
           :data="tableList"
-          highlight-current-row
-          tooltip-effect="dark"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange"
           height="380">

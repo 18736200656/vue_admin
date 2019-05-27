@@ -7,11 +7,9 @@
       </section>
       <section class="table_container">
         <el-table
-          ref="multipleTable"
+           stripe
           :class="tableData.type+'_table'"
           :data="tableList"
-          highlight-current-row
-          tooltip-effect="dark"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange"
           height="380">
@@ -127,7 +125,7 @@
         });
         this.$api[this.tableData.api[0]](params).then(res=>{
           if(res.code==1){
-              debugger
+              
             this.tableList = res.data.list;
             this.total = res.data.total
           }else{

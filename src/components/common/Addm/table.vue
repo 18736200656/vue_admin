@@ -6,11 +6,9 @@
       </section>
       <section class="table_container">
         <el-table
-          ref="multipleTable"
+          stripe
           :class="tableData.type+'_table'"
           :data="tableList"
-          highlight-current-row
-          tooltip-effect="dark"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange"
           height="380">
@@ -30,21 +28,21 @@
               <el-tag v-if="item.Tag" :type="scope.row[item.key]=='1' ?'':'info'">
               {{$valid.statusStr(scope.row[item.key])}}
               </el-tag>
-            <div v-else-if="item.changeStatus">
-              <el-button
-                size="mini"
-                v-for="(v,n) in item.chilren" :key="n" :type="v.type" v-if="scope.row[item.key] != v.num"
-                @click="changeStatus(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
-            </div>
-            <div v-else-if="item.fun">
-              <el-button
-                size="mini"
-                v-for="(v,n) in item.chilren" :key="n" :type="v.type"
-                @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
-            </div>
-            <div v-else style="cursor: pointer;">
-              <span :title="scope.row[item.key]">{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
-            </div>
+              <div v-else-if="item.changeStatus">
+                <el-button
+                  size="mini"
+                  v-for="(v,n) in item.chilren" :key="n" :type="v.type" v-if="scope.row[item.key] != v.num"
+                  @click="changeStatus(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
+              </div>
+              <div v-else-if="item.fun">
+                <el-button
+                  size="mini"
+                  v-for="(v,n) in item.chilren" :key="n" :type="v.type"
+                  @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
+              </div>
+              <img :src="scope.row[item.key]" alt="" v-else-if="item.img" class="ad_img">
+              <a :href="scope.row[item.key]" target="_blank" v-else-if="item.link" style="color:#409EFF;">{{scope.row[item.key]}}</a>
+              <span :title="scope.row[item.key]" v-else>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
             </template>
           </el-table-column>
         </el-table>
@@ -66,7 +64,7 @@
       :visible.sync="dialogVisible"
       @close="beforeClose"
       width="50%">
-      <span slot="title" class="dialog_tit">新增商品分类</span>
+      <span slot="title" class="dialog_tit">{{edit ? '修改广告':'新增广告' }}</span>
       <form-box :FormData="FormData" @update="closeDialog" ref="formdata"></form-box>
     </el-dialog>
   </div>
@@ -85,6 +83,8 @@
         dialogVisible:false,
         FormData:{},
         busData:{},
+        adTitle:'',
+        edit:false,
       }
     },
     components:{
@@ -113,13 +113,11 @@
       },
       //一页显示
       handleSizeChange(val){
-        console.log(val,'一页显示多少');
         this.pageSize=val
         this.getTabList();
       },
       //跳转到第几页
       handleCurrentChange(val){
-        console.log(val,'当前页面是')
         this.currentPage = val;
         this.getTabList();
       },
@@ -143,6 +141,7 @@
       //修改
       handleEdit(index,row,num){
         if(num==1){
+          this.edit = true
           this.dialogVisible = true;
           let data ={
             edit:true,
@@ -187,6 +186,7 @@
           edit:false,
           data:{}
         }
+        this.edit = false
       },
       //关闭弹窗
       closeDialog(data){
@@ -224,7 +224,7 @@
       //关闭弹窗
       beforeClose(){
         this.dialogVisible = false;
-        this.$refs.FormData.reset();
+        this.$refs.formdata.reset();
       }
     }
   }
@@ -259,6 +259,11 @@
   .el-table__header th {
     padding: 0;
     height: 60px;
+  }
+  .ad_img{
+    width: 50px;
+    height: 40px;
+    border-radius: 4px;
   }
 </style>
 

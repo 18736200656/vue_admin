@@ -51,9 +51,8 @@
           </el-form-item>
         </el-form>
         <el-table
-          ref="multipleTable"
+          stripe
           :data="tableData"
-          style="width: 100%"
           height="500"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange">

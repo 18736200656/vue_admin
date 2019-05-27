@@ -32,10 +32,10 @@ export default {
             key:'id',
             label:"数据ID",
           },
-          {
-            key:'taskId',
-            label:"任务ID",
-          },
+          // {
+          //   key:'taskId',
+          //   label:"任务ID",
+          // },
           {
             key:'taskName',
             label:"任务名称",
@@ -89,10 +89,10 @@ export default {
               }
             }
           },
-           {
-            key:'version',
-            label:"当前版本号",
-          },
+          //  {
+          //   key:'version',
+          //   label:"当前版本号",
+          // },
 
           {
             fun:true,

@@ -23,10 +23,10 @@ export default {
                 //接口名字方法     //启用。      禁用             //新增       //修改 
         api:['queryTaskList','enableTask','disableTask','saveTask','updateTask'],
         thData:[
-          {
-            key:'id',
-            label:"renwuID",
-          },
+          // {
+          //   key:'id',
+          //   label:"renwuID",
+          // },
           {
             key:'taskName',
             label:"任务名称",
@@ -58,10 +58,10 @@ export default {
             key:'updateTime',
             label:"更新时间",
           },
-           {
-            key:'version',
-            label:"当前版本号",
-          },
+          //  {
+          //   key:'version',
+          //   label:"当前版本号",
+          // },
           {
             key:'status',
             label:"状态",
