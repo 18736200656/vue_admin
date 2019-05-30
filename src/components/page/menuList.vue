@@ -40,8 +40,8 @@
             },
             {
               imgShow:true,
-              key:'cateImgs',
-              label:"图片组",
+              key:'img',
+              label:"图片",
             },
             {
               key:'sort',
