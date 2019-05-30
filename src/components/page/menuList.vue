@@ -41,7 +41,7 @@
             {
               imgShow:true,
               key:'img',
-              label:"图片组",
+              label:"图片",
             },
             {
               key:'sort',

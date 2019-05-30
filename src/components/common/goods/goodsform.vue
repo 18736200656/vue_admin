@@ -1,86 +1,81 @@
 <template>
   <div>
     <div class="goodsform">
-      <el-form ref="goodsform" :model="FormData" :rules="formRules" label-width= "150px" label-position="left">
-        <el-form-item label="商品名称" prop="name">
-          <el-input v-model="FormData.name"></el-input>
+      <el-form ref="form" :model="FormData" :rules="formRules" label-width= "150px" label-position="left">
+        <el-form-item label="商品编号" prop="goodsId">
+          <el-input v-model="FormData.goodsId"></el-input>
         </el-form-item>
-        <el-form-item label="商品标题" prop="title">
-          <el-input v-model="FormData.title"></el-input>
+        <el-form-item label="商品名称" prop="goodsName">
+          <el-input v-model="FormData.goodsName"></el-input>
         </el-form-item>
-        <el-form-item label="商品描述" prop="content">
-          <el-input v-model="FormData.content"></el-input>
+        <el-form-item label="商品主图" prop="goodsUrl">
+          <el-input v-model="FormData.goodsUrl"></el-input>
         </el-form-item>
-        <el-form-item label="海景图片组" prop="seascapes">
-          <el-input v-model="FormData.seascapes"></el-input>
+        <el-form-item label="商品详情" prop="goodsItemUrl">
+          <el-input v-model="FormData.goodsItemUrl"></el-input>
         </el-form-item>
-        <el-form-item label="商品搜索名称" prop="searchName">
-          <el-input v-model="FormData.searchName"></el-input>
+        <el-form-item label="商品分类" prop="goodsLevel">
+          <el-input v-model="FormData.goodsLevel"></el-input>
         </el-form-item>
-        <el-form-item label="商品图片" prop="img" class="upload_img">
-          <!-- <el-upload
-            class="avatar-uploader"
-            action="/common/attachment/uploadFile"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess">
-            <img v-if="FormData.img" :src="FormData.img" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload> -->
-          <uploadImg :value="FormData.img" :title="'上传图片'" @input="updateImg"></uploadImg>
-        </el-form-item>
-        <el-form-item label="商品图片详情" prop="imgList">
-          <el-input v-model="FormData.imgList"></el-input>
-        </el-form-item>
-        <el-form-item label="商品分类一级" prop="levelOne" >
-          <el-select v-model="FormData.levelOne" placeholder="请选择商品分类等级">
-            <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="商品分类二级" prop="levelTwo">
-          <el-select v-model="FormData.levelTwo" placeholder="请选择商品分类等级">
-            <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="商品分类三级" prop="levelThree">
-          <el-select v-model="FormData.levelThree" placeholder="请选择商品分类等级">
-            <el-option :label="item.label" :value="item.value" v-for="item in options" :key="item.value"></el-option>
-          </el-select>
+        <el-form-item label="淘宝点击链接" prop="tbkUrl">
+          <el-input v-model="FormData.tbkUrl"></el-input>
         </el-form-item>
         <el-form-item label="商品价格" prop="price">
           <el-input v-model="FormData.price"></el-input>
         </el-form-item>
-        <el-form-item label="商品销量" prop="monSalesVolume">
-          <el-input v-model="FormData.monSalesVolume"></el-input>
+        <el-form-item label="商品销量" prop="goodsSales">
+          <el-input v-model="FormData.goodsSales"></el-input>
         </el-form-item>
-        <el-form-item label="收入比例" prop="incomeProportion">
-          <el-input v-model="FormData.incomeProportion"></el-input>
+        <el-form-item label="收入比例" prop="rate">
+          <el-input v-model="FormData.rate"></el-input>
         </el-form-item>
         <el-form-item label="佣金" prop="commission">
           <el-input v-model="FormData.commission"></el-input>
         </el-form-item>
+        <el-form-item label="卖家旺旺" prop="sellName">
+          <el-input v-model="FormData.sellName"></el-input>
+        </el-form-item>
+        <el-form-item label="卖家ID" prop="sellId">
+          <el-input v-model="FormData.sellId"></el-input>
+        </el-form-item>
+        <el-form-item label="店铺名称" prop="sellStoreName">
+          <el-input v-model="FormData.sellStoreName"></el-input>
+        </el-form-item>
+        <el-form-item label="平台类型" prop="platform">
+          <el-input v-model="FormData.platform"></el-input>
+        </el-form-item>
         <el-form-item label="优惠券ID" prop="couponId">
           <el-input v-model="FormData.couponId"></el-input>
         </el-form-item>
-        <el-form-item label="商品优惠卷推广链接" prop="url">
-          <el-input v-model="FormData.url"></el-input>
+        <el-form-item label="优惠券总量" prop="couponCount">
+          <el-input v-model="FormData.couponCount"></el-input>
         </el-form-item>
-        <el-form-item label="返利比例" prop="rebate">
-          <el-input v-model="FormData.rebate"></el-input>
+        <el-form-item label="优惠券剩余总量" prop="couponLeftCoupon">
+          <el-input v-model="FormData.couponLeftCoupon"></el-input>
         </el-form-item>
-        <el-form-item label="创建人" prop="createPerson">
-          <el-input v-model="FormData.createPerson" disabled></el-input>
+        <el-form-item label="优惠券面额" prop="couponValue">
+          <el-input v-model="FormData.couponValue"></el-input>
         </el-form-item>
-        <el-form-item label="优惠券结束日期">
-          <el-col :span="11">
-            <el-date-picker type="date" placeholder="选择日期" v-model="FormData.date" style="width: 100%;"></el-date-picker>
-          </el-col>
+        <el-form-item label="优惠券开始时间" prop="couponStartTime">
+          <el-input v-model="FormData.couponStartTime"></el-input>
+        </el-form-item>
+        <el-form-item label="优惠券结束时间" prop="couponEndTime">
+          <el-input v-model="FormData.couponEndTime"></el-input>
+        </el-form-item>
+        <el-form-item label="优惠卷链接" prop="couponUrl">
+          <el-input v-model="FormData.couponUrl"></el-input>
+        </el-form-item>
+        <el-form-item label="优惠券推广链接" prop="couponItemUrl">
+          <el-input v-model="FormData.couponItemUrl"></el-input>
         </el-form-item>
       </el-form>
     </div>
-    <div class="form_bottom">
-      <el-button type="primary" @click="onsubmit(true)" v-if="formdata.edit">保存</el-button>
-      <el-button type="primary" @click="onsubmit(false)" v-else>立即创建</el-button>
+    <div class="form_bottom"> 
+      <el-button type="primary" @click="onSubmit('true')" v-if="formdata.edit">保存</el-button>
+      <el-button type="primary" @click="onSubmit('false')" v-else>立即创建</el-button>
+      <!--<el-button>取消</el-button>-->
     </div>
+
   </div>
 </template>
 <script>
@@ -90,66 +85,73 @@ export default {
   data(){
     return{
       FormData: {
-        name:'',     //	string	是	商品名称
-        title:'',     //	string	是	商品标题
-        content:'',     //	string	是	商品描述
-        seascapes:'',     //	string	是	海景图片组 字符串
-        searchName:'',     //	string	是	商品搜索名称
-        img:'',     //	string	是	商品图片
-        imgList:'',     //	string	是	商品图片详情
-        levelOne:'',     //	long	是	商品分类一级
-        levelTwo:'',     //	long	是	商品分类二级
-        levelThree:'',     //	long	是	商品分类三级
-        price:'',     //	float	是	价格
-        monSalesVolume:'',     //	int	是	月销量
-        incomeProportion:'',     //	float	是	收入比例
-        commission:'',     //	float	是	佣金
-        rebate:'',     //	float	是	返利比例
-        couponId:'',     //	long	是	优惠券ID
-        url:'',     //	string	是	商品优惠卷推广链接
-        createPerson:'',     //	string	是	创建人
+        goodsId:'',     //	string	是	商品编号
+        goodsName:'',     //	string	是	商品名称
+        goodsUrl:'',     //	string	是	商品主图
+        goodsItemUrl:'',     //	string	是	商品详情
+        goodsLevel:'',     //	string	是	商品分类
+        tbkUrl:'',     //	string	是	淘宝客点击链接
+        price:'',     //	string	是	商品价格
+        goodsSales:'',     //		是	商品月销量
+        rate:'',     //		是	收入比列
+        commission:'',     //	佣金
+        sellName:'',     //	卖家旺旺
+        sellId:'',     //		卖家ID
+        sellStoreName:'',     //	店铺名称
+        platform:'',     //	平台类型
+        couponId:'',     //	优惠券ID
+        couponCount:'',     // 优惠券数量
+        couponLeftCoupon:'',     //	优惠券剩余数量
+        couponValue:'',     //	优惠券面额
+        couponStartTime:'',     //	优惠券开始时间
+        couponEndTime:'',     // 优惠券结束时间
+        couponUrl:'',     //	优惠券链接
+        couponItemUrl:'',     // 优惠券推广链接
       },
       dialogImageUrl: '',
       dialogVisible:false  ,
       formRules:{
-        name:{required: true, message: '请输入商品名称', trigger: 'blur'},
-        title:{required: true, message: '请输入商品标题', trigger: 'blur'},
-        content:{required: true, message: '请输入品描述', trigger: 'blur'},
-        seascapes:{required: true, message: '请输入海景图片组', trigger: 'blur'},
-        searchName:{required: true, message: '请输入商品搜索名称 ', trigger: 'blur'},
-        img:{required: true, message: '请输入商品图片 ', trigger: 'change'},
-        imgList:{required: true, message: '请输入商品图片详情 ', trigger: 'blur'},
-        levelOne:{required: true, message: '请输入商品分类一级', trigger: 'change'},
-        levelTwo:{required: true, message: '请输入商品分类二级', trigger: 'change'},
-        levelThree:{required: true, message: '请输入商品分类三级', trigger: 'change'},
-        price:{required: true, message: '请输入价格', trigger: 'blur'},
-        monSalesVolume:{required: true, message: '请输入月销量 ', trigger: 'blur'},
-        incomeProportion:{required: true, message: '请输入收入比例 ', trigger: 'blur'},
-        commission:{required: true, message: '请输入佣金 ', trigger: 'blur'},
-        rebate:{required: true, message: '请输入返利比例 ', trigger: 'blur'},
-        couponId:{required: true, message: '请输入优惠券ID  ', trigger: 'blur'},
-        url:{required: true, message: '请输入商品优惠卷推广链接', trigger: 'blur'},
+        goodsId:{required: false, message: '请输入商品编号', trigger: 'blur'},
+        goodsName:{required: false, message: '请输入商品名称', trigger: 'blur'},
+        goodsUrl:{required: false, message: '请输入商品主图', trigger: 'blur'},
+        goodsItemUrl:{required: false, message: '请输入商品详情', trigger: 'blur'},
+        goodsLevel:{required: false, message: '请输入商品分类 ', trigger: 'blur'},
+        tbkUrl:{required: false, message: '请输入淘宝客点击链接 ', trigger: 'change'},
+        price:{required: false, message: '请输入商品价格 ', trigger: 'blur'},
+        goodsSales:{required: false, message: '请输入商品月销量', trigger: 'change'},
+        rate:{required: false, message: '请输入收入比例', trigger: 'change'},
+        commission:{required: false, message: '请输入佣金', trigger: 'change'},
+        sellName:{required: false, message: '请输入卖家旺旺', trigger: 'blur'},
+        sellId:{required: false, message: '请输入卖家ID ', trigger: 'blur'},
+        sellStoreName:{required: false, message: '请输入店铺名称 ', trigger: 'blur'},
+        platform:{required: false, message: '请输入平台类型', trigger: 'blur'},
+        couponId:{required: false, message: '请输入优惠券ID', trigger: 'blur'},
+        couponCount:{required: false, message: '请输入优惠券总量', trigger: 'blur'},
+        couponLeftCoupon:{required: false, message: '请输入优惠券剩余数量', trigger: 'blur'},
+        couponValue:{required: false, message: '请输入优惠券面额', trigger: 'blur'},
+        couponStartTime:{required: false, message: '请输入优惠券开始时间', trigger: 'blur'},
+        couponEndTime:{required: false, message: '请输入优惠券结束时间', trigger: 'blur'},
+        couponUrl:{required: false, message: '请输入优惠券链接', trigger: 'blur'},
+        couponItemUrl:{required: false, message: '请输入优惠卷推广链接', trigger: 'blur'},
       },
-      options:[
-        {label:'一级',value:1},
-        {label:'二级',value:2},
-        {label:'三级',value:3},
-      ]
     }
   },
   props:['formdata'],
   methods:{
-    updateImg(val){
-      this.FormData.img = val
-    },
-    onsubmit(val) {
-      this.FormData.type = val
-      this.$refs.goodsform.validate(valid =>{
+    onSubmit(val) {
+      debugger;
+      this.FormData = Object.assign(this.FormData,{
+         type:val
+      });
+      if(val){
+          
+      }
+      this.$refs.form.validate(valid =>{
         if (valid){
-          console.log(this.FormData,'==========this.FormData')
           this.$emit('update',this.FormData)
         }else{
-          return false
+          //重置
+          // this.$refs.form.resetFields();
         }
       })
       console.log('submit!');
@@ -180,12 +182,11 @@ export default {
     },
     //重置
     reset(){
-      this.$refs.goodsform.resetFields();
+      this.$refs.form.resetFields();
     }
   },
   created(){
-    this.FormData.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName;
-    this.FormData=this.formdata.data
+    this.FormData.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName
   },
   watch:{
    formdata(val){
@@ -197,7 +198,7 @@ export default {
 <style scoped>
   .goodsform{
     margin-top:15px;
-    max-height: 600px;
+    max-height: 400px;
     overflow: auto;
   }
   .form_bottom{

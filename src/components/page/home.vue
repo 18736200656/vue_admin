@@ -9,29 +9,16 @@
       <el-card class="el_card_form">
         <el-form ref="goodsForm" :model="goodsForm" label-width="80px" :inline="true" align="left">
           <el-form-item label="商品编号">
-            <el-input v-model="goodsForm.order"></el-input>
+            <el-input v-model="goodsForm.goodsId"></el-input>
           </el-form-item>
           <el-form-item label="商品名称">
-            <el-input v-model="goodsForm.name"></el-input>
+            <el-input v-model="goodsForm.goodsName"></el-input>
           </el-form-item>
           <el-form-item label="商品分类">
-             <el-select v-model="goodsForm.level1" placeholder="请选择商品分类" @change="queryGoods">
-              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods1List" :key="index"></el-option>
-            </el-select>
-            <el-select v-model="goodsForm.level2"
-                       :disabled="goods2List.length==0 || goods2List==null"
-                       @change="query2Goods" placeholder="请选择商品分类2">
-              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods2List" :key="index"></el-option>
-            </el-select>
-            <el-select v-model="goodsForm.level3"
-                       :disabled="goods3List.length==0 || goods3List==null"
-                       placeholder="请选择商品分类3">
-              <el-option :label="item.name" :value="item.level" v-for="(item,index) in goods3List" :key="index" ></el-option>
-            </el-select>
+            <el-input v-model="goodsForm.goodsLevel"></el-input>
           </el-form-item>
           <el-form-item size="mini">
             <el-button type="primary" @click="queryGoodsList">查询</el-button>
-            <el-button type="primary" @click="resetForm">重置</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -43,16 +30,19 @@
            <el-form-item >
              <el-button type="primary" @click="addClick">添加</el-button>
            </el-form-item>
+           <!--
           <el-form-item >
             <el-button type="danger" @click="deleteGoods">删除</el-button>
           </el-form-item>
+          -->
           <el-form-item >
             <el-button type="success" @click="FiledialogVisible = true" >导入</el-button>
           </el-form-item>
         </el-form>
         <el-table
-          stripe
+          ref="multipleTable"
           :data="tableData"
+          style="width: 100%"
           height="500"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange">
@@ -61,52 +51,42 @@
             width="55">
           </el-table-column>
           <el-table-column
-            label="编号"
-            prop="id"
+            label="商品编号"
+            prop="goodsId"
             align="center"
-            width="50">
+            width="120">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="goodsName"
             label="商品名称"
             align="center"
             show-overflow-tooltip
             width="150">
           </el-table-column>
           <el-table-column
-            label="商品标题"
+            label="商品主图"
             show-overflow-tooltip
             align="center"
             width="150">
             <template slot-scope="scope">
-              <span>{{scope.row.title || "--"}}</span>
+              <span>{{scope.row.goodsUrl || "--"}}</span>
             </template>
           </el-table-column>
           <el-table-column
-            label="商品内容"
+            label="商品详情页地址"
             show-overflow-tooltip
             align="center"
             width="150">
             <template slot-scope="scope">
-              <span>{{scope.row.content || "--"}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="商品图片"
-            align="center"
-            width="120">
-             <template slot-scope="scope">
-              <img :src="scope.row.img" class="goods_img"/>
+              <span>{{scope.row.goodsItemUrl || "--"}}</span>
             </template>
           </el-table-column>
           <el-table-column
             label="商品分类"
             align="center"
-            width="150">
+            width="200">
             <template slot-scope="scope">
-              <div>商品等级一级分类：{{scope.row.levelOne}}</div>
-              <div>商品等级二级分类：{{scope.row.levelTwo}}</div>
-              <div>商品等级三级分类：{{scope.row.levelThree}}</div>
+              <span>{{scope.row.goodsLevel || "--"}}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -116,13 +96,13 @@
             width="120">
           </el-table-column>
           <el-table-column
-            prop="monSalesVolume"
+            prop="goodsSales"
             label="月销量"
             align="right"
             width="120">
           </el-table-column>
           <el-table-column
-            prop="incomeProportion"
+            prop="rate"
             label="收入比例"
             align="right"
             width="120">
@@ -134,25 +114,52 @@
             width="100">
           </el-table-column>
           <el-table-column
-            prop="rebate"
-            label="返利比例"
+            prop="sellId"
+            label="卖家ID"
+            align="right"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="sellStoreName"
+            label="店铺名称"
+            align="right"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="platform"
+            label="平台"
+            align="right"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="couponCount"
+            label="优惠券数量"
+            align="right"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="couponLeftCoupon"
+            label="优惠券剩余数量"
+            align="right"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="couponValue"
+            label="优惠券面额"
+            align="right"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="couponStartTime"
+            label="优惠券开始时间"
             align="right"
             width="120">
           </el-table-column>
           <el-table-column
-            prop="date"
+            prop="couponEndTime"
             label="优惠券结束日期"
             align="center"
             width="120">
-          </el-table-column>
-          <el-table-column
-            label="优惠券推广链接"
-            show-overflow-tooltip
-            align="center"
-            width="220">
-            <template slot-scope="scope">
-              <a :href="scope.row.url">{{scope.row.url}}</a>
-            </template>
           </el-table-column>
           <el-table-column
             label="操作"
@@ -172,7 +179,6 @@
         </el-table>
         <div class="page_block">
           <el-pagination
-            background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
@@ -187,7 +193,7 @@
     <!-- 商品弹出 -->
      <el-dialog
       :visible.sync="dialogVisible"
-      :before-close="beforeClose"
+      @close="beforeClose"
       width="40%">
       <span slot="title" class="dialog-header">
         {{'商品信息'}}
@@ -197,7 +203,7 @@
     <!-- 导入xlsx -->
      <el-dialog
       :visible.sync="FiledialogVisible"
-      width="21%">
+      width="30%">
       <span slot="title" class="dialog_tit">导入文件</span>
         <el-card>
           <el-upload
@@ -228,11 +234,9 @@ export default {
   data(){
     return {
       goodsForm: {
-        name: '',
-        title: '',
-        level1: '',
-        level2: '',
-        level3: '',
+        goodsId: '',
+        goodsName: '',
+        goodsLevel: '',
       },
       tableData:[],
       currentPage: 1, //当前是第几页
@@ -240,9 +244,6 @@ export default {
       total: 0, //总共
       dialogVisible: false,
       id: 0,
-      goods1List: [],
-      goods2List: [],
-      goods3List: [],
       formdata:{}, //修改的东西
       selectDatas:[],  // 选则的商品
       FiledialogVisible:false,
@@ -259,26 +260,20 @@ export default {
   },
   methods:{
     handleSelectionChange(val){
+      console.log(val,'选中数据---')
       this.selectDatas = val
     },
     handleSizeChange(val){
+      console.log(val,'一页显示多少');
       this.pageSize=val
       this.queryGoodsList()
     },
     handleCurrentChange(val){
+      console.log(val,'当前页面是')
       this.currentPage = val;
       this.queryGoodsList()
     },
-    //重置
-    resetForm(){
-      this.goodsForm={
-        name: '',
-        title: '',
-        level1: '',
-        level2: '',
-        level3: '',
-      }
-    },
+
      //新增
     addClick(){
       this.dialogVisible=true
@@ -303,8 +298,9 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          debugger;
           //删除商品
-          this.$api.delGoods({ids:[row.id]}).then(res=>{
+          this.$api.delGoods({id:row.id}).then(res=>{
             if(res.code==1){
               this.queryGoodsList()
               this.$message({
@@ -317,7 +313,7 @@ export default {
           }).catch(error=>{
             return Promise.reject(error)
           })
-
+          
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -365,13 +361,16 @@ export default {
         });
       });
     },
+
     // 关闭弹窗
     closeDialog(params){
+      debugger;
       this.dialogVisible=false;
-      console.log(params.type,params,'--goodsForm---')
+      console.log(params.type,'-----')
                           //  1修改      2新增
-      let api = params.type ? 'editGoods' : 'addGoods'
+      let api = params.type=='true' ? 'editGoods' : 'addGoods'
       this.$api[api](params).then(res=>{
+        debugger;
         if(res.code==1){
           this.$message.success(res.data);
           this.queryGoodsList()
@@ -390,7 +389,7 @@ export default {
       })
       this.$api.queryGoods(data).then(res=>{
         if(res.code==1){
-          this.tableData = res.data.list;
+          this.tableData = res.data;
           this.total =  res.data.total;
           this.goodsForm={}
         }else{
@@ -400,6 +399,7 @@ export default {
         return Promise.reject(error)
       })
     },
+
     //商品分类查询
     queryGoodsCategory(evel,parentId,cb){
       //一级分类
@@ -415,7 +415,7 @@ export default {
             cb && cb(res.data)
           }
         }else{
-          this.$message.error(res.msg)
+          this.$message.error(res.message)
         }
       }).catch(error=>{
         this.$message.error(res.messag)
@@ -444,7 +444,6 @@ export default {
         if (res.code ==1){
           this.queryGoodsList();
           this.$message.success(res.data.message)
-          this.$refs.form.reset();
         }else{
           this.$message.error(res.msg)
         }
@@ -473,14 +472,14 @@ export default {
       }
     },
      //关闭弹窗
-    beforeClose(done){
-      done();
-      this.$refs.form.reset();
-
-    }
+      beforeClose(){
+        this.dialogVisible = false;
+        this.$refs.form.reset();
+      }
 
   },
   components:{
+//    DialogEidt,
     goodsForm
   }
 }
