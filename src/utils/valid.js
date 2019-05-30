@@ -11,15 +11,21 @@ module.exports = {
     return data.status[val];
   },
   //日期
-  formdate(item){
+  date(item){
     let date = new Date(item);
     var Y = date.getFullYear();
     var M = date.getMonth()+1;
     var D = date.getDate();
     return `${Y}-${M>10 ? M : '0'+M}-${D>10?D:'0'+D}`
   },
-  timeDate(val){
-    let date = val.split(' ');
-    return date[0]
+  time(val){
+    let date = new Date(item);
+    var Y = date.getFullYear();
+    var M = date.getMonth()+1;
+    var D = date.getDate();
+    var H = date.getHours();
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+    return `${Y}-${M>10 ? M : '0'+M}-${D>10?D:'0'+D} ${H>10?'H':'0'+H}:${m>10?m:'0'+m}}:${s>10?s:'0'+s}}`
   }
 };

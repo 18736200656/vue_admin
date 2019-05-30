@@ -61,7 +61,7 @@
           disabledDate:(item)=>{
             let beginDate = this.formData.endTime
             if(beginDate){
-              return this.$valid.formdate(item.getTime()).split('-').join('') > beginDate
+              return this.$valid.date(item.getTime()).split('-').join('') > beginDate
             }
           }
         },
@@ -69,7 +69,7 @@
           disabledDate:(item)=>{
             let beginDate = this.formData.startTime
             if(beginDate){
-              return this.$valid.formdate(item.getTime()).split('-').join('') < beginDate
+              return this.$valid.date(item.getTime()).split('-').join('') < beginDate
             }
           }
         },

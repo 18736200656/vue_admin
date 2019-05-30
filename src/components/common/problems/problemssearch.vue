@@ -7,11 +7,10 @@
     <el-card class="search">
       <el-form :model="formData" ref="formData" lable-width="100px" :inline="true">
         <el-form-item label="问题">
-          <el-input v-model="formData.title" placeholder="问题" type="text" ></el-input>
+          <el-input v-model="formData.title" placeholder="问题" clearable></el-input>
         </el-form-item>
         <el-form-item align="right">
           <el-button type="primary" @click="submit">查询</el-button>
-          <el-button type="primary" @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -33,9 +32,6 @@
       submit(){
         bus.$emit('updataTKM',this.formData)
       },
-      resetForm(){
-        this.formData.title =''
-      }
     }
   }
 </script>
