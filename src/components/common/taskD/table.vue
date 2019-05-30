@@ -12,7 +12,7 @@
         :data="tableList"
         :header-cell-style="{background:'#f7f7f7'}"
         @selection-change="handleSelectionChange"
-        height="380">
+        height="600">
         <el-table-column
           type="selection"
           align="center"
@@ -79,7 +79,7 @@
     :visible.sync="dialogVisible"
     :before-close="beforeClose"
     width="50%">
-    <span slot="title" class="dialog_tit">{{edit ?'新增' :'修改'}}任务详情</span>
+    <span slot="title" class="dialog_tit">{{edit ?'修改' :'新增'}}任务详情</span>
     <form-box :FormData="FormData" @update="closeDialog" ref="taskD"></form-box>
   </el-dialog>
 </div>

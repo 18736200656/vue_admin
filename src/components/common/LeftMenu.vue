@@ -78,7 +78,7 @@ export default {
           path: "/addm",
         },
         {
-          icon: "el-icon-picture",
+          icon: "el-icon-chat-line-round",
           name: "常见问题",
           path: "/problems",
         },

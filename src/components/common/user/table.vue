@@ -2,7 +2,7 @@
   <div>
     <el-card class="tablelist">
       <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-        <i class="iconfont icon-wuxupailie"></i>用户列表
+        <!--<i class="iconfont icon-wuxupailie"></i>用户列表-->
         <div style="margin-top:10px;">
          <el-button type="primary" @click="addClick">新增</el-button>
         </div>
@@ -14,7 +14,7 @@
           :data="tableList"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange"
-          height="380">
+          height="600">
           <el-table-column
             type="selection"
             align="center"

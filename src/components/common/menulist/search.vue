@@ -7,11 +7,10 @@
     <el-card class="search">
       <el-form :model="formData" ref="formData" lable-width="100px" :inline="true">
         <el-form-item label="上级ID">
-          <el-input v-model="formData.parentId" placeholder="请输入上级ID" type="text" ></el-input>
+          <el-input v-model="formData.parentId" placeholder="请输入上级ID" clearable></el-input>
         </el-form-item>
         <el-form-item align="right">
           <el-button type="primary" @click="submit">查询</el-button>
-          <el-button type="primary" @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -33,11 +32,7 @@
     methods:{
       submit(){
         bus.$emit('updataMENU',this.formData)
-
       },
-      resetForm(){
-        this.formData.parentId =''
-      }
     }
   }
 </script>

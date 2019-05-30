@@ -12,7 +12,7 @@
           :data="tableList"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange"
-          height="380">
+          height="600">
           <el-table-column
             type="selection"
             align="center"
@@ -125,7 +125,7 @@
         });
         this.$api[this.tableData.api[0]](params).then(res=>{
           if(res.code==1){
-              
+
             this.tableList = res.data.list;
             this.total = res.data.total
           }else{

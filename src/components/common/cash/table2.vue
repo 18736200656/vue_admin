@@ -27,7 +27,7 @@
           :data="tableList"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange"
-          height="380">
+          height="500">
           <el-table-column
             type="selection"
             align="center"

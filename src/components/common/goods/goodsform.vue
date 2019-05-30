@@ -1,77 +1,77 @@
 <template>
   <div>
     <div class="goodsform">
-      <el-form ref="form" :model="FormData" :rules="formRules" label-width= "150px" label-position="left">
+      <el-form ref="goodsform" :model="goodsdata" :rules="formRules" label-width= "150px" label-position="left">
         <el-form-item label="商品编号" prop="goodsId">
-          <el-input v-model="FormData.goodsId"></el-input>
+          <el-input v-model="goodsdata.goodsId"></el-input>
         </el-form-item>
         <el-form-item label="商品名称" prop="goodsName">
-          <el-input v-model="FormData.goodsName"></el-input>
+          <el-input v-model="goodsdata.goodsName"></el-input>
         </el-form-item>
         <el-form-item label="商品主图" prop="goodsUrl">
-          <el-input v-model="FormData.goodsUrl"></el-input>
+          <el-input v-model="goodsdata.goodsUrl"></el-input>
         </el-form-item>
         <el-form-item label="商品详情" prop="goodsItemUrl">
-          <el-input v-model="FormData.goodsItemUrl"></el-input>
+          <el-input v-model="goodsdata.goodsItemUrl"></el-input>
         </el-form-item>
         <el-form-item label="商品分类" prop="goodsLevel">
-          <el-input v-model="FormData.goodsLevel"></el-input>
+          <el-input v-model="goodsdata.goodsLevel"></el-input>
         </el-form-item>
         <el-form-item label="淘宝点击链接" prop="tbkUrl">
-          <el-input v-model="FormData.tbkUrl"></el-input>
+          <el-input v-model="goodsdata.tbkUrl"></el-input>
         </el-form-item>
         <el-form-item label="商品价格" prop="price">
-          <el-input v-model="FormData.price"></el-input>
+          <el-input v-model="goodsdata.price"></el-input>
         </el-form-item>
         <el-form-item label="商品销量" prop="goodsSales">
-          <el-input v-model="FormData.goodsSales"></el-input>
+          <el-input v-model="goodsdata.goodsSales"></el-input>
         </el-form-item>
         <el-form-item label="收入比例" prop="rate">
-          <el-input v-model="FormData.rate"></el-input>
+          <el-input v-model="goodsdata.rate"></el-input>
         </el-form-item>
         <el-form-item label="佣金" prop="commission">
-          <el-input v-model="FormData.commission"></el-input>
+          <el-input v-model="goodsdata.commission"></el-input>
         </el-form-item>
         <el-form-item label="卖家旺旺" prop="sellName">
-          <el-input v-model="FormData.sellName"></el-input>
+          <el-input v-model="goodsdata.sellName"></el-input>
         </el-form-item>
         <el-form-item label="卖家ID" prop="sellId">
-          <el-input v-model="FormData.sellId"></el-input>
+          <el-input v-model="goodsdata.sellId"></el-input>
         </el-form-item>
         <el-form-item label="店铺名称" prop="sellStoreName">
-          <el-input v-model="FormData.sellStoreName"></el-input>
+          <el-input v-model="goodsdata.sellStoreName"></el-input>
         </el-form-item>
         <el-form-item label="平台类型" prop="platform">
-          <el-input v-model="FormData.platform"></el-input>
+          <el-input v-model="goodsdata.platform"></el-input>
         </el-form-item>
         <el-form-item label="优惠券ID" prop="couponId">
-          <el-input v-model="FormData.couponId"></el-input>
+          <el-input v-model="goodsdata.couponId"></el-input>
         </el-form-item>
         <el-form-item label="优惠券总量" prop="couponCount">
-          <el-input v-model="FormData.couponCount"></el-input>
+          <el-input v-model="goodsdata.couponCount"></el-input>
         </el-form-item>
         <el-form-item label="优惠券剩余总量" prop="couponLeftCoupon">
-          <el-input v-model="FormData.couponLeftCoupon"></el-input>
+          <el-input v-model="goodsdata.couponLeftCoupon"></el-input>
         </el-form-item>
         <el-form-item label="优惠券面额" prop="couponValue">
-          <el-input v-model="FormData.couponValue"></el-input>
+          <el-input v-model="goodsdata.couponValue"></el-input>
         </el-form-item>
         <el-form-item label="优惠券开始时间" prop="couponStartTime">
-          <el-input v-model="FormData.couponStartTime"></el-input>
+          <el-input v-model="goodsdata.couponStartTime"></el-input>
         </el-form-item>
         <el-form-item label="优惠券结束时间" prop="couponEndTime">
-          <el-input v-model="FormData.couponEndTime"></el-input>
+          <el-input v-model="goodsdata.couponEndTime"></el-input>
         </el-form-item>
         <el-form-item label="优惠卷链接" prop="couponUrl">
-          <el-input v-model="FormData.couponUrl"></el-input>
+          <el-input v-model="goodsdata.couponUrl"></el-input>
         </el-form-item>
         <el-form-item label="优惠券推广链接" prop="couponItemUrl">
-          <el-input v-model="FormData.couponItemUrl"></el-input>
+          <el-input v-model="goodsdata.couponItemUrl"></el-input>
         </el-form-item>
       </el-form>
     </div>
-    <div class="form_bottom"> 
-      <el-button type="primary" @click="onSubmit('true')" v-if="formdata.edit">保存</el-button>
+    <div class="form_bottom">
+      <el-button type="primary" @click="onSubmit('true')" v-if="goodsdata.edit">保存</el-button>
       <el-button type="primary" @click="onSubmit('false')" v-else>立即创建</el-button>
       <!--<el-button>取消</el-button>-->
     </div>
@@ -84,7 +84,7 @@ export default {
   name:'goodsform',
   data(){
     return{
-      FormData: {
+      goodsdata: {
         goodsId:'',     //	string	是	商品编号
         goodsName:'',     //	string	是	商品名称
         goodsUrl:'',     //	string	是	商品主图
@@ -139,26 +139,19 @@ export default {
   props:['formdata'],
   methods:{
     onSubmit(val) {
-      debugger;
-      this.FormData = Object.assign(this.FormData,{
-         type:val
-      });
-      if(val){
-          
-      }
-      this.$refs.form.validate(valid =>{
+      this.goodsdata.type =val
+      console.warn(this.goodsdata,'yhjjjjjjlkj')
+      this.$refs.goodsform.validate(valid =>{
         if (valid){
-          this.$emit('update',this.FormData)
+          this.$emit('update',this.goodsdata)
         }else{
-          //重置
-          // this.$refs.form.resetFields();
+          return false
         }
       })
-      console.log('submit!');
     },
     handleAvatarSuccess(res,file){
       if(res.code==1){
-        this.FormData.img = res.data.path;
+        this.goodsdata.img = res.data.path;
       }else{
         this.$message.error(res.msg);
       }
@@ -182,15 +175,15 @@ export default {
     },
     //重置
     reset(){
-      this.$refs.form.resetFields();
+      this.$refs.goodsform.resetFields();
     }
   },
   created(){
-    this.FormData.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName
+    this.goodsdata.createPerson =JSON.parse(sessionStorage.getItem('userInfo')).loginNickName
   },
   watch:{
-   formdata(val){
-      this.FormData=val.data
+    formdata(val){
+      this.goodsdata=val.data
    }
   }
 }

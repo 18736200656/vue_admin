@@ -79,6 +79,9 @@ export default {
 }
 </style>
 <style>
+  .search .el-card__body{
+    padding-bottom: 0px;
+  }
   /*chrome滚动条颜色设置*/
 
   *::-webkit-scrollbar {width:15px; height:15px; background-color:transparent;} /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/

@@ -5,7 +5,7 @@
         <el-input v-model="formData.title" placeholder="请输入问题" type="text" ></el-input>
       </el-form-item>
       <el-form-item label="答案" prop="channelName">
-        <el-input v-model="formData.answer" placeholder="请输入答案" type="text" ></el-input>
+        <el-input v-model="formData.answer" placeholder="请输入答案" type="textarea" :rows="6"></el-input>
       </el-form-item>
       <el-form-item align="right">
         <el-button type="primary" @click="submit(true)" v-if="FormData.edit">保存</el-button>

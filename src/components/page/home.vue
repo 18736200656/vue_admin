@@ -9,13 +9,13 @@
       <el-card class="el_card_form">
         <el-form ref="goodsForm" :model="goodsForm" label-width="80px" :inline="true" align="left">
           <el-form-item label="商品编号">
-            <el-input v-model="goodsForm.goodsId"></el-input>
+            <el-input v-model="goodsForm.goodsId" clearable></el-input>
           </el-form-item>
           <el-form-item label="商品名称">
-            <el-input v-model="goodsForm.goodsName"></el-input>
+            <el-input v-model="goodsForm.goodsName" clearable></el-input>
           </el-form-item>
           <el-form-item label="商品分类">
-            <el-input v-model="goodsForm.goodsLevel"></el-input>
+            <el-input v-model="goodsForm.goodsLevel" clearable></el-input>
           </el-form-item>
           <el-form-item size="mini">
             <el-button type="primary" @click="queryGoodsList">查询</el-button>
@@ -42,8 +42,8 @@
         <el-table
           ref="multipleTable"
           :data="tableData"
-          style="width: 100%"
-          height="500"
+          stripe
+          height="600"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange">
           <el-table-column
@@ -198,7 +198,7 @@
       <span slot="title" class="dialog-header">
         {{'商品信息'}}
       </span>
-      <goods-form @update="closeDialog" :formdata="formdata" ref="form"></goods-form>
+      <goods-form @update="closeDialog" :formdata="formdata" ref="goodsform"></goods-form>
     </el-dialog>
     <!-- 导入xlsx -->
      <el-dialog
@@ -260,16 +260,13 @@ export default {
   },
   methods:{
     handleSelectionChange(val){
-      console.log(val,'选中数据---')
       this.selectDatas = val
     },
     handleSizeChange(val){
-      console.log(val,'一页显示多少');
       this.pageSize=val
       this.queryGoodsList()
     },
     handleCurrentChange(val){
-      console.log(val,'当前页面是')
       this.currentPage = val;
       this.queryGoodsList()
     },
@@ -298,7 +295,6 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          debugger;
           //删除商品
           this.$api.delGoods({id:row.id}).then(res=>{
             if(res.code==1){
@@ -313,7 +309,7 @@ export default {
           }).catch(error=>{
             return Promise.reject(error)
           })
-          
+
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -364,13 +360,11 @@ export default {
 
     // 关闭弹窗
     closeDialog(params){
-      debugger;
       this.dialogVisible=false;
       console.log(params.type,'-----')
                           //  1修改      2新增
-      let api = params.type=='true' ? 'editGoods' : 'addGoods'
+      let api = params.type ? 'editGoods' : 'addGoods'
       this.$api[api](params).then(res=>{
-        debugger;
         if(res.code==1){
           this.$message.success(res.data);
           this.queryGoodsList()
@@ -474,12 +468,11 @@ export default {
      //关闭弹窗
       beforeClose(){
         this.dialogVisible = false;
-        this.$refs.form.reset();
+        this.$refs.goodsform.reset();
       }
 
   },
   components:{
-//    DialogEidt,
     goodsForm
   }
 }
