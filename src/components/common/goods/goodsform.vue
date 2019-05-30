@@ -147,7 +147,6 @@ export default {
       this.$refs.goodsform.validate(valid =>{
         if (valid){
           console.log(this.FormData,'==========this.FormData')
-          
           this.$emit('update',this.FormData)
         }else{
           return false
