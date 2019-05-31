@@ -1,12 +1,6 @@
 <template>
   <div>
     <el-card class="tablelist">
-      <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
-        <!--<i class="iconfont icon-wuxupailie"></i>用户列表-->
-        <div style="margin-top:10px;">
-         <el-button type="primary" @click="addClick">新增</el-button>
-        </div>
-      </section>
       <section class="table_container">
         <el-table
           stripe

@@ -36,6 +36,7 @@ const api = {
   },
   //商品修改
   editGoods(val){
+    debugger;
     return _axios({
       url:'/goods/editGoods',
       method:'POST',
@@ -60,6 +61,7 @@ const api = {
   },
    //商品新增
    addGoods(val){
+    debugger;
     return _axios({
       url:'/goods/addGoods',
       method:'POST',
