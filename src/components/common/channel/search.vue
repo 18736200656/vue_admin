@@ -46,7 +46,7 @@
     },
     methods:{
       submit(){
-        this.$emit('updataCHN',this.formData)
+        bus.$emit('updataCHN',this.formData)
       },
       resetForm(){
         this.formData={

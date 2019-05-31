@@ -32,6 +32,7 @@ export default {
             label:"任务名称",
           },
           {
+            key:'taskDesc',
             taskIntro:true,
             label:"任务简介",
             wd:200,
@@ -46,10 +47,10 @@ export default {
             wd:200,
 
           },
-          {
-            key:'jingdongCount',
-            label:"任务推荐码",
-          },
+          // {
+          //   key:'jingdongCount',
+          //   label:"任务推荐码",
+          // },
           {
             key:'createTime',
             label:"创建时间",

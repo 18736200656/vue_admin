@@ -93,10 +93,10 @@
     methods:{
       submit(val){
         this.taskDdata.type = val
-        console.log(this.taskDdata,'====')
+        delete this.taskDdata.createTime
+        delete this.taskDdata.updateTime     
         this.$refs.taskD.validate(valid =>{
           if (valid){
-            console.log(this.taskDdata,'+++++')
             this.$emit('update',this.taskDdata)
           }else{
             return

@@ -4,9 +4,6 @@ import router from '../router'
 
 let baseurl = process.env.NODE_BASE_URL;
 
-
-// axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
-
 const _axios = axios.create({
   timeout:5000,
   baseURL:baseurl,

@@ -60,7 +60,7 @@
     :before-close="beforeClose"
     width="50%">
     <span slot="title" class="dialog_tit">新增渠道管理</span>
-    <channel-form  @chanel="closeDialog" ref="channelform"></channel-form>
+    <channelForm @channel="channel" ref="channelform"></channelForm>
   </el-dialog>
   <!-- 任务完成量 -->
   <el-dialog
@@ -174,10 +174,7 @@
         }
         this.$api[this.tableData.api[1]](data).then(res=>{
           if(res.code==1){
-            // this.$message.success(res.data)
-            // this.taskList = res.data.list;
             this.getTabList();
-
           }else{
             this.$message.error(res.msg)
           }
@@ -187,7 +184,7 @@
       },
 
       //关闭弹窗
-      closeDialog(data){
+      channel(data){
         this.dialogVisible = false;
         this.$api[this.tableData.api[2]](data).then(res=>{
             if (res.code ==1){

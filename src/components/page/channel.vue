@@ -14,7 +14,6 @@ export default {
       searchChannel:{},
       tableData:{
         type:'channel',
-        filterData:{},
         tableBtn:[
           {
             api:'saveStudenChannel',

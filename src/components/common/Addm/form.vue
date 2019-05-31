@@ -1,9 +1,9 @@
 <template>
   <div class="formbox">
     <el-form :model="formdata" ref="formdata" :rules="formRules" lable-width="100px" label-position="left">
-      <el-form-item label="广告ID" prop="id" v-if="FormData.edit">
+      <!-- <el-form-item label="广告ID" prop="id" v-if="FormData.edit">
         <el-input v-model="formdata.id" placeholder="请输入广告ID" type="text" ></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="广告图片" class="upload_img" prop="imgUrl">
         <!-- <el-upload
           class="avatar-uploader"
@@ -32,14 +32,14 @@
     data() {
       return {
         formdata:{
-          id:'', //	string
+          // id:'', //	string
           imgUrl:'', //		string
           clickUrl:'', //		long
         },
         formRules:{
           imgUrl:{required:true, message:'广告链接不能为空',trigger: 'change'},	//广告链接
         },
-        id:{required:true, message:'广告ID不能为空',trigger: 'blur'}, //		广告ID
+        // id:{required:true, message:'广告ID不能为空',trigger: 'blur'}, //		广告ID
         dialogVisible:false,
       }
     },
@@ -54,12 +54,10 @@
     },
     methods:{
       submit(val){
-        if(this.FormData.edit){
-          this.formRules= Object.assign(this.formRules,{id:this.id})
-        }
-        this.formdata=Object.assign(this.formdata,{
-          type:val
-        });
+        // if(this.FormData.edit){
+        //   this.formRules= Object.assign(this.formRules,{id:this.id})
+        // }
+        this.formdata.type =val
         this.$refs.formdata.validate(valid =>{
           if (valid){
             this.$emit('update',this.formdata)
@@ -70,20 +68,12 @@
       },
       //上传图片
       handleAvatarSuccess(res,file){
-        // let imgs = URL.createObjectURL(file.raw);
-        console.log(res,file,'----图谱按')
           var result = file.response;
           if(result.code==1){
             this.formdata.imgUrl = result.data.path
           }else{
             this.$message.error(result.msg);
           }
-        // if(res.code==1){
-        //   this.formdata.imgUrl = res.data.path
-        //   // this.removeImg()
-        // }else{
-        //   this.$message.error(res.msg);
-        // }
       },
       //重置
       reset(){

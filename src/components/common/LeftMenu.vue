@@ -92,8 +92,7 @@ export default {
   },
   methods:{
     selectMenu(key,keyPath){
-      console.log(key)
-      this.$router.push({path:key})
+      this.$router.push(key);
     },
   }
 };

@@ -42,7 +42,7 @@
       submit(){
         this.$refs.channelform.validate(valid =>{
           if (valid){
-            this.$emit('chanel',this.formData)
+            this.$emit('channel',this.formData)
           }else{
             return false
           }

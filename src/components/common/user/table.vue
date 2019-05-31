@@ -59,7 +59,7 @@
       @before-close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增用户管理</span>
-      <userform :userFormData="userFormData" @updatelist="closeDialog" ref="formbox"></userform>
+      <userform :userFormData="userFormData" @updatelist="closeUser" ref="formbox"></userform>
     </el-dialog>
     <!-- 发送消息 -->
     <el-dialog
@@ -186,7 +186,7 @@
       },
       //新增 编辑
       //关闭弹窗
-      closeDialog(data){
+      closeUser(data){
         console.log(data,'===table --[[[[[[]]]]]-form')
         this.dialogVisible = false;
         let num = data.type ? '1' : '2'; //1 修改 2 新增

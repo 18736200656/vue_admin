@@ -47,12 +47,12 @@ export default {
             chilren:[
               {
                 num: '1',
-                type: 'primary',
+                type: '',
                 name: '修改'
               },
               {
                 num: '2',
-                type: 'primary',
+                type: '',
                 name: '删除'
               }
             ]

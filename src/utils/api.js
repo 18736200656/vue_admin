@@ -269,14 +269,6 @@ const api = {
     })
   },
   // ____________________________________________________用户管理____________________________________________
-  //新增用户消息通知
-  saveStudenChannel(val){
-    return _axios({
-      url:'/saveUserNotice',
-      method:'POST',
-      data:val
-    })
-  },
   //淘宝用户修改
   editUserTaobao(val){
     return _axios({

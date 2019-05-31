@@ -77,7 +77,7 @@
                     },
                     {
                       num: '2',
-                      type: 'danger',
+                      type: '',
                       name: '删除'
                     }
                   ]

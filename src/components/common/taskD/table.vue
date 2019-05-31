@@ -34,18 +34,15 @@
                 v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                 @click="changeSatus(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
             </div>
-            <div v-else-if="item.taskIntro">
+            <!-- <div v-else-if="item.taskIntro">
               <div>1:{{scope.row.oneText}}</div>
               <div>2:{{scope.row.twoText}}</div>
               <div>3:{{scope.row.thirdText}}</div>
-
-              <!-- <span v-for="v in item.chiildren" :key="v.name">{{v.name}}:{{scope.row[v._key]}}</span> -->
-            </div>
+            </div> -->
              <div v-else-if="item.taskImg">
                <div>第一步: <a :href="scope.row.oneImg">{{scope.row.oneImg}}</a> </div>
                <div>第二步: <a :href="scope.row.twoImg">{{scope.row.twoImg}}</a> </div>
                <div>第三步: <a :href="scope.row.thirdImg">{{scope.row.thirdImg}}</a> </div>
-                <!-- <span v-for="v in item.chiildren" :key="v.name">{{v.name}}:{{scope.row[v._key]}}</span> -->
             </div>
             <div v-else>
               <span :title="scope.row[item.key]">{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
