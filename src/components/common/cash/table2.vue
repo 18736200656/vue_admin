@@ -1,22 +1,9 @@
 <template>
   <div>
     <el-card class="tablelist">
-
       <section class="tabe_btn" v-if="tableData.tableBtn.length>0 ||tableData.tableBtn !=null">
         <div style="margin-top:10px;">
-          <el-upload
-            class="upload-demo"
-            ref="uploadFile"
-            action="/importUserPay"
-            :before-upload="beforeUpload"
-            :show-file-list='true'
-            :http-request="uploadFile"
-            :on-error="uploadFail">
-            <!-- <i class="el-icon-upload"></i> -->
-            <el-button size="small" type="success">导入</el-button>
-            <!-- <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传.xlsx,.xls文件，且不超过500kb</div> -->
-          </el-upload>
+          <el-button size="small" type="success" @click="FiledialogVisible=true">导入</el-button>
         </div>
       </section>
       <section class="table_container">
@@ -72,6 +59,31 @@
         </div>
       </section>
     </el-card>
+     <!-- 导入xlsx -->
+     <el-dialog
+      :visible.sync="FiledialogVisible"
+      width="30%">
+      <span slot="title" class="dialog_tit">导入文件</span>
+        <el-card>
+          <el-upload
+            class="upload-demo"
+            ref="uploadFile"
+            drag
+            :action="action"
+            :before-upload="beforeUpload"
+            :show-file-list='true'
+            :on-success="uploadSuccess"
+            :on-error="uploadFail">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">只能上传.xlsx,.xls文件，且不超过500kb</div>
+          </el-upload>
+        </el-card>
+       <span slot="footer" class="dialog-footer">
+        <el-button @click="FiledialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitUpload">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -88,6 +100,8 @@
         dialogVisible:false,
         FormData:[],
         busData:{},
+        FiledialogVisible:false,
+        action:process.env.NODE_BASE_URL+'importUserPay',  //上传文件路径
       }
     },
     components:{
@@ -143,19 +157,16 @@
           Promise.reject(error);
         })
       },
-      uploadFile(item){      //2 导入
-        console.log(item, '=====导入的东西===----');
-        this.file = item.file.name
-        this.$api[this.tableData.api[2]]({file:this.file}).then(res=>{
-          if(res.code==1){
-             this.getTabList();
-          }else{
-            this.$message.error(res.msg)
-          }
-        }).catch((error) => {
-          Promise.reject(error);
-        })
-
+     //导入确定按钮
+      submitUpload(){
+        this.FiledialogVisible = false;
+      },
+      //上传成功
+      uploadSuccess(res,file){
+        if(res.code==1){
+          this.$message.success('上传成功')
+          this.getTabList();
+        }
       },
       //上传错误
       uploadFail(err, file, fileList) {
@@ -165,14 +176,13 @@
       beforeUpload(file){
         //上传前配置
         console.log(file,'-----')
-
         let excelfileExtend = ".xls.xlsx"//设置文件格式
         let fileExtend = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
         if (excelfileExtend.search(fileExtend) == -1) {
           this.$message.error('文件格式错误')
           return false
         }
-      }
+      },
     },
 
   }

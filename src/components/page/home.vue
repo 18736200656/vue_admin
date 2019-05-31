@@ -210,14 +210,14 @@
             class="upload-demo"
             ref="uploadFile"
             drag
-            action="/goods/importGoods"
+            :action="action"
             :before-upload="beforeUpload"
             :show-file-list='true'
-            :http-request="uploadFile"
+            :on-success="uploadSuccess"
             :on-error="uploadFail">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传.xlsx,.xls文件，且不超过500kb</div>
+            <div class="el-upload__tip" slot="tip">只能上传.xlsx,.xls文件，且不超过2M</div>
           </el-upload>
         </el-card>
        <span slot="footer" class="dialog-footer">
@@ -248,6 +248,7 @@ export default {
       selectDatas:[],  // 选则的商品
       FiledialogVisible:false,
       file:'', //导入的文件
+      action:process.env.NODE_BASE_URL+'goods/importGoods',  //上传文件路径
     };
   },
   created(){
@@ -433,22 +434,13 @@ export default {
     //导入确定按钮
     submitUpload(){
       this.FiledialogVisible = false;
-      let params = {file:this.file}
-      this.$api.importGoods(params).then(res=>{
-        if (res.code ==1){
-          this.queryGoodsList();
-          this.$message.success(res.data.message)
-        }else{
-          this.$message.error(res.msg)
-        }
-      }).catch((error) => {
-        Promise.reject(error);
-      })
-
     },
-    uploadFile(item){      //4 导入
-      console.log(item, '=====导入的东西===----');
-      this.file = item.file.name
+    //上传成功
+    uploadSuccess(res,file){
+      if(res.code==1){
+        this.$message.success('上传成功')
+        this.queryGoodsList();
+      }
     },
     //上传错误
     uploadFail(err, file, fileList) {
@@ -466,10 +458,10 @@ export default {
       }
     },
      //关闭弹窗
-      beforeClose(done){
-        done();
-        this.$refs.goodsform.reset();
-      }
+    beforeClose(done){
+      done();
+      this.$refs.goodsform.reset();
+    }
 
   },
   components:{
