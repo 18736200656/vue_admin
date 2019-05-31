@@ -15,7 +15,6 @@
       </el-form-item>
       <el-form-item align="right">
         <el-button type="primary" @click="submit">确 定</el-button>
-        <!--<el-button @click="submit(false)">取 消</el-button>-->
       </el-form-item>
     </el-form>
   </div>
@@ -38,15 +37,6 @@
           password:{required:true, message:'状态不能为空',trigger: 'change'},		//状态
         }
       }
-    },
-    props:{
-      // FormData:{
-      //   type:Array,
-      //   default:()=>{}
-      // }
-    },
-    created(){
-
     },
     methods:{
       submit(){

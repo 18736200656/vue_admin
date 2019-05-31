@@ -22,12 +22,11 @@
       <section class="table_container">
         <el-table
           stripe
-          ref="multipleTable"
           :class="tableData.type+'_table'"
           :data="tableList"
           :header-cell-style="{background:'#f7f7f7'}"
           @selection-change="handleSelectionChange"
-          height="500">
+          height="380">
           <el-table-column
             type="selection"
             align="center"

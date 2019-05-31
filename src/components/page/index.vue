@@ -34,8 +34,8 @@ export default {
   },
   mounted() {
     window.addEventListener('resize',this.getclientW,false);
-    var con = this.$refs.content;
-    this.scrollbarShowHidden(con);
+    // var con = this.$refs.content;
+    // this.scrollbarShowHidden(con);
 
   },
   methods:{
@@ -45,15 +45,15 @@ export default {
     },
 
     //鼠标划入滚动条展现，鼠标划出滚动条隐藏
-    scrollbarShowHidden(element){
-      element.setAttribute('className','scrollbarHide');
-      element.onMouseEnter =function() {
-        element.setAttribute('className','scrollbarShow');
-      };
-      element.onMouseLeave =function (){
-        element.removeAtrribute('scrollbarShow');
-      };
-    }
+    // scrollbarShowHidden(element){
+    //   element.setAttribute('className','scrollbarHide');
+    //   element.onMouseEnter =function() {
+    //     element.setAttribute('className','scrollbarShow');
+    //   };
+    //   element.onMouseLeave =function (){
+    //     element.removeAtrribute('scrollbarShow');
+    //   };
+    // }
 
   }
 };

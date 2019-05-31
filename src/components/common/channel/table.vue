@@ -97,7 +97,7 @@
 </template>
 <script>
   import bus from '../../../utils/bus'
-  import channelForm from '../channel/channelForm'
+  import channelForm from './channelForm'
   export default {
     name:'Table',
     data(){
@@ -189,7 +189,6 @@
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
-        console.log(this.tableData.api[2],'===api')
         this.$api[this.tableData.api[2]](data).then(res=>{
             if (res.code ==1){
               this.getTabList();

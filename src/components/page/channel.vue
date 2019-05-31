@@ -1,6 +1,6 @@
 <template>
   <div class="channel">
-    <search-box></search-box>
+    <search-box :searchChannel.sync='tableData.filterData'></search-box>
     <table-box :tableData="tableData"></table-box>
   </div>
 </template>
@@ -11,43 +11,7 @@ export default {
   name:'Channel',
   data(){
     return{
-      searchData:{
-        type:'channel',
-        params:{
-          channelLoginName:'', //	渠道账号
-          channelName:'',	//渠道名称
-          inviteCode:'',	//	邀请码
-          status:'',		//状态
-        },
-        filterData:[
-          {
-            label:'渠道账号',
-            key:'formData.channelLoginName',
-            prop:'channelLoginName',
-            placeholder:'请输入渠道账号',
-          },
-          {
-            label:'渠道名称',
-            key:'formData.channelName',
-            prop:'channelName',
-            placeholder:'请输入渠道名称',
-          },
-          {
-            label:'邀请码',
-            key:'formData.inviteCode',
-            prop:'inviteCode',
-            placeholder:'请输入邀请码',
-          },
-          {
-            label:'状态',
-            key:'formData.status',
-            prop:'status',
-            status:['1','2'],
-            elSelct:true
-          },
-
-        ]
-      },
+      searchChannel:{},
       tableData:{
         type:'channel',
         filterData:{},
