@@ -6,15 +6,14 @@
     </div>
     <el-card class="search">
       <el-form :model="formData" ref="formData" lable-width="100px" :inline="true">
-        <el-form-item label="淘宝用户名">
-          <el-input v-model="formData.taobaoName" placeholder="请输入淘宝用户名" type="text" ></el-input>
+        <el-form-item label="淘宝用户名" >
+          <el-input v-model="formData.taobaoName" placeholder="请输入淘宝用户名" clearable></el-input>
         </el-form-item>
         <el-form-item label="手机号">
-          <el-input v-model="formData.mobile" placeholder="请输入手机号" type="text" ></el-input>
+          <el-input v-model="formData.mobile" placeholder="请输入手机号" clearable></el-input>
         </el-form-item>
         <el-form-item align="right">
           <el-button type="primary" @click="submit">查询</el-button>
-          <el-button type="primary" @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -37,12 +36,6 @@
     methods:{
       submit(){
         bus.$emit('updataUSR',this.formData);
-      },
-      resetForm(){
-        this.formData={
-          taobaoName:'', //		string	淘宝用户名
-            mobile:'', //		string	手机号
-        }
       }
     }
   }

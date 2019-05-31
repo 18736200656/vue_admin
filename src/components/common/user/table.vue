@@ -124,7 +124,7 @@
     },
     created(){
       this.getTabList();
-      bus.$on('updataCHN',data =>{
+      bus.$on('updataUSR',data =>{
         this.busData = data;
         this.getTabList();
       })
