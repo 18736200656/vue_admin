@@ -100,7 +100,7 @@
 <style lang="scss">
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -109,27 +109,27 @@
     border-color: #409EFF;
   }
   .avatar-uploader-icon {
-    font-size: 28px;
+    font-size: 14px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 80px;
+    height: 80px;
     display: block;
     border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     text-align: center;
-    line-height: 178px;
+    line-height: 80px;
     img{
-      max-width: 100%;
-      max-height: 100%;
+      width: 100%;
+      height: 100%;
     }
     .avatar-cover{
       display: none;
@@ -141,9 +141,9 @@
       height: 100%;
       i{
         color: #fff;
-        font-size: 28px;
+        font-size: 14px;
         cursor: pointer;
-        margin: 0 10px;
+        line-height: 80px;
       }
     }
     &:hover{
