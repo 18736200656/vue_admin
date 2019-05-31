@@ -193,7 +193,7 @@
     <!-- 商品弹出 -->
      <el-dialog
       :visible.sync="dialogVisible"
-      @close="beforeClose"
+      :before-close="beforeClose"
       width="40%">
       <span slot="title" class="dialog-header">
         {{'商品信息'}}
@@ -361,9 +361,9 @@ export default {
     // 关闭弹窗
     closeDialog(params){
       this.dialogVisible=false;
-      console.log(params.type,'-----')
+      console.log(params,'-----')
                           //  1修改      2新增
-      let api = params.type=='true'? 'editGoods' : 'addGoods';
+      let api = params.type ? 'editGoods' : 'addGoods';
       this.$api[api](params).then(res=>{
         if(res.code==1){
           this.$message.success("操作成功!");
@@ -466,8 +466,8 @@ export default {
       }
     },
      //关闭弹窗
-      beforeClose(){
-        this.dialogVisible = false;
+      beforeClose(done){
+        done();
         this.$refs.goodsform.reset();
       }
 

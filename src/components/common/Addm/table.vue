@@ -62,7 +62,7 @@
     </el-card>
     <el-dialog
       :visible.sync="dialogVisible"
-      @close="beforeClose"
+      :before-close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">{{edit ? '修改广告':'新增广告' }}</span>
       <form-box :FormData="FormData" @update="closeDialog" ref="formdata"></form-box>
@@ -222,7 +222,8 @@
         })
       },
       //关闭弹窗
-      beforeClose(){
+      beforeClose(done){
+        done();
         this.dialogVisible = false;
         this.$refs.formdata.reset();
       }

@@ -364,11 +364,9 @@ const api = {
       data:val
     })
   },
-
    //修改常见问题
    updateUserProblems(val){
-     debugger;
-     var aa = {id:val.id,title:val.title,answer:val.answer}
+    var aa = {id:val.id,title:val.title,answer:val.answer}
     return _axios({
       url:'/updateUserProblems',
       method:'POST',

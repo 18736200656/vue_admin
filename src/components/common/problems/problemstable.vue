@@ -126,7 +126,6 @@
       },
       //启用还是禁用
       handleEdit(index,val,num){
-        debugger;
         if(num=='1'){ //修改
            let data = {
             edit:true,

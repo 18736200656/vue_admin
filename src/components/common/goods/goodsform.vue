@@ -140,8 +140,8 @@ export default {
   methods:{
     onSubmit(val) {
       this.goodsdata.type =val
-      console.warn(this.goodsdata,'yhjjjjjjlkj')
       this.$refs.goodsform.validate(valid =>{
+         console.warn(this.goodsdata,'yhjjjjjjlkj')
         if (valid){
           this.$emit('update',this.goodsdata)
         }else{
