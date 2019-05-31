@@ -14,17 +14,6 @@
           @selection-change="handleSelectionChange"
           height="600">
           <el-table-column
-            type="selection"
-            align="center"
-            width="55">
-          </el-table-column>
-          <el-table-column
-            label="编号"
-            type="index"
-            align="center"
-            width="50">
-          </el-table-column>
-          <el-table-column
             v-for="(item,index) in tableData.thData"
             :key="index"
             :label="item.label"
@@ -137,6 +126,7 @@
       },
       //启用还是禁用
       handleEdit(index,val,num){
+        debugger;
         if(num=='1'){ //修改
            let data = {
             edit:true,
@@ -147,19 +137,8 @@
         }else if(num=='2'){ //删除
           this.$api[this.tableData.api[num]]({id:val.id}).then(res=>{
             if(res.code==1){
-             this.$message.success(res.data.message)
+             this.$message.success("操作成功!")
              this.getTabList()
-            }else{
-              this.$message.error(res.msg)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
-        }else{ //导出 3
-          this.$api[this.tableData.api[num]](val).then(res=>{
-            if(res.code==1){
-               this.$message.success(res.data.message)
-              //  window.location.href = res.data.xx
             }else{
               this.$message.error(res.msg)
             }
@@ -176,28 +155,15 @@
             edit:false,
             data:{}
           }
-        }else{
-          //导出
-          // let data = {
-          //   taskName:'', //	string	否	任务名称
-          //   userName:'', //		string	否	用户名称
-          //   status:'', //		string	否	状态 1：保存 2：审核通过 3：审核驳回
-          //   mobile:'', //		string	否	用户手机号
-          //   startTime:'', //		string	否	提交任务开始时间
-          //   endTime:'', //		string	否	提交任务结束时间
-          // }
-          console.log(this.baseUrl,'----ip地址')
-          window.location.href = this.baseUrl+'exportTaskUser'
         }
-
       },
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
-        let num = data.type ? '1' : '4'; //1 修改 4 新增
+        let num = data.type ? '1' : '3'; //1 修改 4 新增
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
-            this.$message.success(res.data.message)
+            this.$message.success("操作成功!")
             this.getTabList();
           }else{
             this.$message.error(res.msg)

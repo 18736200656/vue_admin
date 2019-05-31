@@ -18,15 +18,10 @@ export default {
             api:false,
             type:'primary',
             name:'新增'
-          },
-          {
-            api:true,
-            type:'success',
-            name:'導出'
-          },
+          }
         ],
-                //接口名字方法
-        api:['queryUserProblemsList','saveUserProblems','updateUserProblems','deleteUserProblems'],
+                //接口名字方法  
+        api:['queryUserProblemsList','updateUserProblems','deleteUserProblems','saveUserProblems'],
         thData:[
           {
             key:'title',
@@ -52,6 +47,11 @@ export default {
             chilren:[
               {
                 num: '1',
+                type: 'primary',
+                name: '修改'
+              },
+              {
+                num: '2',
                 type: 'primary',
                 name: '删除'
               }

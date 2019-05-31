@@ -349,7 +349,7 @@ const api = {
 
   //删除常见问题
   deleteUserProblems(val){
-    return axios({
+    return _axios({
       url:'/deleteUserProblems',
       method:'POST',
       data:val
@@ -358,10 +358,21 @@ const api = {
 
   //新增常见问题
   saveUserProblems(val){
-    return axios({
+    return _axios({
       url:'/saveUserProblems',
       method:'POST',
       data:val
+    })
+  },
+
+   //修改常见问题
+   updateUserProblems(val){
+     debugger;
+     var aa = {id:val.id,title:val.title,answer:val.answer}
+    return _axios({
+      url:'/updateUserProblems',
+      method:'POST',
+      data:aa
     })
   },
 }
