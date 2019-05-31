@@ -273,7 +273,7 @@ export default {
 
      //新增
     addClick(){
-      this.dialogVisible=true
+      this.dialogVisible=true;
       this.formdata={
         edit:false,
         data:{}
@@ -281,12 +281,12 @@ export default {
     },
     //编辑
     handleEdit(index,row){
-      let data = {
+      this.dialogVisible = true;
+      this.formdata = {
         edit:true,
         data:row
       };
-      this.formdata=data;
-      this.dialogVisible = true
+      
     },
     //单个删除
     handleDelete(index,row){
@@ -363,10 +363,10 @@ export default {
       this.dialogVisible=false;
       console.log(params.type,'-----')
                           //  1修改      2新增
-      let api = params.type ? 'editGoods' : 'addGoods'
+      let api = params.type=='true'? 'editGoods' : 'addGoods';
       this.$api[api](params).then(res=>{
         if(res.code==1){
-          this.$message.success(res.data);
+          this.$message.success("操作成功!");
           this.queryGoodsList()
         }else{
           this.$message.error(res.msg)

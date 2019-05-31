@@ -71,7 +71,7 @@
       </el-form>
     </div>
     <div class="form_bottom">
-      <el-button type="primary" @click="onSubmit('true')" v-if="goodsdata.edit">保存</el-button>
+      <el-button type="primary" @click="onSubmit('true')" v-if="formdata.edit==true">保存</el-button>
       <el-button type="primary" @click="onSubmit('false')" v-else>立即创建</el-button>
       <!--<el-button>取消</el-button>-->
     </div>
