@@ -62,10 +62,6 @@ export default {
         api:['queryStudenChannel','updateStudentChannel','saveStudenChannel','queryChannelView'],
         thData:[
           {
-            key:'id',
-            label:"渠道ID",
-          },
-          {
             key:'channelLoginName',
             label:"渠道账号",
 
@@ -115,21 +111,12 @@ export default {
             Tag:true,
           },
           {
-            key:'statusName',
-            label:"状态名称",
-          },
-          
-          {
             key:'createTime',
             label:"创建时间",
           },
           {
             key:'updateTime',
             label:"更新时间",
-          },
-          {
-            key:'version',
-            label:"当前版本号",
           },
           {
             key:'status',

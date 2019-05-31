@@ -91,11 +91,6 @@
               wd:250,
               chilren:[
                 {
-                  num: '1',
-                  type: 'primary',
-                  name: '修改'
-                },
-                {
                   num: '2',
                   type: '',
                   name: '发送消息'
