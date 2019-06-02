@@ -1,13 +1,17 @@
 <template>
   <div class="formbox">
     <el-form :model="formData" ref="taskform" :rules="formRules" lable-width="100px" label-position="left">
-      <el-form-item label="任务ID" prop="channelLoginName">
-        <el-input v-model="formData.taskId" placeholder="请输入任务ID" type="text" ></el-input>
+      <el-form-item label="淘宝用户名称" prop="taskId">
+        <el-select v-model="formData.taskId" placeholder="请选择淘宝用户名称" >
+           <el-option :label="item.taobaoName" :value="item.id" v-for="item in formData.userList" :key="item.id"></el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="用户ID" prop="channelName">
-        <el-input v-model="formData.userId" placeholder="请输入用户ID" type="text" ></el-input>
-      </el-form-item>
-      <el-form-item label="任务截图" prop="taskImg" class="upload_img">
+      <el-form-item label="任务名称" prop="userId">
+          <el-select v-model="formData.userId" placeholder="请选择任务名称">
+            <el-option :label="item.taskName" :value="item.id" v-for="item in formData.taskList" :key="item.id"></el-option>
+          </el-select>
+        </el-form-item>
+      <el-form-item label="任务截图" class="upload_img">
         <!-- <el-upload
           class="avatar-uploader"
           action="/common/attachment/uploadFile"
@@ -38,7 +42,7 @@
         formRules:{
           taskId:{required:true, message:'任务ID不能为空',trigger: 'blur'}, //	任务ID
           userId:{required:true, message:'用户ID不能为空',trigger: 'blur'},	//用户ID
-          taskImg:{required:true, message:'任务截图不能为空',trigger: 'change'},	//	任务截图
+          taskImg:[{required:true, message:'任务截图不能为空',trigger: 'change'}]	//	任务截图
         }
       }
     },
@@ -52,16 +56,18 @@
       this.formData =  this.taskFormData.data
     },
      methods:{
-      updateImg(val){
-        this.formData.taskImg = val
+      updateImg(value){
+        this.formData.taskImg = value
+        console.log(value,'===========')
       },
       submit(val){
         this.formData.type= val;
-        console.log(this.formData,'====')
+        delete this.formData.taskList
+        delete this.formData.userList
+         console.log(this.formData,'==+++++++++++=========')
         this.$refs.taskform.validate(valid =>{
           if (valid){
-            console.log(this.formData,'++++')
-            this.$emit('update',this.formData)
+            this.$emit('updateTask',this.formData)
           }else{
             return
           }
@@ -69,7 +75,6 @@
       },
       //上传图片
       handleAvatarSuccess(res,file){
-        console.log(file,res,'====')
         if(res.code==1){
           this.formData.taskImg = res.data.path
         }else{

@@ -64,7 +64,7 @@
       :before-close="beforeClose"
       width="50%">
       <span slot="title" class="dialog_tit">新增任务数据</span>
-      <taskform :taskFormData="taskFormData" @update="closeDialog" ref="taskform"></taskform>
+      <taskform :taskFormData="taskFormData" @updateTask="closeDialog" ref="taskform"></taskform>
     </el-dialog>
   </div>
 </template>
@@ -82,7 +82,9 @@
         dialogVisible:false,
         taskFormData:[],
         busData:{},
-        baseUrl:'http://47.97.152.146/',
+        baseUrl:process.env.NODE_BASE_URL,
+        userList:[],
+        taskList:[],
       }
     },
     components:{
@@ -96,6 +98,8 @@
     },
     created(){
       this.getTabList();
+      this.queryUserList(); //获取用户下拉列表
+      this.querytaskList(); //	获取任务列表
       bus.$on('updataTKM',data =>{
         this.busData = data;
         this.currentPage= 1
@@ -135,8 +139,10 @@
           Promise.reject(error);
         })
       },
-      //启用还是禁用
+      //启用还是禁用  
       handleEdit(index,val,num){
+        val.userList=this.userList
+        val.taskList = this.taskList
         if(num=='1'){ //修改
            let data = {
             edit:true,
@@ -175,19 +181,13 @@
           this.dialogVisible=true
           this.taskFormData={
             edit:false,
-            data:{},
+            data:{
+              taskImg:'',
+              userList:this.userList,
+              taskList:this.taskList
+            },
           }
         }else{
-          //导出
-          // let data = {
-          //   taskName:'', //	string	否	任务名称
-          //   userName:'', //		string	否	用户名称
-          //   status:'', //		string	否	状态 1：保存 2：审核通过 3：审核驳回
-          //   mobile:'', //		string	否	用户手机号
-          //   startTime:'', //		string	否	提交任务开始时间
-          //   endTime:'', //		string	否	提交任务结束时间
-          // }
-          console.log(this.baseUrl,'----ip地址')
           window.open(this.baseUrl+'exportTaskUser','_blank')
         }
 
@@ -195,7 +195,9 @@
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
+                 console.log(data,'==+++++++++++=========')
         let num = data.type ? '1' : '4'; //1 修改 4 新增
+        console.log(this.tableData.api[num],num,this.tableData.api,'-------------0000')
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
             this.$message.success(res.data.message)
@@ -211,6 +213,42 @@
       beforeClose(done){
         done();
         this.$refs.taskform.reset();
+      },
+      //获取用户的id
+      queryUserList(){
+         this.$api[this.tableData.api[6]]().then(res=>{
+            if(res.code==1){
+                res.data.forEach(val => {
+                  this.userList.push({
+                    "id": val.id,
+                    "taobaoName": val.taobaoName
+                 })
+               });
+               this.$message.success(res.data.message)
+            }else{
+              this.$message.error(res.msg)
+            }
+          }).catch((error) => {
+            Promise.reject(error);
+          })
+      },
+      //	获取任务列表
+      querytaskList(){
+         this.$api[this.tableData.api[7]]().then(res=>{
+            if(res.code==1){
+                res.data.forEach(val => {
+                  this.taskList.push({
+                    "id": val.id,
+                    "taskName": val.taskName
+                 })
+               });
+               this.$message.success(res.data.message)
+            }else{
+              this.$message.error(res.msg)
+            }
+          }).catch((error) => {
+            Promise.reject(error);
+          })
       }
     },
   }

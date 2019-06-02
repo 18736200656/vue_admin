@@ -268,6 +268,20 @@ const api = {
       data:val
     })
   },
+  //获取用户下拉列表
+  queryUserList(){
+    return _axios({
+      url:'/userTaobao/queryUserList',
+      method:'POST',
+    })
+  },
+  //获取任务列表
+  taskList(){
+    return _axios({
+      url:'taskList',
+      method:'POST',
+    })
+  },
   // ____________________________________________________用户管理____________________________________________
   //淘宝用户修改
   editUserTaobao(val){

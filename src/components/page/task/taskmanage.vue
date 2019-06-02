@@ -25,8 +25,10 @@ export default {
             name:'导出'
           },
         ],
-                //接口名字方法      //修改              删除            //导出         //新增           //审核用户
-        api:['queryTaskUserList','updateTaskUser','deleteTaskUser','exportTaskUser','saveTaskUser','reviewTaskUser'],
+                //接口名字方法      //修改              删除            //导出         //新增         
+        api:['queryTaskUserList','updateTaskUser','deleteTaskUser','exportTaskUser','saveTaskUser',
+          //审核用户      //用户信息      //任务列表
+        'reviewTaskUser','queryUserList','taskList'],
         thData:[
           {
             key:'id',
