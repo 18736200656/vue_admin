@@ -142,17 +142,16 @@
       },
       //启用还是禁用  
       handleEdit(index,val,num){
-        
-        
         if(num=='1'){ //修改
-           let data = {
+           let params = {
             edit:true,
             data:{
               id:val.id,
               taskImg:val.taskImg
             },
           }
-          this.taskFormData = data;
+          console.log(params.data,'==edit')
+          this.taskFormData = params;
           this.dialogVisible = true;
         }else if(num=='2'){ //删除
           this.$api[this.tableData.api[num]]({id:val.id}).then(res=>{
@@ -166,8 +165,8 @@
           }).catch((error) => {
             Promise.reject(error);
           })
-        }else{ //导出 3
-          this.$api[this.tableData.api[num]](val).then(res=>{
+        }else{ //审核 5
+          this.$api[this.tableData.api[num]]({id:val.id,status:val.status}).then(res=>{
             if(res.code==1){
                this.$message.success(res.data.message)
               //  window.location.href = res.data.xx

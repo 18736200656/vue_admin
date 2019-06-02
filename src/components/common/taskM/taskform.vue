@@ -37,13 +37,13 @@
         formData:{
           taskId:'', //		long	是	任务ID
           userId:'', //		long	是	用户ID
-          taskImg:'', //		string	是	任务截图
+          taskImg:'', //		string	是	任务截
         },
         formRules:{
           taskId:{required:true, message:'任务ID不能为空',trigger: 'blur'}, //	任务ID
           userId:{required:true, message:'用户ID不能为空',trigger: 'blur'},	//用户ID
           taskImg:[{required:true, message:'任务截图不能为空',trigger: 'change'}]	//	任务截图
-        }
+        },
       }
     },
     props:{
@@ -53,17 +53,20 @@
       }
     },
     created(){
-      this.formData =  this.taskFormData.data
-      console.log(this.formData,'===')
+      this.formData =  this.taskFormData.data  
+
+      console.log(this.formData,'==-----created---=')
     },
      methods:{
-      updateImg(value){
-        this.formData.taskImg = value
+      updateImg(val){
+        this.formData.taskImg = val
       },
       submit(val){
         this.formData.type= val;
         delete this.formData.taskList
         delete this.formData.userList
+         this.formData.id = this.id
+
         this.$refs.taskform.validate(valid =>{
           if (valid){
             this.$emit('updateTask',this.formData)
