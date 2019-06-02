@@ -1,13 +1,13 @@
 <template>
   <div class="formbox">
     <el-form :model="formData" ref="taskform" :rules="formRules" lable-width="100px" label-position="left">
-      <el-form-item label="淘宝用户名称" prop="taskId">
-        <el-select v-model="formData.taskId" placeholder="请选择淘宝用户名称" >
+      <el-form-item label="淘宝用户名称" :prop="taskFormData.edit ? '' :'userId'"  v-if="!taskFormData.edit">
+        <el-select v-model="formData.userId" placeholder="请选择淘宝用户名称" >
            <el-option :label="item.taobaoName" :value="item.id" v-for="item in formData.userList" :key="item.id"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="任务名称" prop="userId">
-          <el-select v-model="formData.userId" placeholder="请选择任务名称">
+      <el-form-item label="任务名称" :prop="taskFormData.edit ? '' :'taskId'"  v-if="!taskFormData.edit">
+          <el-select v-model="formData.taskId" placeholder="请选择任务名称">
             <el-option :label="item.taskName" :value="item.id" v-for="item in formData.taskList" :key="item.id"></el-option>
           </el-select>
         </el-form-item>
@@ -54,17 +54,16 @@
     },
     created(){
       this.formData =  this.taskFormData.data
+      console.log(this.formData,'===')
     },
      methods:{
       updateImg(value){
         this.formData.taskImg = value
-        console.log(value,'===========')
       },
       submit(val){
         this.formData.type= val;
         delete this.formData.taskList
         delete this.formData.userList
-         console.log(this.formData,'==+++++++++++=========')
         this.$refs.taskform.validate(valid =>{
           if (valid){
             this.$emit('updateTask',this.formData)

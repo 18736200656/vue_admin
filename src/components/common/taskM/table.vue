@@ -39,7 +39,8 @@
                   @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
               </div>
               <div v-else>
-                <span v-if="item.key== 'updateTime' || item.key== 'createTime'">{{$valid.timeDate(scope.row[item.key]) || '--'}}</span>
+                <span v-if="item.key== 'updateTime' || item.key== 'createTime'">{{$valid.date(scope.row[item.key]) || '--'}}</span>
+                <span v-else-if="item.key== 'status' ">{{$valid.examineStr(scope.row[item.key])}}</span>
                 <span v-else>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
               </div>
             </template>
@@ -141,12 +142,15 @@
       },
       //启用还是禁用  
       handleEdit(index,val,num){
-        val.userList=this.userList
-        val.taskList = this.taskList
+        
+        
         if(num=='1'){ //修改
            let data = {
             edit:true,
-            data:val,
+            data:{
+              id:val.id,
+              taskImg:val.taskImg
+            },
           }
           this.taskFormData = data;
           this.dialogVisible = true;
@@ -195,12 +199,11 @@
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
-                 console.log(data,'==+++++++++++=========')
         let num = data.type ? '1' : '4'; //1 修改 4 新增
-        console.log(this.tableData.api[num],num,this.tableData.api,'-------------0000')
+        data.id = num=='1' ? data.taskId : ''
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
-            this.$message.success(res.data.message)
+            this.$message.success('操作成功')
             this.getTabList();
           }else{
             this.$message.error(res.msg)

@@ -30,10 +30,10 @@ export default {
           //审核用户      //用户信息      //任务列表
         'reviewTaskUser','queryUserList','taskList'],
         thData:[
-          {
-            key:'id',
-            label:"数据ID",
-          },
+          // {
+          //   key:'id',
+          //   label:"数据ID",
+          // },
           // {
           //   key:'taskId',
           //   label:"任务ID",

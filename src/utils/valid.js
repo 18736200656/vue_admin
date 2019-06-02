@@ -3,6 +3,11 @@ const data ={
   status:{
     '1':'启用',
     '2':'禁用',
+  },
+  examine:{
+    '1':'保存',
+    '2':'审核通过',
+    '3':'审核驳回'
   }
 }
 
@@ -27,5 +32,8 @@ module.exports = {
     var m = date.getMinutes();
     var s = date.getSeconds();
     return `${Y}-${M>10 ? M : '0'+M}-${D>10?D:'0'+D} ${H>10?'H':'0'+H}:${m>10?m:'0'+m}}:${s>10?s:'0'+s}}`
+  },
+  examineStr(val){
+    return data.examine[val];
   }
 };
