@@ -59,11 +59,6 @@ export default {
             label:"淘宝用户名",
           },
           {
-            taskImg:true,
-            label:"任务图文介绍",
-        
-          },
-          {
             key:'taskImg',
             label:"任务截图",
           },
