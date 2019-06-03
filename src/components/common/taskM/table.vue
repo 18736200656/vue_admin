@@ -67,6 +67,19 @@
       <span slot="title" class="dialog_tit">新增任务数据</span>
       <taskform :taskFormData="taskFormData" @updateTask="closeDialog" ref="taskform"></taskform>
     </el-dialog>
+     <el-dialog
+      :visible.sync="checkdialogVisible"
+      width="30%">
+      <span slot="title" class="dialog_tit">审核状态</span>
+      <div class="audit_box">
+        <span @click="auditStatus=2" class="audit" :class="auditStatus==2 ? 'auditCheck' : ''">通过</span>
+        <span @click="auditStatus=3" class="audit" :class="auditStatus==3 ? 'auditCheck' : ''">驳回</span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="checkdialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="auditSubmit">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -86,6 +99,9 @@
         baseUrl:process.env.NODE_BASE_URL,
         userList:[],
         taskList:[],
+        checkdialogVisible:false,
+        auditStatus:2,
+        id:'',
       }
     },
     components:{
@@ -150,32 +166,33 @@
               taskImg:val.taskImg
             },
           }
-          console.log(params.data,'==edit')
           this.taskFormData = params;
           this.dialogVisible = true;
         }else if(num=='2'){ //删除
-          this.$api[this.tableData.api[num]]({id:val.id}).then(res=>{
-            if(res.code==1){
-             this.$message.success(res.data.message)
-             this.getTabList();
-             this.$refs.taskform.reset();
-            }else{
-              this.$message.error(res.msg)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
+          this.$confirm('确定真的删除？','提示',{
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$api[this.tableData.api[num]]({id:val.id}).then(res=>{
+              if(res.code==1){
+              this.$message.success('删除成功')
+              this.getTabList();
+              }else{
+                this.$message.error(res.msg)
+              }
+            }).catch((error) => {
+              Promise.reject(error);
+            })
+          }).catch(()=>{
+            this.$message({
+              type: 'info',
+              message: '取消删除'
+            });
+          });
         }else{ //审核 5
-          this.$api[this.tableData.api[num]]({id:val.id,status:val.status}).then(res=>{
-            if(res.code==1){
-               this.$message.success(res.data.message)
-              //  window.location.href = res.data.xx
-            }else{
-              this.$message.error(res.msg)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
+          this.checkdialogVisible = true
+          this.id = val.id;
         }
       },
        //新增
@@ -199,7 +216,6 @@
       closeDialog(data){
         this.dialogVisible = false;
         let num = data.type ? '1' : '4'; //1 修改 4 新增
-        data.id = num=='1' ? data.taskId : ''
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
             this.$message.success('操作成功')
@@ -251,6 +267,20 @@
           }).catch((error) => {
             Promise.reject(error);
           })
+      },
+      //提交申请
+      auditSubmit(){
+        this.$api[this.tableData.api[5]]({id:this.id,status:this.auditStatus}).then(res=>{
+          if(res.code==1){
+              this.checkdialogVisible = false
+              this.getTabList()
+              this.$message.success('操作成功')
+          }else{
+            this.$message.error(res.msg)
+          }
+        }).catch((error) => {
+          Promise.reject(error);
+        })
       }
     },
   }
@@ -285,6 +315,26 @@
   .el-table__header th {
     padding: 0;
     height: 60px;
+  }
+  .audit_box{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .audit{
+    width: 30%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .auditCheck{
+    border: 1px solid #409eff;
+    color: #409eff;
   }
 </style>
 

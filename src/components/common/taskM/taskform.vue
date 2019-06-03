@@ -54,8 +54,6 @@
     },
     created(){
       this.formData =  this.taskFormData.data  
-
-      console.log(this.formData,'==-----created---=')
     },
      methods:{
       updateImg(val){
@@ -65,8 +63,6 @@
         this.formData.type= val;
         delete this.formData.taskList
         delete this.formData.userList
-         this.formData.id = this.id
-
         this.$refs.taskform.validate(valid =>{
           if (valid){
             this.$emit('updateTask',this.formData)
