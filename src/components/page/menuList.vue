@@ -44,6 +44,10 @@
               label:"图片",
             },
             {
+              key:'searchName',
+              label:"搜索名称",
+            },
+            {
               key:'sort',
               label:"排序",
             },

@@ -6,6 +6,12 @@
     </div>
     <el-card class="search">
       <el-form :model="formData" ref="formData" lable-width="100px" :inline="true">
+        <el-form-item label="分类名称">
+          <el-input v-model="formData.name" placeholder="请输入分类名称" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="分类级别">
+          <el-input v-model="formData.level" placeholder="请输入分类级别" clearable></el-input>
+        </el-form-item>
         <el-form-item label="上级ID">
           <el-input v-model="formData.parentId" placeholder="请输入上级ID" clearable></el-input>
         </el-form-item>

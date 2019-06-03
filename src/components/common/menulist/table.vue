@@ -153,6 +153,7 @@
                          // 2 新增 1 修改
         let num = data.type ? '1' :'2'
         console.log(num,data.type,'---')
+        debugger;
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
             this.getTabList();
