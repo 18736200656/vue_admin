@@ -236,7 +236,7 @@
             },
           }
         }else if(val=='2'){
-          window.open(this.baseUrl+'importTaskUser','_blank')
+          window.open(this.baseUrl+'exportTaskUser')
         }else{
           //导入确定按钮
           this.FiledialogVisible = true;

@@ -14,11 +14,11 @@ export default {
       tableData:{
         type:'taskM',
         tableBtn:[
-          {
-            api:1,
-            type:'primary',
-            name:'新增'
-          },
+          //{
+          //  api:1,
+          //  type:'primary',
+          //  name:'新增'
+          //},
           {
             api:2,
             type:'success',
@@ -48,26 +48,22 @@ export default {
             label:"任务名称",
           },
           {
-            key:'userId',
-            label:"用户ID",
-          },
-           {
             key:'userName',
-            label:"用户姓名",
-          },
-           {
-            key:'mobile',
-            label:"手机号",
+            label:"用户名",
           },
           {
             key:'tbName',
             label:"淘宝用户名",
           },
           {
-            taskImg:true,
-            label:"任务图文介绍",
-        
+            key:'mobile',
+            label:"手机号",
           },
+          {
+            key:'identityCode',
+            label:"身份证号",
+          },
+          
           {
             key:'taskImg',
             label:"任务截图",
@@ -106,11 +102,11 @@ export default {
             label:"操作",
             wd:250,
             chilren:[
-              {
-                num: '1',
-                type: 'primary',
-                name: '修改'
-              },
+            //  {
+             //   num: '1',
+              //  type: 'primary',
+              //  name: '修改'
+              //},
               {
                 num: '2',
                 type: 'danger',
