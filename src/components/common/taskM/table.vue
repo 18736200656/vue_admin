@@ -80,6 +80,31 @@
         <el-button type="primary" @click="auditSubmit">确 定</el-button>
       </span>
     </el-dialog>
+     <!-- 导入xlsx -->
+     <el-dialog
+      :visible.sync="FiledialogVisible"
+      width="30%">
+      <span slot="title" class="dialog_tit">导入文件</span>
+        <el-card>
+          <el-upload
+            class="upload-demo"
+            ref="uploadFile"
+            drag
+            :action="action"
+            :before-upload="beforeUpload"
+            :show-file-list='true'
+            :on-success="uploadSuccess"
+            :on-error="uploadFail">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">只能上传.xlsx,.xls文件</div>
+          </el-upload>
+        </el-card>
+       <span slot="footer" class="dialog-footer">
+        <el-button @click="FiledialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitUpload">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -102,6 +127,9 @@
         checkdialogVisible:false,
         auditStatus:2,
         id:'',
+        FiledialogVisible:false,
+        file:'', //导入的文件
+        action:process.env.NODE_BASE_URL+'importTaskUser',  //上传文件路径
       }
     },
     components:{
@@ -197,7 +225,7 @@
       },
        //新增
       addClick(val){
-        if(!val){
+        if(val=='1'){
           this.dialogVisible=true
           this.taskFormData={
             edit:false,
@@ -207,10 +235,12 @@
               taskList:this.taskList
             },
           }
+        }else if(val=='2'){
+          window.open(this.baseUrl+'importTaskUser','_blank')
         }else{
-          window.open(this.baseUrl+'exportTaskUser','_blank')
+          //导入确定按钮
+          this.FiledialogVisible = true;
         }
-
       },
       //关闭弹窗
       closeDialog(data){
@@ -281,7 +311,33 @@
         }).catch((error) => {
           Promise.reject(error);
         })
-      }
+      },
+      //导入确定按钮
+      submitUpload(){
+        this.FiledialogVisible = false;
+      },
+      //上传成功
+      uploadSuccess(res,file){
+        if(res.code==1){
+          this.$message.success('上传成功')
+          this.querytaskList();
+        }
+      },
+      //上传错误
+      uploadFail(err, file, fileList) {
+        this.$message.error(err,file)
+      },
+      //限制
+      beforeUpload(file){
+        //上传前配置
+        console.log(file,'-----')
+        let excelfileExtend = ".xls.xlsx"//设置文件格式
+        let fileExtend = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+        if (excelfileExtend.search(fileExtend) == -1) {
+          this.$message.error('文件格式错误')
+          return false
+        }
+      },
     },
   }
 </script>

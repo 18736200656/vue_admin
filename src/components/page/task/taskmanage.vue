@@ -15,14 +15,19 @@ export default {
         type:'taskM',
         tableBtn:[
           {
-            api:false,
+            api:1,
             type:'primary',
             name:'新增'
           },
           {
-            api:true,
+            api:2,
             type:'success',
             name:'导出'
+          },
+          {
+            api:3,
+            type:'success',
+            name:'导入'
           },
         ],
                 //接口名字方法      //修改              删除            //导出         //新增         
