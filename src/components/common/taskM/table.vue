@@ -129,6 +129,7 @@
         id:'',
         FiledialogVisible:false,
         file:'', //导入的文件
+        exportDate:'',//导出文件的数据
         action:process.env.NODE_BASE_URL+'importTaskUser',  //上传文件路径
       }
     },
@@ -150,7 +151,7 @@
         this.currentPage= 1
         this.pageSize= 10
         this.getTabList();
-      })
+      });
     },
     methods:{
       //选中
@@ -237,11 +238,21 @@
           }
         }else if(val=='2'){
           //window.open(this.baseUrl+'exportTaskUser')
-          window.location.href="http://www.sheng001.cn/exportTaskUser"
+          this.$api[this.tableData.api[3]](this.busData).then(res=>{
+            if (res.code ==1){
+              console.log(res,'====导出数据')
+              this.$message.success('操作成功')
+            }else{
+              this.$message.error(res.msg)
+            }
+          }).catch((error) => {
+            Promise.reject(error);
+          })
         }else{
           //导入确定按钮
           this.FiledialogVisible = true;
         }
+        
       },
       //关闭弹窗
       closeDialog(data){

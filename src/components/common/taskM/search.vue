@@ -84,7 +84,7 @@
           startTime:'', //		string	否	提交任务开始时间
           endTime:'', //		string	否	提交任务结束时间
         }
-      }
+      },
     }
   }
 </script>
