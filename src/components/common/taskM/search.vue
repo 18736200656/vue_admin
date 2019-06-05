@@ -6,8 +6,8 @@
     </div>
     <el-card class="search">
       <el-form :model="formData" ref="formData" lable-width="100px" :inline="true">
-        <el-form-item label="渠道账号">
-          <el-input v-model="formData.taskName" placeholder="请输入渠道账号" type="text" ></el-input>
+        <el-form-item label="任务名称">
+          <el-input v-model="formData.taskName" placeholder="请输入任务名称" type="text" ></el-input>
         </el-form-item>
         <el-form-item label="提交任务开始时间">
           <el-date-picker
