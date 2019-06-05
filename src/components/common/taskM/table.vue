@@ -236,7 +236,8 @@
             },
           }
         }else if(val=='2'){
-          window.open(this.baseUrl+'exportTaskUser')
+          //window.open(this.baseUrl+'exportTaskUser')
+          window.location.href="http://www.sheng001.cn/exportTaskUser"
         }else{
           //导入确定按钮
           this.FiledialogVisible = true;
