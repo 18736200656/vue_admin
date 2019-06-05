@@ -85,13 +85,13 @@ const api = {
   //分页查询商品列表
   queryGoodsCategory(val){
     return _axios({
-      url:'/goodsCategory/addGoodsCategory/goodsCategory/queryGoodsCategory',
+      url:'/goodsCategory/queryGoodsCategory',
       method:'POST',
       data:val
     })
   },
   //商品分类
-  queryGoodsCategory(val){
+  queryGoodsList(val){
     return _axios({
       url:'/goodsCategory/queryGoodsList',
       method:'POST',

@@ -384,7 +384,7 @@ export default {
       })
       this.$api.queryGoods(data).then(res=>{
         if(res.code==1){
-          this.tableData = res.data;
+          this.tableData = res.data.list;
           this.total =  res.data.total;
           this.goodsForm={}
         }else{

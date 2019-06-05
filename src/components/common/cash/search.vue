@@ -9,12 +9,14 @@
         <el-form-item label="用户名" >
           <el-input v-model="formData.userName" placeholder="请输入用户名" type="text" ></el-input>
         </el-form-item>
+        <!-- 
         <el-form-item label="状态" >
           <el-select v-model="formData.status" placeholder="请选择支付状态" type="text">
             <el-option label="未支付" value="1"></el-option>
             <el-option label="已支付" value="2"></el-option>
           </el-select>
         </el-form-item>
+        -->
         <el-form-item label="提现账号" >
           <el-input v-model="formData.withdrawAccount" placeholder="请输入提现账号" type="text" ></el-input>
         </el-form-item>

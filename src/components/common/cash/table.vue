@@ -75,6 +75,7 @@
         dialogVisible:false,
         FormData:[],
         busData:{},
+        baseUrl:process.env.NODE_BASE_URL,
       }
     },
     components:{
@@ -147,7 +148,7 @@
        //导出
       exportFile(){
         window.open(this.baseUrl+'exportUserWithdraw','_blank')
-      //  window.location.href="http://47.97.152.146/exportUserWithdraw"
+        // window.location.href="http://www.sheng001.cn/exportUserWithdraw"
       },
       //关闭弹窗
       closeDialog(data){

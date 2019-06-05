@@ -121,8 +121,8 @@
         });
         this.$api[this.tableData.api[0]](params).then(res=>{
           if(res.code==1){
-            this.tableList = res.data;
-            this.total = res.data.length;
+            this.tableList = res.data.list;
+            this.total = res.data.total;
           }else{
             this.$message.error(res.msg)
           }
