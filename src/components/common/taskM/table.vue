@@ -237,7 +237,9 @@
             },
           }
         }else if(val=='2'){
-          var str='';
+          delete this.busData.currentPage;
+          delete this.busData.pageSize;
+          var str='?';
           if(this.busData=='null'){
             window.open(this.baseUrl+'exportTaskUser')
           }else{
@@ -245,7 +247,7 @@
               str+=val +'='+ this.busData[val]+'&'
             })
             str = str.substring(0, str.lastIndexOf('&'));
-            window.open(this.baseUrl+'exportTaskUser?'+str)
+            window.open(this.baseUrl+'exportTaskUser'+str)
           }
           
           // this.$api[this.tableData.api[3]](this.busData).then(res=>{
