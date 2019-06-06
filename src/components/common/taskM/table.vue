@@ -38,6 +38,12 @@
                   v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                   @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
               </div>
+              <div v-else-if="item.verify">
+                <el-button
+                  size="mini" :disabled="scope.row[item.key] !== 0"
+                  v-for="(v,n) in item.chilren" :key="n" :type="v.type"
+                  @click="handleVerify(scope.$index,scope.row,v.num)">{{v.name}}</el-button>
+              </div>
               <div v-else>
                 <span v-if="item.key== 'updateTime' || item.key== 'createTime'">{{$valid.date(scope.row[item.key]) || '--'}}</span>
                 <span v-else-if="item.key== 'status' ">{{$valid.examineStr(scope.row[item.key])}}</span>
@@ -66,19 +72,6 @@
       width="50%">
       <span slot="title" class="dialog_tit">新增任务数据</span>
       <taskform :taskFormData="taskFormData" @updateTask="closeDialog" ref="taskform"></taskform>
-    </el-dialog>
-     <el-dialog
-      :visible.sync="checkdialogVisible"
-      width="30%">
-      <span slot="title" class="dialog_tit">审核状态</span>
-      <div class="audit_box">
-        <span @click="auditStatus=2" class="audit" :class="auditStatus==2 ? 'auditCheck' : ''">通过</span>
-        <span @click="auditStatus=3" class="audit" :class="auditStatus==3 ? 'auditCheck' : ''">驳回</span>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="checkdialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="auditSubmit">确 定</el-button>
-      </span>
     </el-dialog>
      <!-- 导入xlsx -->
      <el-dialog
@@ -124,8 +117,6 @@
         baseUrl:process.env.NODE_BASE_URL,
         userList:[],
         taskList:[],
-        checkdialogVisible:false,
-        auditStatus:2,
         id:'',
         FiledialogVisible:false,
         file:'', //导入的文件
@@ -219,10 +210,11 @@
               message: '取消删除'
             });
           });
-        }else{ //审核 5
-          this.checkdialogVisible = true
-          this.id = val.id;
         }
+      },
+      //审核状态
+      handleVerify(index,val,num){
+        this.auditSubmit(val.id,num)
       },
        //新增
       addClick(val){
@@ -325,10 +317,10 @@
           })
       },
       //提交申请
-      auditSubmit(){
-        this.$api[this.tableData.api[5]]({id:this.id,status:this.auditStatus}).then(res=>{
+      auditSubmit(id,num){
+        this.$api[this.tableData.api[5]]({id:id,status:num}).then(res=>{
           if(res.code==1){
-              this.checkdialogVisible = false
+              // this.checkdialogVisible = false
               this.getTabList()
               this.$message.success('操作成功')
           }else{

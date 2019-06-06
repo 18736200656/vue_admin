@@ -78,7 +78,7 @@ export default {
             keyS:'createTimeS',
             handdle:function(val){
               if(val){
-                return this.$valid.timeDate(val)
+                return this.$valid.time(val)
               }
             }
           },
@@ -88,35 +88,38 @@ export default {
             keyS:'updateTimeS',
             handdle:function(val){
               if(val){
-                return this.$valid.timeDate(val)
+                return this.$valid.time(val)
               }
             }
           },
-          //  {
-          //   key:'version',
-          //   label:"当前版本号",
-          // },
-
+          {
+            verify:true,
+            label:"审核状态",
+            key:'status',
+            wd:250,
+            chilren:[
+              {
+                num: '1',
+                type: 'primary',
+                name: '通过'
+              },
+              {
+                num: '2',
+                type: '',
+                name: '驳回'
+              }
+            ]
+          },
+          
           {
             fun:true,
             label:"操作",
-            wd:250,
             chilren:[
-            //  {
-             //   num: '1',
-              //  type: 'primary',
-              //  name: '修改'
-              //},
               {
                 num: '2',
                 type: 'danger',
                 name: '删除'
               },
-              {
-                num: '5',
-                type: 'success',
-                name: '审核'
-              }
             ]
           }
           
