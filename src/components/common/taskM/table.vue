@@ -237,17 +237,27 @@
             },
           }
         }else if(val=='2'){
-          //window.open(this.baseUrl+'exportTaskUser')
-          this.$api[this.tableData.api[3]](this.busData).then(res=>{
-            if (res.code ==1){
-              console.log(res,'====导出数据')
-              this.$message.success('操作成功')
-            }else{
-              this.$message.error(res.msg)
-            }
-          }).catch((error) => {
-            Promise.reject(error);
-          })
+          var str='';
+          if(this.busData=='null'){
+            window.open(this.baseUrl+'exportTaskUser')
+          }else{
+            Object.keys(this.busData).map(val=>{
+              str+=val +'='+ this.busData[val]+'&'
+            })
+            str = str.substring(0, str.lastIndexOf('&'));
+            window.open(this.baseUrl+'exportTaskUser?'+str)
+          }
+          
+          // this.$api[this.tableData.api[3]](this.busData).then(res=>{
+          //   if (res.code ==1){
+          //     console.log(res,'====导出数据')
+          //     this.$message.success('操作成功')
+          //   }else{
+          //     this.$message.error(res.msg)
+          //   }
+          // }).catch((error) => {
+          //   Promise.reject(error);
+          // })
         }else{
           //导入确定按钮
           this.FiledialogVisible = true;
