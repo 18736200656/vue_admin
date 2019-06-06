@@ -147,8 +147,22 @@
       },
        //导出
       exportFile(){
+          delete this.busData.currentPage;
+          delete this.busData.pageSize;
+          var str='?';
+          if(this.busData=='null'){
+            //window.open(this.baseUrl+'exportTaskUser')
+            window.location.href=this.baseUrl+'exportUserWithdraw';
+          }else{
+            Object.keys(this.busData).map(val=>{
+              str+=val +'='+ this.busData[val]+'&'
+            })
+            str = str.substring(0, str.lastIndexOf('&'));
+            window.location.href=this.baseUrl+'exportUserWithdraw' + str;
+          }
+           // window.location.href=this.baseUrl+'exportTaskUser'+str;
         //window.open(this.baseUrl+'exportUserWithdraw','_blank')
-        window.location.href="http://www.sheng001.cn/exportUserWithdraw"
+        
       },
       //关闭弹窗
       closeDialog(data){
