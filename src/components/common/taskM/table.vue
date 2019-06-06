@@ -241,13 +241,15 @@
           delete this.busData.pageSize;
           var str='?';
           if(this.busData=='null'){
-            window.open(this.baseUrl+'exportTaskUser')
+            //window.open(this.baseUrl+'exportTaskUser')
+            window.location.href=this.baseUrl+'exportTaskUser';
           }else{
             Object.keys(this.busData).map(val=>{
               str+=val +'='+ this.busData[val]+'&'
             })
             str = str.substring(0, str.lastIndexOf('&'));
-            window.open(this.baseUrl+'exportTaskUser'+str)
+            //window.open(this.baseUrl+'exportTaskUser'+str)
+            window.location.href=this.baseUrl+'exportTaskUser'+str;
           }
           
           // this.$api[this.tableData.api[3]](this.busData).then(res=>{
