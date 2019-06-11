@@ -40,7 +40,7 @@
               </div>
               <div v-else-if="item.verify">
                 <el-button
-                  size="mini" :disabled="scope.row[item.key] !== 0"
+                  size="mini" :disabled="scope.row[item.key] != 1"
                   v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                   @click="handleVerify(scope.$index,scope.row,v.num)">{{v.name}}</el-button>
               </div>
