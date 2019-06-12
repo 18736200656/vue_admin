@@ -35,53 +35,62 @@
               wd:100,
             },
             {
-              key:'shopCount',
+              key:'mobile',
               label:"手机号码",
             },
             {
-              key:'creditCount',
+              key:'payCode',
               label:"提现支付宝账号",
             },
-            {
-              key:'cloudPayCount',
-              label:"京东用户名",
-            },
-            {
-              key:'jingdongCount',
-              label:"任务完成情况",
+           // {
+            //  key:'jdName',
+             // label:"京东用户名",
+            //},
+          //  {
+           //   key:'jingdongCount',
+           //   label:"任务完成情况",
 
-            },
+          //  },
+         //   {
+          //    key:'status',
+          //    label:"购物情况",
+           // },
             {
-              key:'status',
-              label:"购物情况",
-            },
-            {
-              key:'status',
+              key:'recommendCode',
               label:"推荐码",
             },
+           // {
+           //   key:'status',
+           //   label:"推荐用户完成任务情况",
+           // },
             {
-              key:'status',
-              label:"推荐用户完成任务情况",
-            },
-            {
-              key:'status',
+              key:'taskAmount',
               label:"任务佣金",
             },
             {
-              key:'status',
+              key:'inviteAmount',
               label:"推荐佣金",
             },
             {
-              key:'status',
+              key:'shopAmount',
               label:"购物佣金",
             },
             {
-              key:'status',
+              key:'withdrawAmount',
               label:"已经提现金额",
             },
             {
-              key:'status',
-              label:"总资产",
+              key:'frozenAmount',
+              label:"冻结金额",
+            },
+            {
+              key:'amount',
+              label:"可用金额",
+            },
+
+             {
+              key:'totalAmount',
+              label:"总金额",
             },
 
             {
