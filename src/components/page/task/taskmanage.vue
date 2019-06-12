@@ -99,12 +99,12 @@ export default {
             wd:250,
             chilren:[
               {
-                num: '1',
+                num: '2',
                 type: 'primary',
                 name: '通过'
               },
               {
-                num: '2',
+                num: '3',
                 type: '',
                 name: '驳回'
               }
