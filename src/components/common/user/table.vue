@@ -34,9 +34,8 @@
                   v-for="(v,n) in item.chilren" :key="n" :type="v.type"
                   @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
               </div>
-              <div v-else>
-                <span v-if="item.key=='taobaoOpenUid'" class="blue" @click="openUser(item.key)">{{scope.row[item.key] !==null ? scope.row[item.key] : '--'}}</span>
-                <span v-else>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
+              <div v-else>          
+                <span>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
               </div>
             </template>
           </el-table-column>
@@ -82,28 +81,6 @@
         </el-form>
       </section>
     </el-dialog>
-    <!-- 用户下载信息 -->
-    <el-dialog
-      :visible.sync="userDialogvisible"
-      width="30%">
-      <span slot="title" class="dialog_tit">用户数据任务列表</span>
-      <section style="margin-top:10px;">
-        <table border="1" cellspacing="0" rowspacing="0" width="100%" style="border-color:#f4f4f4;" algin="center">
-          <thead bgcolor="#f4f4f4">
-            <tr><th>任务名称</th><th>完成量</th></tr>
-          </thead>
-          <tbody style="">
-            <tr><td>APP安装量</td><td>{{}}</td></tr>
-            <tr><td>首购完成量</td><td>{{}}</td></tr>
-            <tr><td>京东白条激活</td><td>{{}}</td></tr>
-            <tr><td>首购奖励和返利</td><td>{{}}</td></tr>
-            <tr><td>中国银联云闪付开通</td><td>{{}}</td></tr>
-            <tr><td>苏宁易购校园微信公众号关注</td><td>{{}}</td></tr>
-            <tr><td>自如免押金申请</td><td>{{}}</td></tr>
-          </tbody>
-        </table>
-      </section>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -129,7 +106,6 @@
           noticeMsg:{required:true, message:'消息不能为空',trigger: 'blur'}, //	任务ID
         },
         type:'',
-        userDialogvisible:true,
       }
     },
     components:{
@@ -251,11 +227,6 @@
         done();
         this.$refs.formbox.reset();
       },
-      //查看用户的量
-      openUser(val){
-        this.userDialogvisible = true;
-
-      }
     },
 
   }

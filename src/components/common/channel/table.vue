@@ -35,7 +35,7 @@
                 @click="handleEdit(scope.$index, scope.row,v.num)">{{v.name}}</el-button>
             </div>
             <div v-else>
-              <span style="color: #409eff;cursor: pointer;" v-if="item.key=='id'" @click="lookUP(scope.$index,scope.row)">{{scope.row[item.key]}}</span>
+              <span style="color: #409eff;cursor: pointer;" v-if="item.key=='channelLoginName'" @click="lookUP(scope.$index,scope.row)">{{scope.row[item.key]}}</span>
               <span :title="scope.row[item.key]" v-else>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
             </div>
           </template>
