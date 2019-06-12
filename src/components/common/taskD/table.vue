@@ -22,6 +22,7 @@
           v-for="(item,index) in tableData.thData"
           :key="index"
           :label="item.label"
+          show-overflow-tooltip
           :align="item.align || 'center'"
           :width=" item.wd || 'auto'">
           <template slot-scope="scope">
@@ -40,9 +41,9 @@
               <div>3:{{scope.row.thirdText}}</div>
             </div> -->
              <div v-else-if="item.taskImg">
-               <div>第一步: <a :href="scope.row.oneImg">{{scope.row.oneImg}}</a> </div>
-               <div>第二步: <a :href="scope.row.twoImg">{{scope.row.twoImg}}</a> </div>
-               <div>第三步: <a :href="scope.row.thirdImg">{{scope.row.thirdImg}}</a> </div>
+               <div>第一步: <img :src="scope.row.oneImg" class="task_img"/> </div>
+               <div>第二步: <img :src="scope.row.twoImg" class="task_img"> </div>
+               <div>第三步: <img :src="scope.row.thirdImg" class="task_img"></div>
             </div>
             <div v-else>
               <span :title="scope.row[item.key]">{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
@@ -210,6 +211,12 @@
   }
 </script>
 <style>
+  .task_img{
+    width: 50px;
+    height: 40px;
+    vertical-align: middle;
+    margin: 5px;
+  }
   .dialog_tit{
     position: absolute;
     left:0;

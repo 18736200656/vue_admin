@@ -125,7 +125,7 @@ export default {
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 180px;
-  min-height: 400px;
+  min-height: 600px;
 }
 
 .el-menu-vertical-demo {

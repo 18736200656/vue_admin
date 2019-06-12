@@ -46,7 +46,7 @@
               </div>
               <div v-else>
                 <span v-if="item.key== 'updateTime' || item.key== 'createTime'">{{$valid.date(scope.row[item.key]) || '--'}}</span>
-                <span v-else-if="item.key== 'status' ">{{$valid.examineStr(scope.row[item.key])}}</span>
+                <el-tag v-else-if="item.key== 'status' " :type="scope.row[item.key]=='2'? 'primary' : 'danger'" plain>{{$valid.examineStr(scope.row[item.key])}}</el-tag>
                 <span v-else>{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
               </div>
             </template>
