@@ -41,10 +41,11 @@
               <div>3:{{scope.row.thirdText}}</div>
             </div> -->
              <div v-else-if="item.taskImg">
-               <div>第一步: <img :src="scope.row.oneImg" class="task_img"/> </div>
-               <div>第二步: <img :src="scope.row.twoImg" class="task_img"> </div>
-               <div>第三步: <img :src="scope.row.thirdImg" class="task_img"></div>
+               <div>第一步: <img :src="scope.row.oneImg" class="task_img" @click="viewImg(scope.row.oneImg)"/> </div>
+               <div>第二步: <img :src="scope.row.twoImg" class="task_img" @click="viewImg(scope.row.twoImg)"> </div>
+               <div>第三步: <img :src="scope.row.thirdImg" class="task_img" @click="viewImg(scope.row.thirdImg)"></div>
             </div>
+            
             <div v-else>
               <span :title="scope.row[item.key]">{{scope.row[item.key] !==null ? scope.row[item.key] : 0}}</span>
             </div>
@@ -80,11 +81,14 @@
     <span slot="title" class="dialog_tit">{{edit ?'修改' :'新增'}}任务详情</span>
     <form-box :FormData="FormData" @update="closeDialog" ref="taskD"></form-box>
   </el-dialog>
+  <!-- 放大图片 -->
+　<big-img :showImg="showImg" :imgSrc="imgSrc"></big-img>
 </div>
 </template>
 <script>
   import bus from '../../../utils/bus'
   import formBox from './form'
+  import BigImg from '../BigImg.vue'; 
   export default {
     name:'Table',
     data(){
@@ -97,10 +101,12 @@
         FormData:{},
         busData:{},
         edit:false,
+        showImg:false,
+        imgSrc:'',
       }
     },
     components:{
-      formBox
+      formBox,BigImg
     },
     props:{
       tableData:{
@@ -172,7 +178,6 @@
       //关闭弹窗
       closeDialog(data){
         this.dialogVisible = false;
-        console.log(data,'+++++data')
         let num = data.type ? '4' : '3'; //4修改 3 新增
         this.$api[this.tableData.api[num]](data).then(res=>{
           if (res.code ==1){
@@ -205,7 +210,13 @@
       beforeClose(done){
         done();
         this.$refs.taskD.reset();
-      }
+      },
+      // 图片点击放大
+　　　viewImg(img){
+        console.log(img)
+        this.showImg = true;
+      　this.imgSrc =img;
+　　　},
 
     }
   }

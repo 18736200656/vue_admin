@@ -11,6 +11,10 @@ Vue.prototype.$api = api; //接口
 Vue.prototype.$valid = valid; //状态
 Vue.use(ElementUI,{size: "small"});
 Vue.use(uploadImg) //上传组件
+
+Vue.filter('preImg',function(){
+
+});
 new Vue({
   router,
   render: h => h(App),
